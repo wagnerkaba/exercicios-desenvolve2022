@@ -1,4 +1,6 @@
 document.write("<br><h1>Clique em algum ponto no quadro cinza</h1>");
+document.write("<h1>Clique e aperte 'shift' para aumentar bolinha</h1>");
+document.write("<h1>Clique com botão direito para mudar cor</h1>");
 
 
 var tela = document.querySelector('canvas');
@@ -12,13 +14,19 @@ var indiceCorAtual = 0; // começa com blue
 
 function desenhaCirculo(evento) {
 
+    var raio;
     var x = evento.pageX - tela.offsetLeft;
     var y = evento.pageY - tela.offsetTop;
+
+    if (evento.shiftKey){
+        raio = 20;
+    } else raio = 10;
+
 
     pincel.fillStyle = cores[indiceCorAtual];
     
     pincel.beginPath();
-    pincel.arc(x, y, 10, 0, 2 * 3.14);
+    pincel.arc(x, y, raio, 0, 2 * 3.14);
     pincel.fill();
     console.log(x + ',' + y);
 }

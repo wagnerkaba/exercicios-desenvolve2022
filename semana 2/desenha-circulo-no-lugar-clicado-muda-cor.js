@@ -1,4 +1,6 @@
 document.write("<br><h1>Clique em algum ponto no quadro cinza</h1>");
+document.write("<br><h1>Clique com botão direito para mudar cor</h1>");
+
 
 
 var tela = document.querySelector('canvas');
