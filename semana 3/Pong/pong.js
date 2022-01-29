@@ -18,6 +18,7 @@ let raqueteAltura = 90;
 let xRaqueteOponente = 585;
 let yRaqueteOponente = 150;
 let velocidadeYOponente;
+let chanceDeErrar = 0;
 
 //placar do jogo
 let meusPontos = 0;
@@ -29,6 +30,7 @@ let somPonto;
 let somTrilha;
 
 let colidiu = false;
+
 
 function preload(){
   somTrilha = loadSound("trilha.mp3");
@@ -105,7 +107,8 @@ function verificaColisaoRaquete(x_Raquete, y_Raquete){
 
 function movimentaRaqueteOponente(){
   velocidadeYOponente = yBolinha - yRaqueteOponente - raqueteComprimento / 2 - 30;
-  yRaqueteOponente += velocidadeYOponente;
+  yRaqueteOponente += velocidadeYOponente + chanceDeErrar;
+  calculaChanceDeErrar();
 }
 
 function incluiPlacar(){
@@ -134,4 +137,18 @@ function marcaPontos(){
     somPonto.play();
   }
 
+}
+
+function calculaChanceDeErrar() {
+  if (pontosOponente >= meusPontos) {
+    chanceDeErrar += 1
+    if (chanceDeErrar >= 39){
+    chanceDeErrar = 40
+    }
+  } else {
+    chanceDeErrar -= 1
+    if (chanceDeErrar <= 35){
+    chanceDeErrar = 35
+    }
+  }
 }
