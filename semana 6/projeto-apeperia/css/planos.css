@@ -116,3 +116,17 @@ https://www.w3schools.com/css/css3_mediaqueries.asp */
     }
     
 }
+
+@media screen and (min-width:1024px) {
+
+    .planos__cartoes {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+
+    .cartao {
+        max-width: 300px;
+    }
+    
+}

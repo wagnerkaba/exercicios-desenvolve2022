@@ -34,3 +34,21 @@
 
     margin: 0 .5rem .7rem;
 }
+
+/* CSS Media Queries
+The @media rule, introduced in CSS2, made it possible to define different style rules for different media types.
+https://www.w3schools.com/css/css3_mediaqueries.asp */
+
+@media screen and (min-width: 1024px) {
+    .rodape {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .rodape__navegacao {
+        text-align: left;
+
+        min-width: 600px;
+    }
+}

@@ -46,3 +46,15 @@ body {
     border: 1px solid var(--branco);
     border-radius: 5px;
 }
+
+
+/* CSS Media Queries
+The @media rule, introduced in CSS2, made it possible to define different style rules for different media types.
+https://www.w3schools.com/css/css3_mediaqueries.asp */
+
+@media screen and (min-width: 1024px) {
+    .container {
+        padding-left: calc((100% - 940px)/2);
+        padding-right: calc((100% - 940px)/2);
+    }
+}

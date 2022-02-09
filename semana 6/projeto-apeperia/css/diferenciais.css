@@ -44,3 +44,20 @@
 .item__texto {
     line-height: normal;
 }
+
+/* CSS Media Queries
+The @media rule, introduced in CSS2, made it possible to define different style rules for different media types.
+https://www.w3schools.com/css/css3_mediaqueries.asp */
+
+@media screen and (min-width:1024px) {
+
+    .diferenciais {
+        background-color: var(--cinza-claro);
+    }
+
+    .diferenciais__lista {
+        justify-content: space-around;
+    }
+
+    
+}
