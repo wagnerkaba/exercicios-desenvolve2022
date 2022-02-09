@@ -31,3 +31,15 @@
 .chamada__botao {
     width: 100%;
 }
+
+/* CSS Media Queries
+The @media rule, introduced in CSS2, made it possible to define different style rules for different media types.
+https://www.w3schools.com/css/css3_mediaqueries.asp */
+
+@media screen and (min-width:768px) {
+
+    .chamada__texto{
+        max-width: 600px;
+    }
+    
+}
