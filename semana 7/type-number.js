@@ -9,10 +9,10 @@ console.log(primeiroNumero / 0);
 //No entanto, há uma exceção: zero dividido por zero não tem um valor bem definido e o resultado dessa operação é o valor especial não numérico NaN.
 console.log(0/0);
 
-//unicode
-const tique = '\u2705';
-const hiragana = '\u3041';
-console.log(hiragana);
-console.log(tique);
-console.log('\u1F235');
+
+
+const soma = 10 + 10;
+const multiplicacao = 10 * 10;
+const operacao = soma + multiplicacao + 10;
+console.log("resultado da operação: " + operacao);
 
