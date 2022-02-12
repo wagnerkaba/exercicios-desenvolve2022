@@ -17,3 +17,5 @@ console.log(numero===texto);
 
 console.log(typeof numero);
 console.log(typeof texto);
+
+console.log("AS BOAS PRATICAS RECOMENDAM USAR TRIPLE EQUALS SEMPRE QUE POSSÍVEL");
