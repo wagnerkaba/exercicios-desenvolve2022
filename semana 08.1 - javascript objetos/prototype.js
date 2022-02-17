@@ -17,4 +17,4 @@ myDate.getYear = function() {
   console.log('something else!')
 };
 
-console.log(myDate.getYear()); // 'something else!'
+console.log(myDate.getYear());
