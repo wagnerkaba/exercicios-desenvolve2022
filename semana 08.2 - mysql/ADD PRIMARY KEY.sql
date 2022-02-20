@@ -1,0 +1,5 @@
+USE TBPRODUTO;
+
+ALTER TABLE TBPRODUTO ADD primary key (PRODUTO);
+
+SELECT * FROM tbproduto;
