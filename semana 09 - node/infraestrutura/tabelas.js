@@ -1,7 +1,29 @@
 class Tabelas {
-    init(conexao {
-        console.log('Tabelas foram chamadas');
-    })
+    init(conexao) {
+        this.conexao = conexao;
+        this.criarAtendimentos();
+    }
+
+    criarAtendimentos() {
+        const sql = 'CREATE TABLE IF NOT EXISTS Atendimentos (id int NOT NULL AUTO_INCREMENT, cliente varchar(50) NOT NULL, pet varchar(20), servico varchar(20) NOT NULL, status varchar(20) NOT NULL, observacoes text, PRIMARY KEY(id))';
+
+        this.conexao.query(
+            sql,
+            erro => {
+                if (erro) {
+                    console.log(erro)
+                } else {
+                    console.log('Tabela Atendimentos criada com sucesso');
+                }
+            }
+        );
+    }
+
+
 }
 
+
+
+// Tabelas foi exportada já instanciada porque não iremos utilizar de outro jeito
+// ou seja, não vai haver instâncias diferentes da mesma tabela
 module.exports = new Tabelas;
