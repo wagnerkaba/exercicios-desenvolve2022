@@ -1,4 +1,19 @@
-# API AGENDA PET SHOP
+# API REST PARA AGENDA PET SHOP
 
-API para agenda de pet shop, utilizando banco de dados MYSQL.
+API REST para agenda de pet shop, utilizando banco de dados MYSQL.
+
+
+
+## Tecnologias utilizadas
+
+* NodeJS
+* MySQL
+* [ExpressJS](https://expressjs.com/)
+
+
+## Notas
+Para iniciar a API:
+```
+npm start
+```
 

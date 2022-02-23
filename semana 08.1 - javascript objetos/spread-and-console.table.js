@@ -38,6 +38,8 @@ const listaClientes = [
 
 var listaDependentes = [];
 
+
+// coloca todos os dependentes dos clientes no array listaDependentes
 for(let i = 0; i < listaClientes.length; i++){
     listaDependentes.push(...listaClientes[i].dependentes);
 }
