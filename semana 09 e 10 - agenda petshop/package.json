@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/wagnerkaba/exercicios-desenvolve2022#readme",
   "dependencies": {
+    "axios": "^0.26.0",
     "consign": "^0.1.6",
     "express": "^4.17.3",
     "moment": "^2.29.1",
