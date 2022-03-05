@@ -1,0 +1,14 @@
+
+// Este arquivo é necessário para o vscode fazer imports automaticamente
+// Explicação:
+// https://github.com/microsoft/vscode/issues/70689
+// https://code.visualstudio.com/docs/nodejs/working-with-javascript#_javascript-projects-jsconfigjson
+
+{
+    "compilerOptions": {
+        "target": "es6"
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}

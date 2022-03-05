@@ -1,12 +1,14 @@
-const conexao = require('../infraestrutura/conexao')
+const conexao = require('../infraestrutura/database/conexao')
 
 // MOMENT is a JavaScript date library for parsing, validating, manipulating, and formatting dates.
 const moment = require('moment');
 const axios = require('axios');
-const atendimento = require('../controllers/atendimento');
+
+const repositorio = require('../repositorios/atendimento');
 
 
 class Atendimento {
+
     adiciona(atendimento, res) {
 
         //Quando Moment() é invocado sem parâmetros, ele retorna a data atual formatada conforme format()
@@ -43,32 +45,24 @@ class Atendimento {
         // se erros.length = 0 então existemErros == 0 (false)
         const existemErros = erros.length;
 
+
+
         if (existemErros) {
-            res.status(400).json(erros);
+            // Este promise não tem resolve, mas apenas reject            
+            return new Promise((resolve, reject) => reject(erros));
         } else {
-
-
 
             // exemplo de uso do spread operator (...), ou sintaxe de espalhamento. 
             // Este operador copia as propriedades de objetos para outros, “espalhando” os conteúdos. 
             // ou seja, será criado um objeto atendimentoDatado com as propriedades de atendimento, dataCriacao e data
             const atendimentoDatado = { ...atendimento, dataCriacao, data };
-            console.table(atendimento);
-            console.table(atendimentoDatado);
-
-            const sql = 'INSERT INTO Atendimentos SET ?';
-
-            conexao.query(
-                sql,
-                atendimentoDatado,
-                (erro, resultados) => {
-                    if (erro) {
-                        res.status(400).json(erro);
-                    } else {
-                        res.status(201).json(atendimento);
-                    }
-                }
-            )
+            return repositorio.adiciona(atendimentoDatado)
+                .then(resultados => {
+                    
+                    const id = resultados.insertId;
+                    return { ...atendimento, id };
+                })
+                // .catch(console.log("este catch não foi criado na aula"));
         }
     }
 
