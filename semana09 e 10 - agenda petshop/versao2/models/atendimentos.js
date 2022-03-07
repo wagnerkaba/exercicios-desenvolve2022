@@ -9,39 +9,87 @@ const repositorio = require('../repositorios/atendimento');
 
 class Atendimento {
 
-    adiciona(atendimento, res) {
-
-        //Quando Moment() é invocado sem parâmetros, ele retorna a data atual formatada conforme format()
-        const dataCriacao = moment().format('YYYY-MM-DD HH:mm:ss');
-
-        //quando o cliente envia a data, provavelmente ela não estará formatada corretamente
-        //se a data não está formatada corretamente, isso vai gerar erro quando for persistir os dados no mysql
-        //por isso, é necessário formatar a data utilizando a biblioteca MOMENT
-        // OBS: a data gerada pelo cliente deve estar no formato 'DD/MM/YYYY'
-        const data = moment(atendimento.data, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss');
-
+    constructor() {
         // verifica se a data agendada para atendimento não é anterior à data da criação do agendamento
-        const dataEhValida = moment(data).isSameOrAfter(dataCriacao);
+        this.dataEhValida = ({data, dataCriacao}) => {
+            console.log(`data = ${data}` );
+            console.log(`dataCriacao = ${dataCriacao}` );
+            return  moment(data).isSameOrAfter(dataCriacao);
+        }
 
         // verifica se a string cliente é maior ou igual a 5
-        const clienteEhValido = atendimento.cliente.length >= 5;
+        this.clienteEhValido = ({tamanho}) => {
+            console.table(tamanho);
+            return tamanho >= 5;
+        }
 
-        const validacoes = [
+        // The filter() method creates a new array with all elements that pass the test implemented by the provided function.
+        this.valida = parametros => this.validacoes.filter(
+
+            // function utilizada pelo filter() para criar um novo array
+            // Function is a predicate, to test each element of the array. Return a value that coerces to true to keep the element, or to false otherwise.
+            // campo: The current element being processed in the array.
+            campo => {
+                const { nome } = campo;
+                
+                console.log(`campo = ${campo.nome}` );
+
+                const parametro = parametros[nome];
+
+                console.log('VALIDA(): CONST PARAMETRO')
+                console.table(parametro);
+
+                const booleanParaRetorno = !campo.valido(parametro);
+
+                console.log (booleanParaRetorno);
+
+                return booleanParaRetorno;
+            }
+        )
+
+        // array para armazenar as validações a serem utilizadas pelo método valida()
+        this.validacoes = [
             {
                 nome: 'data',
-                valido: dataEhValida,
+                valido: this.dataEhValida,
                 mensagem: 'Data deve ser maior ou igual à data atual'
             },
             {
                 nome: 'cliente',
-                valido: clienteEhValido,
+                valido: this.clienteEhValido,
                 mensagem: 'Cliente deve ter pelo menos cinco caracteres'
             }
 
         ];
+    }
 
-        const erros = validacoes.filter(campo => !campo.valido);
 
+    adiciona(atendimento, res) {
+        // dataCriacao: armazena a data atual que é capurada com o método moment()
+        //Quando Moment() é invocado sem parâmetros, ele retorna a data atual formatada conforme format()
+        const dataCriacao = moment().format('YYYY-MM-DD HH:mm:ss');
+
+        // data: armazena a data agendada para atendimento
+        // OBS 1: quando o cliente envia a data, provavelmente ela não estará formatada corretamente
+        //se a data não está formatada corretamente, isso vai gerar erro quando for persistir os dados no mysql
+        //por isso, é necessário formatar a data utilizando a biblioteca MOMENT
+        // OBS 2: a data gerada pelo cliente deve estar no formato 'DD/MM/YYYY'
+        const data = moment(atendimento.data, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss');
+
+        // parametrosParaValidar é um Object Literal para armazenar os valores que precisam ser validados
+        const parametrosParaValidar = {
+            data: { data, dataCriacao },
+            cliente: { tamanho: atendimento.cliente.length }
+        }
+
+        console.log(parametrosParaValidar);
+
+        // faz validação utilizando método "valida()" 
+        const erros = this.valida(parametrosParaValidar);
+
+        console.table(erros);
+
+        // se erros recebeu algum valor, isso significa que 
         // se erros.length = 0 então existemErros == 0 (false)
         const existemErros = erros.length;
 
@@ -58,30 +106,16 @@ class Atendimento {
             const atendimentoDatado = { ...atendimento, dataCriacao, data };
             return repositorio.adiciona(atendimentoDatado)
                 .then(resultados => {
-                    
+
                     const id = resultados.insertId;
                     return { ...atendimento, id };
                 })
-                // .catch(console.log("este catch não foi criado na aula"));
+            // .catch(console.log("este catch não foi criado na aula"));
         }
     }
 
     lista(res) {
-        const sql = 'SELECT * FROM Atendimentos';
-
-        conexao.query(
-            sql,
-            (erro, resultados) => {
-                if (erro) {
-                    res.status(400).json(erro);
-                } else {
-                    res.status(200).json(resultados);
-                }
-            }
-
-
-        )
-
+        return repositorio.lista();
     }
 
     buscaPorId(id, res) {

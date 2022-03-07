@@ -4,11 +4,14 @@ const Atendimento = require('../models/atendimentos')
 
 module.exports = app => {
     app.get('/atendimentos', (req, res) => {
-        Atendimento.lista(res);
+        Atendimento.lista()
+            //não é necessário retornar status(200) porque 200 é o default
+            .then(resultados => res.json(resultados))
+            .catch(erros => res.status(400).json(erros));
     });
 
 
-    app.get('/atendimentos/:id', (req, res)=>{
+    app.get('/atendimentos/:id', (req, res) => {
         console.log(req.params);
 
         //O id é recebido como string
@@ -24,10 +27,10 @@ module.exports = app => {
         Atendimento.adiciona(atendimento)
             .then(atendimentoCadastrado => res.status(201).json(atendimentoCadastrado))
             .catch(erros => res.status(400).json(erros));
-        
+
     });
 
-    app.patch('/atendimentos/:id', (req,res)=>{
+    app.patch('/atendimentos/:id', (req, res) => {
         const id = parseInt(req.params.id);
         const valores = req.body;
         Atendimento.altera(id, valores, res);
