@@ -11,7 +11,7 @@ const senha = config.get('mysql.senha');
 const meuHost = config.get('mysql.host');
 
 
-const instancia = new Sequelize(
+const instanciaSequelize = new Sequelize(
     database,
     usuario,
     senha, 
@@ -20,8 +20,6 @@ const instancia = new Sequelize(
         dialect: 'mysql'
 
     }
-
-
 )
 
-module.exports = instancia;
+module.exports = instanciaSequelize;

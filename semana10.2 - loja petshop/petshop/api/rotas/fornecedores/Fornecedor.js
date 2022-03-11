@@ -35,6 +35,21 @@ class Fornecedor {
         this.dataAtualizacao = fornecedorEncontrado.dataAtualizacao;
         this.versao = fornecedorEncontrado.versao;
     }
+
+    async atualizar() {
+        await TabelaFornecedor.pegarPorId(this.id);
+        const campos = ['empresa', 'email', 'categoria'];
+        const dadosParaAtualizar = {};
+        
+        campos.forEach((campo) => {
+            const valor = this[campo];
+            if (typeof valor === 'string' &&){
+                dadosParaAtualizar[campo] = valor
+            }
+        })
+
+
+    }
 }
 
 module.exports = Fornecedor;
