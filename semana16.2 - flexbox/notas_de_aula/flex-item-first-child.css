@@ -1,0 +1,17 @@
+/* Quando a largura da tela chega a 800 px, os elementos mantém 200 px de largura cada um preenchendo todo o espaço da tela, porém, o que acontece com a largura dos flexItem quando diminuímos a tela para por exemplo 600 px? */
+
+.flexContainer {
+    display: flex;
+    background-color: blue;
+    height: 200px;
+  }
+  .flexItem {
+    background-color: yellow;
+    outline: red solid 1px;
+    width: 200px;
+    
+  }
+
+  .flexItem:first-child {
+    flex-shrink: 2;
+  }

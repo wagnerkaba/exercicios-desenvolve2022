@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="flex-item-first-child.css">
+</head>
+<header>
+    <h1>Quando a largura da tela chega a 800 px, os elementos "flexItem" mantém 200 px de largura cada um preenchendo
+        todo o espaço da tela. </h1>
+    <h1>O que acontece com a largura dos flexItem quando diminuímos a tela para por exemplo 600 px?</h1>
+</header>
+
+<main class="flexContainer">
+
+    <div class="flexItem firstRow">1</div>
+    <div class="flexItem firstRow">2</div>
+    <div class="flexItem firstRow">3</div>
+    <div class="flexItem firstRow">4</div>
+</main>
+<footer>
+    <p>
+
+        Quando colocamos flex-shrink: 2 no primeiro, ele diminui de forma diferente do que os outros elementos. As
+        contas que ocorrem são semelhantes as que ocorrem no flex-grow.
+    </p>
+    <p>
+        Primeiro de tudo o navegador pega o total de flex-shrink que nossos flex items tem, como temos por padrão
+        flex-shrink: 1 nos flex items, a conta fica assim:
+
+    </p>
+
+
+    <p>
+        2 + 1 + 1 + 1 = 5. Isso pois o primeiro colocamos flex-shrink:2.
+
+    </p>
+    <p>
+        Como diminuímos 200 px do tamanho total, o navegador pega esse valor e divide pelo total de flex-shrink. Fica:
+        200 px : 5 = 40 px.
+
+    </p>
+    <p>
+
+        Dessa forma o navegador tira 2 partes do primeiro elemento 200px - 80px = 120px e tira 1 parte dos demais, ou
+        seja: 200 px - 40 px = 160 px.
+    </p>
+</footer>
+
+</html>

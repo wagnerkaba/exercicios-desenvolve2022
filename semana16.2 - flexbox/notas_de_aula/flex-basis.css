@@ -1,0 +1,83 @@
+.container {
+  font-family: arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: yellow;
+  outline: red solid 5px;
+}
+
+.flex {
+  background: #6AB6D8;
+  padding: 10px;
+  margin-bottom: 50px;
+  border: 3px solid #2E86BB;
+  color: white;
+  font-size: 14px;
+  text-align: center;
+  position: relative;
+}
+
+/* In CSS, ::after creates a pseudo-element that is the last child of the selected element. It is often used to add cosmetic content to an element with the content property. It is inline by default. */
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/::after */
+.flex:after {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 100%;
+  margin-top: 10px;
+  width: 100%;
+  color: #333;
+  font-size: 12px;
+  outline: green solid 1px;
+}
+
+.flex1 {
+  flex-basis: 200px;
+}
+
+.flex1:after {
+  content: 'flex-basis: 200px';
+}
+
+/* In CSS, ::before creates a pseudo-element that is the first child of the selected element. It is often used to add cosmetic content to an element with the content property. It is inline by default. */
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/::before */
+.flex1:before {
+  content: "***";
+  color: red;
+}
+
+.flex2 {
+  flex-basis: max-content;
+}
+
+.flex2:after {
+  content: 'flex-basis: max-content';
+}
+
+.flex3 {
+  flex-basis: min-content;
+}
+
+.flex3:after {
+  content: 'flex-basis: min-content';
+}
+
+.flex4 {
+  flex: 1 1 300px;
+}
+
+.flex4:after {
+  content: 'flex: 1 1 300px;';
+}
+
+/* Max-width and min-width can be used together to target a specific range of screen sizes. 
+The query below will trigger only for screens that are 600-400px wide. */
+@media(min-width: 400px) and (max-width: 600px) {
+  .container {
+    background-color: red;
+    
+  }
+}
