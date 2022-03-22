@@ -1,0 +1,33 @@
+
+<!-- CÓDIGO EXTRAIDO DE https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation -->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <title> Cadastro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./validation.css">
+
+
+
+</head>
+
+<body>
+
+<!-- NOVALIDATE: Indicate that the form is not to be validated on submit -->
+    <form novalidate>
+        <p>
+            <label for="mail">
+                <span>Please enter an email address:</span>
+                <input type="email" id="mail" name="mail" required minlength="8">
+                <span class="error" aria-live="polite"></span>
+            </label>
+        </p>
+        <button>Submit</button>
+    </form>
+<script src="./validation.js"></script>
+</body>
+
+</html>
