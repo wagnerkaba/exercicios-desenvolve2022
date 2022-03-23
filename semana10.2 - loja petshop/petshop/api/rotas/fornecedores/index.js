@@ -20,10 +20,7 @@ roteador.post('/', async (requisicao, resposta) => {
 
 })
 
-
 roteador.get('/:idFornecedor', async (requisicao, resposta) => {
-
-
     try {
         const id = requisicao.params.idFornecedor;
         const fornecedor = new Fornecedor({ id: id });
@@ -38,13 +35,25 @@ roteador.get('/:idFornecedor', async (requisicao, resposta) => {
     }
 })
 
-roteador.put('/:idFornecedor', (requisicao, resposta) => {
-    const id = requisicao.params.idFornecedor;
-    const dadosRecebidos = requisicao.body;
+roteador.put('/:idFornecedor', async (requisicao, resposta) => {
+    try {
+        const id = requisicao.params.idFornecedor;
+        const dadosRecebidos = requisicao.body;
+    
+        // The Object.assign() method copies all enumerable own properties from one or more source objects to a target object. It returns the modified target object.
+        const dados = Object.assign({}, dadosRecebidos, { id: id});
+        const fornecedor = new Fornecedor(dados);
+        await fornecedor.atualizar();
+        resposta.end();
+    } catch (erro) {
+        resposta.send(
+            JSON.stringify({
+                mensagem: erro.message
+            })
+        )
+    }
 
-    // The Object.assign() method copies all enumerable own properties from one or more source objects to a target object. It returns the modified target object.
-    const dados = Object.assign({}, dadosRecebidos, { id: id});
-    const fornecedor = new Fornecedor(dados);
+
 
 })
 
