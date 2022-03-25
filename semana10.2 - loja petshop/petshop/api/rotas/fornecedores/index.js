@@ -1,6 +1,7 @@
 const roteador = require('express').Router();
 const TabelaFornecedor = require('./TabelaFornecedor');
 const Fornecedor = require('./Fornecedor');
+const NaoEncontrado = require('../../erros/NaoEncontrado');
 
 roteador.get('/', async (requisicao, resposta) => {
     const resultados = await TabelaFornecedor.listar();
@@ -48,7 +49,10 @@ roteador.get('/:idFornecedor', async (requisicao, resposta) => {
     }
 })
 
-roteador.put('/:idFornecedor', async (requisicao, resposta) => {
+// O parâmetro next serve para chamar o próximo middleware. 
+// No caso abaixo, serve para chamar o middleware de tratamento de erros (error-handling middleware function)
+// Para entender sobre middleware, veja a pasta "api-middleware" nesta semana 10.
+roteador.put('/:idFornecedor', async (requisicao, resposta, next) => {
     try {
         const id = requisicao.params.idFornecedor;
         const dadosRecebidos = requisicao.body;
@@ -60,12 +64,10 @@ roteador.put('/:idFornecedor', async (requisicao, resposta) => {
         resposta.status(204);
         resposta.end();
     } catch (erro) {
-        resposta.status(400);
-        resposta.send(
-            JSON.stringify({
-                mensagem: erro.message
-            })
-        )
+
+        // a linha abaixo vai chamar o middleware que faz o tratamento de erros do Express: error-handling middleware function
+        // Para entender sobre middleware, veja a pasta "api-middleware" nesta semana 10.
+        next(erro);
     }
 
 
