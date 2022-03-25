@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const NaoEncontrado = require('./erros/NaoEncontrado');
+const CampoInvalido = require('./erros/CampoInvalido');
+const DadosNaoFornecidos = require('./erros/DadosNaoFornecidos');
 
 
 // indicação do local em que está o diretório config
@@ -21,11 +23,19 @@ app.use('/api/fornecedores', roteador);
 //You define error-handling middleware last, after other app.use() and routes calls
 // https://expressjs.com/en/guide/error-handling.html
 app.use((erro, requisicao, resposta, next) => {
+    let status = 500;
+
     if (erro instanceof NaoEncontrado){
-        resposta.status(404);
-    } else {
-        resposta.status(400);
-    }
+        status = 404;
+    } 
+
+    if (erro instanceof CampoInvalido || erro instanceof DadosNaoFornecidos){
+        status = 400;
+
+    } 
+    
+
+    resposta.status(status);
     resposta.send(
         JSON.stringify({
             mensagem: erro.message,
