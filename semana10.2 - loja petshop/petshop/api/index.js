@@ -4,7 +4,8 @@ const bodyParser = require('body-parser');
 const NaoEncontrado = require('./erros/NaoEncontrado');
 const CampoInvalido = require('./erros/CampoInvalido');
 const DadosNaoFornecidos = require('./erros/DadosNaoFornecidos');
-
+const ValorNaoSuportado = require('./erros/ValorNaoSuportado');
+const formatosAceitos = require('./Serializador').formatosAceitos;
 
 // indicação do local em que está o diretório config
 process.env["NODE_CONFIG_DIR"] = "../config/";
@@ -12,6 +13,42 @@ const config = require('config');
 const roteador = require('./rotas/fornecedores');
 
 app.use(bodyParser.json());
+
+
+// Middeware para verificar qual é o formato requisitado como resposta pelo cliente
+// Para entender sobre middleware, veja a pasta "api-middleware" nesta semana 10.
+app.use((requisicao, resposta, next) => {
+
+    // procura o header da requisição com o parâmetro Accept
+    // O parâmetro accept indica o formato aceito como resposta pelo cliente
+    let formatoRequisitado = requisicao.header('Accept');
+
+
+    // '*/*' é o formato default do Accept 
+    // se o cliente não definir o formato requisitado, ele irá vir com formato default
+    if (formatoRequisitado === '*/*') {
+
+        // se o formato requisitado for default ('*/*'), então pressupõe-se que seja json
+        formatoRequisitado = 'application/json';
+    }
+
+    // verifica se o formato requisitado pelo cliente existe dentro de formatosAceitos
+    // se "formatosAceitos.indexOf" for igual a -1, isso significa que o formato requisitado não é aceito
+    if (formatosAceitos.indexOf(formatoRequisitado) === -1){
+
+        resposta.status(406);
+        resposta.end();
+        return;
+
+    }
+
+    // se o formato requisitado é aceito, então o formato da resposta já pode ser definido como idêntico a "formatoRequisitado"
+    resposta.setHeader('Content-Type', formatoRequisitado);
+
+    // chama o próximo middleware ou route handler (Para entender melhor, veja a pasta "api-middleware" nesta semana 10.)
+    next();
+
+})
 
 app.use('/api/fornecedores', roteador);
 
@@ -33,6 +70,10 @@ app.use((erro, requisicao, resposta, next) => {
         status = 400;
 
     } 
+
+    if (erro instanceof ValorNaoSuportado) {
+        status = 406;
+    }
     
 
     resposta.status(status);
