@@ -13,20 +13,56 @@ class Serializador {
     serializar(dados) {
         if (this.contentType === 'application/json') {
             console.log('Serializando dados...');
-            return this.json(dados);
+            return this.json(                 
+                this.filtrar(dados)
+            );
         }
         throw new ValorNaoSuportado(this.contentType);
     }
 
+    // método para filtrar dados que não devem ser enviados como resposta
+    // Recebe apenas objetos simples como parâmetro
+    // Por exemplo, se não queremos que dados privados do fornecedor sejam enviados (por exemplo email do fornecedor), o método abaixo retira os dados que não queremos que sejam enviados.
+    filtrarObjeto(dados){
+        const novoObjeto = {};
+
+        this.camposPublicos.forEach((campo) => {
+            if (dados.hasOwnProperty(campo)){
+                novoObjeto[campo] = dados[campo];
+            }
+        })
+        return novoObjeto;
+    }
+
+    // método para filtrar dados que não devem ser enviados como resposta
+    // Recebe como parâmetro arrays ou objetos simples
+    // Quando o usuário pede para listar todos os fornecedores, o método listar envia um array como resposta
+    // Nesse caso, o método filtrar irá receber esse array para ser filtrado
+    // Quando o usuário pede para listar um fornecedor específico, o método listar envia apenas o objeto do fornecedor desejado
+    // Nesse caso, o método filtrar recebe esse objeto para ser filtrado
+    filtrar (dados) {
+        if (Array.isArray(dados)) {
+            dados = dados.map(item => {
+                return this.filtrarObjeto(item);
+            })
+        } else {
+            dados = this.filtrarObjeto(dados);
+        }
+
+        return dados;
+    }
+
 }
 
-// Classe que cria um Serializador específico para Fornecedor
+// Classe que cria um Serializador com propriedades específicas para uso
 // Este é um exemplo do Design Pattern Template Method
 // Template Method is a behavioral design pattern that defines the skeleton of an algorithm in the superclass but lets subclasses override specific steps of the algorithm without changing its structure.
 class SerializadorFornecedor extends Serializador {
     constructor(contentType) {
         super();
+        // contentType é uma propriedade específica da classe SerializadorFornecedor
         this.contentType = contentType;
+        this.camposPublicos = ['id', 'empresa', 'categoria'];
     }
 }
 
