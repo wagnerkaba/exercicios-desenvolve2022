@@ -1,4 +1,7 @@
 const ValorNaoSuportado = require('./erros/ValorNaoSuportado');
+// jsontoxml  is a library designed to render js objects as xml.
+// para instalar jsontoxml: npm install jsontoxml
+const jsontoxml = require('jsontoxml');
 
 
 // Serializador serve para capturar os dados a serem enviados para o cliente e convertê-los em um formato específico que o cliente deseja.
@@ -10,13 +13,39 @@ class Serializador {
         return JSON.stringify(dados);
     }
 
-    serializar(dados) {
-        if (this.contentType === 'application/json') {
-            console.log('Serializando dados...');
-            return this.json(                 
-                this.filtrar(dados)
-            );
+    xml(dados){
+
+        //tag é o root element do xml
+        //caso dados seja um único objeto, o root element do xml será tagSingular
+        let tag = this.tagSingular;
+
+        // se os dados recebidos forem uma lista de objetos, então o root element do xml será tagPlural e cada objeto terá uma tagSingular
+        if (Array.isArray(dados)){            
+            tag = this.tagPlural;
+            dados = dados.map((item) => {
+                return {
+                    [this.tagSingular]: item
+                }
+            })
         }
+
+
+        return jsontoxml({ [tag] : dados });
+    }
+
+    serializar(dados) {
+
+        dados = this.filtrar(dados);
+
+        if (this.contentType === 'application/json') {
+            return this.json(dados);
+        }
+
+        if (this.contentType === 'application/xml') {
+            return this.xml(dados);
+        }
+
+
         throw new ValorNaoSuportado(this.contentType);
     }
 
@@ -54,20 +83,55 @@ class Serializador {
 
 }
 
-// Classe que cria um Serializador com propriedades específicas para uso
+//__________________________________________________________________________
+//                  CLASSE SERIALIZADOR FORNECEODOR
+//__________________________________________________________________________
+// Classe que cria um Serializador com propriedades específicas para fornecedor
 // Este é um exemplo do Design Pattern Template Method
 // Template Method is a behavioral design pattern that defines the skeleton of an algorithm in the superclass but lets subclasses override specific steps of the algorithm without changing its structure.
 class SerializadorFornecedor extends Serializador {
-    constructor(contentType) {
+
+
+    // Parâmetros do construtor:
+    // contentType: é o formato de dados que o usuário quer receber (por exemplo: JSON)
+    // camposExtras: quando o usuário pede uma informação, a API envia apenas os dados públicos (id, empresa e categoria).
+    // se o usuário quiser outros dados além dos dados públicos, ele precisa informar que dados deseja através do parâmetro camposExtras
+    constructor(contentType, camposExtras) {
         super();
         // contentType é uma propriedade específica da classe SerializadorFornecedor
         this.contentType = contentType;
-        this.camposPublicos = ['id', 'empresa', 'categoria'];
+        this.camposPublicos = [
+            'id', 
+            'empresa',
+            'categoria'
+        ].concat(camposExtras || []); // se camposExtras for undefined, vai causar erro. Para evitar erro, concat deve concatenar uma lista vazia caso camposExtras seja undefined
+        
+        this.tagSingular = 'fornecedor'; // utilizado como parâmetro no método xml() para servir como "root element" do xml
+        this.tagPlural = 'fornecedores'; // utilizado como parâmetro no método xml() para servir como "root element" do xml
+    }
+}
+
+//__________________________________________________________________________
+//                  SERIALIZADOR ERRO
+//__________________________________________________________________________
+// Classe que cria um Serializador com propriedades específicas para mensagens de erro
+class SerializadorErro  extends Serializador {
+    constructor(contentType, camposExtras){
+        super();
+        this.contentType = contentType;
+        this.camposPublicos = [
+            'id',
+            'mensagem'
+        ].concat(camposExtras || []);
+
+        this.tagSingular = 'erro'; // utilizado como parâmetro no método xml() para servir como "root element" do xml
+        this.tagPlural = 'erros'; // utilizado como parâmetro no método xml() para servir como "root element" do xml
     }
 }
 
 module.exports = {
     Serializador: Serializador,
     SerializadorFornecedor: SerializadorFornecedor,
-    formatosAceitos: ['application/json']
+    SerializadorErro: SerializadorErro, 
+    formatosAceitos: ['application/json', 'application/xml']
 }
