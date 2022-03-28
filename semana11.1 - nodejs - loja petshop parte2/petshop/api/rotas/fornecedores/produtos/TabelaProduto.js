@@ -1,6 +1,7 @@
 
 const { atualizar } = require('../TabelaFornecedor');
-const Modelo = require('./ModeloTabelaProduto')
+const Modelo = require('./ModeloTabelaProduto');
+const instancia = require('../../../banco-de-dados');
 
 //------------------------------------------------------
 // Este módulo funciona como DAO (Data access object)
@@ -60,6 +61,21 @@ module.exports = {
                 where: dadosDoProduto
             }
         )
+    },
+
+    subtrair(idProduto, idFornecedor, campo, quantidade){
+        // A transaction in MySQL is a sequential group of statements, queries, or operations such as select, insert, update or delete to perform as a one single work unit that can be committed or rolled back.
+        return instancia.transaction(async transacao => {
+            const produto = await Modelo.findOne({
+                where: {
+                    id: idProduto,
+                    fornecedor: idFornecedor
+                }
+            });
+            produto[campo] = quantidade;
+            await produto.save();
+            return produto;
+        })
     }
 }
 

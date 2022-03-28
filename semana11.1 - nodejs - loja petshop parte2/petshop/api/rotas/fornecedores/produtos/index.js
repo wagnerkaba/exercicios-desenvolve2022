@@ -127,15 +127,35 @@ roteador.put('/:id', async (requisicao, resposta, next) => {
         await produto.atualizar();
         resposta.status(204);
         resposta.end();
-    } catch(erro) {
+    } catch (erro) {
         next(erro);
 
     }
 
 })
 
+//-------------------------------------------------------------
+// Diminuir estoque
+//-------------------------------------------------------------
+roteador.post('/:id/diminuir-estoque', async (requisicao, resposta, next) => {
 
 
+    try {
+        const produto = new Produto({
+            id: requisicao.params.id,
+            fornecedor: requisicao.fornecedor.id
+        });
+        await produto.carregar();
+        produto.estoque = produto.estoque - requisicao.body.quantidade;
+        await produto.diminuirEstoque();
+        resposta.status(204);
+        resposta.end();
+
+    } catch (erro){
+        next(erro);
+    }
+
+})
 
 //-------------------------------------------------------------
 // ROTA PARA RECLAMAÇÕES
