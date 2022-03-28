@@ -17,7 +17,13 @@
 const roteador = require('express').Router({ mergeParams: true });
 const Tabela = require('./TabelaProduto')
 
-roteador.get('/', async(requisicao, resposta) => {
+
+
+//-------------------------------------------------------------
+// LISTAR PRODUTOS
+//-------------------------------------------------------------
+
+roteador.get('/', async (requisicao, resposta) => {
 
     const produtos = await Tabela.listar(requisicao.params.idFornecedor);
     resposta.send(
@@ -25,6 +31,18 @@ roteador.get('/', async(requisicao, resposta) => {
     )
 })
 
+//-------------------------------------------------------------
+// CRIAR PRODUTOS
+//-------------------------------------------------------------
+
+roteador.post('/', (requisicao, resposta) => {
+    const idFornecedor = requisicao.params.idFornecedor;
+    const corpo = requisicao.body;
+
+    // The Object.assign() method copies all enumerable own properties from one or more source objects to a target object. It returns the modified target object.
+    const dados = Object.assign({}, corpo, { fornecedor: idFornecedor });
+
+})
 
 
 //-------------------------------------------------------------
