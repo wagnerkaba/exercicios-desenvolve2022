@@ -1,6 +1,16 @@
 const Modelo = require('./ModeloTabelaFornecedor');
 const NaoEncontrado = require('../../erros/NaoEncontrado')
 
+//------------------------------------------------------
+// Este módulo funciona como DAO (Data access object)
+// Quando o usuário quer, por exemplo, enviar dados para o banco de dados, os seguintes passos são dados:
+//      1. A API se comunica com o DAO.
+//      2. O DAO se comunica com o Sequelize
+//      3. O Sequelize se comunica com o MySQL
+//
+// Fonte: https://cursos.alura.com.br/course/nodejs-api-rest-controle-versao/task/82415
+//------------------------------------------------------
+
 module.exports = { 
     listar() {
         //o método findAll retorna objetos do sequelize. Para retornar objetos simples com dados, passamos { raw: true } como parâmetro

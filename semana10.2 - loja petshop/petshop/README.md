@@ -12,7 +12,7 @@
 ## Bibliotecas do NodeJS utilizadas
 * Express
 * bodyParser
-* Sequelize ORM (Object–relational mapping)
+* Sequelize ORM (Object–relational mapping). **[Para saber mais: Curso da Alura sobre Sequelize](https://www.alura.com.br/curso-online-orm-nodejs-api-sequelize-mysql)**
 * mysql2
 * node-config 
 * jsontoxml
