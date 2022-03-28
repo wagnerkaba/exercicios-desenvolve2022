@@ -3,7 +3,7 @@ const TabelaFornecedor = require('./TabelaFornecedor');
 const CampoInvalido = require('../../erros/CampoInvalido');
 const DadosNaoFornecidos = require('../../erros/DadosNaoFornecidos');
 
-class Fornecedor {  
+class Fornecedor {
 
     constructor({ id, empresa, email, categoria, dataCriacao, dataAtualizacao, versao }) {
         this.id = id;
@@ -19,12 +19,16 @@ class Fornecedor {
     async criar() {
 
         this.validar();
+
+        // quando se insere um produto no banco de dados, os campos id, versao e datas são automaticamente criados
+        // por isso, não é necessário fornecer esses dados no método inserir()
         const resultado = await TabelaFornecedor.inserir({
             empresa: this.empresa,
             email: this.email,
-            categoria: this.categoria  
+            categoria: this.categoria
         })
 
+        //recupera os dados gerados id, datas e versao que foram criados automaticamente
         this.id = resultado.id;
         this.dataCriacao = resultado.dataCriacao;
         this.dataAtualizacao = resultado.dataAtualizacao;
@@ -45,10 +49,10 @@ class Fornecedor {
         await TabelaFornecedor.pegarPorId(this.id);
         const campos = ['empresa', 'email', 'categoria'];
         const dadosParaAtualizar = {};
-        
+
         campos.forEach((campo) => {
             const valor = this[campo];
-            if (typeof valor === 'string' && valor.length > 0){
+            if (typeof valor === 'string' && valor.length > 0) {
                 dadosParaAtualizar[campo] = valor
             }
         })
@@ -58,16 +62,16 @@ class Fornecedor {
         await TabelaFornecedor.atualizar(this.id, dadosParaAtualizar)
     }
 
-    remover(){
+    remover() {
         return TabelaFornecedor.remover(this.id);
     }
 
-    validar(){
+    validar() {
         const campos = ['empresa', 'email', 'categoria'];
-        campos.forEach( campo => {
+        campos.forEach(campo => {
             const valor = this[campo];
 
-            if (typeof valor !== 'string' || valor.length === 0){
+            if (typeof valor !== 'string' || valor.length === 0) {
                 throw new CampoInvalido(campo);
             }
 

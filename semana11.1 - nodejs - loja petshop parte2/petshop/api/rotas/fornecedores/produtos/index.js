@@ -16,6 +16,8 @@
 // Se mergeParams é falso, este módulo não vai conseguir capturar os parâmetros da requisição
 const roteador = require('express').Router({ mergeParams: true });
 const Tabela = require('./TabelaProduto')
+const Produto = require('./Produto');
+const Serializador = require('../../../Serializador').SerializadorProduto;
 
 
 
@@ -25,9 +27,13 @@ const Tabela = require('./TabelaProduto')
 
 roteador.get('/', async (requisicao, resposta) => {
 
-    const produtos = await Tabela.listar(requisicao.params.idFornecedor);
+    // requisicao.fornecedor é um dado enviado pelo método verificarFornecedor() dentro de "fornecedores/index.js"
+    const produtos = await Tabela.listar(requisicao.fornecedor.id);
+    const serializador = new Serializador(
+        resposta.getHeader('Content-Type')
+    )
     resposta.send(
-        JSON.stringify(produtos)
+        serializador.serializar(produtos)
     )
 })
 
@@ -35,14 +41,100 @@ roteador.get('/', async (requisicao, resposta) => {
 // CRIAR PRODUTOS
 //-------------------------------------------------------------
 
-roteador.post('/', (requisicao, resposta) => {
-    const idFornecedor = requisicao.params.idFornecedor;
-    const corpo = requisicao.body;
+roteador.post('/', async (requisicao, resposta, next) => {
 
-    // The Object.assign() method copies all enumerable own properties from one or more source objects to a target object. It returns the modified target object.
-    const dados = Object.assign({}, corpo, { fornecedor: idFornecedor });
+    try {
+        // requisicao.fornecedor é um dado enviado pelo método verificarFornecedor() dentro de "fornecedores/index.js"
+        const idFornecedor = requisicao.fornecedor.id;
+        const corpo = requisicao.body;
+
+        // The Object.assign() method copies all enumerable own properties from one or more source objects to a target object. It returns the modified target object.
+        const dados = Object.assign({}, corpo, { fornecedor: idFornecedor });
+
+        const produto = new Produto(dados);
+        await produto.criar();
+        const serializador = new Serializador(
+            resposta.getHeader('Content-Type')
+        )
+        resposta.status(201);
+        resposta.send(
+            serializador.serializar(produto)
+        );
+    } catch (erro) {
+        next(erro);
+    }
 
 })
+
+//-------------------------------------------------------------
+// APAGAR PRODUTOS
+//-------------------------------------------------------------
+roteador.delete('/:id', async (requisicao, resposta) => {
+    // requisicao.fornecedor é um dado enviado pelo método verificarFornecedor() dentro de "fornecedores/index.js"
+    const dados = {
+        id: requisicao.params.id,
+        fornecedor: requisicao.fornecedor.id
+    }
+
+    const produto = new Produto(dados);
+    await produto.apagar();
+    resposta.status(204);
+    resposta.end();
+})
+
+//-------------------------------------------------------------
+// listar produto específico
+//-------------------------------------------------------------
+roteador.get('/:id', async (requisicao, resposta, next) => {
+
+    try {
+        // requisicao.fornecedor é um dado enviado pelo método verificarFornecedor() dentro de "fornecedores/index.js"
+        const dados = {
+            id: requisicao.params.id,
+            fornecedor: requisicao.fornecedor.id
+        }
+        const produto = new Produto(dados);
+        await produto.carregar();
+        const serializador = new Serializador(
+            resposta.getHeader('Content-Type'),
+            ['preco', 'estoque', 'fornecedor', 'dataCriacao', 'dataAtualizacao', 'versao']
+        )
+        resposta.send(
+            serializador.serializar(produto)
+        )
+    } catch (erro) {
+        next(erro);
+    }
+
+})
+
+//-------------------------------------------------------------
+// Atualizar produto
+//-------------------------------------------------------------
+roteador.put('/:id', async (requisicao, resposta, next) => {
+
+    try {
+        // The Object.assign() method copies all enumerable own properties from one or more source objects to a target object. It returns the modified target object.
+        const dados = Object.assign(
+            {},
+            requisicao.body,
+            {
+                id: requisicao.params.id,
+                fornecedor: requisicao.fornecedor.id
+            }
+        )
+        const produto = new Produto(dados);
+        await produto.atualizar();
+        resposta.status(204);
+        resposta.end();
+    } catch(erro) {
+        next(erro);
+
+    }
+
+})
+
+
 
 
 //-------------------------------------------------------------

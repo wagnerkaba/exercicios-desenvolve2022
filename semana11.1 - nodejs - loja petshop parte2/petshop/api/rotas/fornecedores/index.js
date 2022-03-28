@@ -102,7 +102,38 @@ roteador.delete('/:idFornecedor', async (requisicao, resposta, next) => {
 //-------------------------------------------------------------
 
 const roteadorProdutos = require('./produtos');
-roteador.use('/:idFornecedor/produtos', roteadorProdutos);
+
+//-------------------------------------------------------------
+// Middleware para verificar se fornecedor existe
+// Quando o cliente acessa a rota de produtos, ele tem que indicar o id do fornecedor do produto
+// Por exemplo: localhost:3000/api/fornecedores/75/produtos/
+// No caso acima, o id do fornecedor é 75
+// Se o cliente fornecer um id que não existe, vai causar erro
+// Assim, o middleware abaixo serve para tratar corretamente o erro, caso o cliente envie um id de fornecedor inexistente
+//-------------------------------------------------------------
+const verificarFornecedor = async (requisicao, resposta, next) => {
+    try {
+        const id = requisicao.params.idFornecedor;
+        const fornecedor = new Fornecedor({id:id});
+
+        // verifica se o fornecedor existe
+        await fornecedor.carregar();
+
+        // se o fornecedor existe e foi carregado, então ele é inserido na requisição para eventualmente ser utilizado
+        // dessa forma, se for necessário alguma informação do fornecedor no futuro, não será preciso carregá-lo na memória novamente
+        requisicao.fornecedor = fornecedor;
+        next();
+    } catch (erro){
+        next(erro);
+    }
+
+
+}
+
+// Sintaxe de app.use: app.use([path,] callback [, callback...])
+// You can provide multiple callback functions that behave just like middleware, except that these callbacks can invoke next('route') to bypass the remaining route callback(s). You can use this mechanism to impose pre-conditions on a route, then pass control to subsequent routes if there is no reason to proceed with the current route.
+// https://expressjs.com/en/api.html#app.use
+roteador.use('/:idFornecedor/produtos', verificarFornecedor, roteadorProdutos);
 
 module.exports = roteador;
 

@@ -3,7 +3,9 @@ const ValorNaoSuportado = require('./erros/ValorNaoSuportado');
 // para instalar jsontoxml: npm install jsontoxml
 const jsontoxml = require('jsontoxml');
 
-
+//__________________________________________________________________________
+//                  CLASSE SERIALIZADOR
+//__________________________________________________________________________
 // Serializador serve para capturar os dados a serem enviados para o cliente e convertê-los em um formato específico que o cliente deseja.
 // Por exemplo, se o cliente deseja que os dados sejam enviados por json, o serializador converte os dados para json.
 //Serialization is the process of converting an object into a stream of bytes to store the object or transmit it to memory, a database, or a file. Its main purpose is to save the state of an object in order to be able to recreate it when needed. The reverse process is called deserialization.
@@ -84,7 +86,7 @@ class Serializador {
 }
 
 //__________________________________________________________________________
-//                  CLASSE SERIALIZADOR FORNECEODOR
+//                  CLASSE SERIALIZADOR FORNECEDOR
 //__________________________________________________________________________
 // Classe que cria um Serializador com propriedades específicas para fornecedor
 // Este é um exemplo do Design Pattern Template Method
@@ -112,6 +114,24 @@ class SerializadorFornecedor extends Serializador {
 }
 
 //__________________________________________________________________________
+//                  CLASSE SERIALIZADOR PRODUTO
+//  Para entender melhor, veja os comentários em SERIALIZADOR FORNECEDOR
+//__________________________________________________________________________
+class SerializadorProduto extends Serializador{
+    constructor (contentType, camposExtras){
+        super();
+        this.contentType = contentType;
+        this.camposPublicos = [
+            'id',
+            'titulo'
+        ].concat(camposExtras || []);
+        this.tagSingular = 'produto';
+        this.tagPlural = 'produtos';
+    }
+}
+
+
+//__________________________________________________________________________
 //                  SERIALIZADOR ERRO
 //__________________________________________________________________________
 // Classe que cria um Serializador com propriedades específicas para mensagens de erro
@@ -133,5 +153,6 @@ module.exports = {
     Serializador: Serializador,
     SerializadorFornecedor: SerializadorFornecedor,
     SerializadorErro: SerializadorErro, 
+    SerializadorProduto: SerializadorProduto,
     formatosAceitos: ['application/json', 'application/xml']
 }
