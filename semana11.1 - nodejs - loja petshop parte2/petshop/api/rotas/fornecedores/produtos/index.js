@@ -56,6 +56,16 @@ roteador.post('/', async (requisicao, resposta, next) => {
         const serializador = new Serializador(
             resposta.getHeader('Content-Type')
         )
+        // coloca no header da resposta a versão do produto
+        // The ETag (or entity tag) HTTP response header is an identifier for a specific version of a resource.
+        resposta.set('ETag', produto.versao);
+
+        //formata a data de atualização do produto para colocar no header depois
+        const timestamp = (new Date(produto.dataAtualizacao)).getTime();
+        // coloca no header da resposta, o momento da ultima atualizacao do produto
+        resposta.set('Last-Modified', timestamp);
+        // coloca no header a url para maiores detalhes sobre o produto
+        resposta.set('Location', `/api/fornecedores/${produto.fornecedor}/produtos/${produto.id}`)
         resposta.status(201);
         resposta.send(
             serializador.serializar(produto)
@@ -99,6 +109,16 @@ roteador.get('/:id', async (requisicao, resposta, next) => {
             resposta.getHeader('Content-Type'),
             ['preco', 'estoque', 'fornecedor', 'dataCriacao', 'dataAtualizacao', 'versao']
         )
+
+        // coloca no header da resposta a versão do produto
+        // The ETag (or entity tag) HTTP response header is an identifier for a specific version of a resource.
+        resposta.set('ETag', produto.versao);
+
+        //formata a data de atualização do produto para colocar no header depois
+        const timestamp = (new Date(produto.dataAtualizacao)).getTime();
+        // coloca no header da resposta, o momento da ultima atualizacao do produto
+        resposta.set('Last-Modified', timestamp);
+
         resposta.send(
             serializador.serializar(produto)
         )
@@ -125,6 +145,21 @@ roteador.put('/:id', async (requisicao, resposta, next) => {
         )
         const produto = new Produto(dados);
         await produto.atualizar();
+
+        // carrega o produto para pegar a data de atualização após produto.atualizar()
+        await produto.carregar();
+
+        //formata a data de atualização do produto para colocar no header
+        const timestamp = (new Date(produto.dataAtualizacao)).getTime();
+        // coloca no header da resposta, o momento da ultima atualizacao do produto
+        resposta.set('Last-Modified', timestamp);
+
+        // coloca no header da resposta a versão do produto
+        // The ETag (or entity tag) HTTP response header is an identifier for a specific version of a resource.
+        resposta.set('ETag', produto.versao);
+
+
+
         resposta.status(204);
         resposta.end();
     } catch (erro) {
@@ -148,10 +183,23 @@ roteador.post('/:id/diminuir-estoque', async (requisicao, resposta, next) => {
         await produto.carregar();
         produto.estoque = produto.estoque - requisicao.body.quantidade;
         await produto.diminuirEstoque();
+
+        // carrega o produto para pegar a data de atualização após produto.diminuirEstoque()
+        await produto.carregar();
+
+        //formata a data de atualização do produto para colocar no header
+        const timestamp = (new Date(produto.dataAtualizacao)).getTime();
+        // coloca no header da resposta, o momento da ultima atualizacao do produto
+        resposta.set('Last-Modified', timestamp);
+
+        // coloca no header da resposta a versão do produto
+        // The ETag (or entity tag) HTTP response header is an identifier for a specific version of a resource.
+        resposta.set('ETag', produto.versao);
+        
         resposta.status(204);
         resposta.end();
 
-    } catch (erro){
+    } catch (erro) {
         next(erro);
     }
 

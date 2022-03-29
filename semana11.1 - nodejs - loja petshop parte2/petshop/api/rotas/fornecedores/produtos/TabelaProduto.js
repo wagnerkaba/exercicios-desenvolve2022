@@ -14,13 +14,17 @@ const instancia = require('../../../banco-de-dados');
 //------------------------------------------------------
 
 module.exports = {
-    listar (idFornecedor) {
+
+    // por padrão, critérios é um objeto vazio
+    // porém é possível passar outros critérios. 
+    // Por exemplo, o método que calcula reposição de estoque utiliza outros critérios (vide "fornecedores/index.js")
+    listar (idFornecedor, criterios = {}) {
+
+        criterios.fornecedor = idFornecedor;
         //o método listar deve listar apenas os produtos do fornecedor com idFornecedor
         //sobre "raw:true", vide comentários em pegarPorID
         return Modelo.findAll({
-            where: {
-                fornecedor: idFornecedor
-            },
+            where: criterios,
             raw: true
         });
     },

@@ -2,6 +2,7 @@ const roteador = require('express').Router();
 const TabelaFornecedor = require('./TabelaFornecedor');
 const Fornecedor = require('./Fornecedor');
 const SerializadorFornecedor = require('../../Serializador').SerializadorFornecedor;
+const TabelaProduto = require('./produtos/TabelaProduto');
 
 roteador.get('/', async (requisicao, resposta) => {
     const resultados = await TabelaFornecedor.listar();
@@ -98,6 +99,27 @@ roteador.delete('/:idFornecedor', async (requisicao, resposta, next) => {
 })
 
 //-------------------------------------------------------------
+// CALCULA REPOSIÇÃO DE ESTOQUE
+// controller para fornecedores que calcula quantos produtos de um determinado fornecedor precisam de reposição de estoque
+//-------------------------------------------------------------
+
+roteador.post('/:idFornecedor/calcular-reposicao-de-estoque', async (requisicao, resposta, proximo) => {
+    try {
+        const fornecedor = new Fornecedor({ id: requisicao.params.idFornecedor })
+        await fornecedor.carregar()
+        const produtos = await TabelaProduto.listar(fornecedor.id, { estoque: 0 })
+        resposta.send({
+            mensagem: `${produtos.length} precisam de reposição de estoque`
+        })
+    } catch (erro) {
+        proximo(erro)
+    }
+})
+
+
+
+
+//-------------------------------------------------------------
 // ROTA PARA PRODUTOS
 //-------------------------------------------------------------
 
@@ -114,7 +136,7 @@ const roteadorProdutos = require('./produtos');
 const verificarFornecedor = async (requisicao, resposta, next) => {
     try {
         const id = requisicao.params.idFornecedor;
-        const fornecedor = new Fornecedor({id:id});
+        const fornecedor = new Fornecedor({ id: id });
 
         // verifica se o fornecedor existe
         await fornecedor.carregar();
@@ -123,7 +145,7 @@ const verificarFornecedor = async (requisicao, resposta, next) => {
         // dessa forma, se for necessário alguma informação do fornecedor no futuro, não será preciso carregá-lo na memória novamente
         requisicao.fornecedor = fornecedor;
         next();
-    } catch (erro){
+    } catch (erro) {
         next(erro);
     }
 
