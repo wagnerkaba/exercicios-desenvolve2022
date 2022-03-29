@@ -11,9 +11,12 @@ const SerializadorErro = require('./Serializador').SerializadorErro;
 // indicação do local em que está o diretório config
 process.env["NODE_CONFIG_DIR"] = "../config/";
 const config = require('config');
-const roteador = require('./rotas/fornecedores');
+
 
 app.use(bodyParser.json());
+
+
+
 
 
 
@@ -38,7 +41,7 @@ app.use((requisicao, resposta, next) => {
 
     // verifica se o formato requisitado pelo cliente existe dentro de formatosAceitos
     // se "formatosAceitos.indexOf" for igual a -1, isso significa que o formato requisitado não é aceito
-    if (formatosAceitos.indexOf(formatoRequisitado) === -1){
+    if (formatosAceitos.indexOf(formatoRequisitado) === -1) {
 
         resposta.status(406);
         resposta.end();
@@ -54,6 +57,26 @@ app.use((requisicao, resposta, next) => {
 
 })
 
+//----------------------------------------------------------------------------
+// Middeware para alterar o header: Access-Control-Allow-Origin. 
+// Isso é importante para Cross-Origin Resource Sharing (CORS)
+// Para saber mais: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin
+// Para entender sobre middleware, veja a pasta "api-middleware" nesta semana 10.
+//----------------------------------------------------------------------------
+
+app.use((requisicao, resposta, next) => {
+    resposta.set('Access-Control-Allow-Origin', '*');
+    next();
+})
+
+
+
+
+//----------------------------------------------------------------------------
+// ROTEADOR
+//----------------------------------------------------------------------------
+
+const roteador = require('./rotas/fornecedores');
 app.use('/api/fornecedores', roteador);
 
 //----------------------------------------------------------------------------
@@ -67,19 +90,19 @@ app.use('/api/fornecedores', roteador);
 app.use((erro, requisicao, resposta, next) => {
     let status = 500;
 
-    if (erro instanceof NaoEncontrado){
+    if (erro instanceof NaoEncontrado) {
         status = 404;
-    } 
+    }
 
-    if (erro instanceof CampoInvalido || erro instanceof DadosNaoFornecidos){
+    if (erro instanceof CampoInvalido || erro instanceof DadosNaoFornecidos) {
         status = 400;
 
-    } 
+    }
 
     if (erro instanceof ValorNaoSuportado) {
         status = 406;
     }
-    
+
     const serializadorErro = new SerializadorErro(
         resposta.getHeader('Content-Type')
     );

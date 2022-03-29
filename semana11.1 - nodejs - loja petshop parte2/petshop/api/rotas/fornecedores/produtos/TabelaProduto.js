@@ -2,6 +2,7 @@
 const { atualizar } = require('../TabelaFornecedor');
 const Modelo = require('./ModeloTabelaProduto');
 const instancia = require('../../../banco-de-dados');
+const NaoEncontrado = require('../../../erros/NaoEncontrado');
 
 //------------------------------------------------------
 // Este módulo funciona como DAO (Data access object)
@@ -53,7 +54,7 @@ module.exports = {
             raw: true
         });
         if(!encontrado){
-            throw new Error('Produto não encontrado')
+            throw new NaoEncontrado('Produto');
         }
         return encontrado;
     },

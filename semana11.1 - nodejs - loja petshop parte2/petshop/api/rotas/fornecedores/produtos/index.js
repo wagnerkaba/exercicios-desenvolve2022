@@ -19,6 +19,49 @@ const Tabela = require('./TabelaProduto')
 const Produto = require('./Produto');
 const Serializador = require('../../../Serializador').SerializadorProduto;
 
+//-----------------------------------------------------------------------
+// HTTP OPTIONS method para a url '/'
+// -------------------
+// The HTTP OPTIONS method requests permitted communication options for a given URL or server.
+// Para saber mais: https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/OPTIONS
+// Isso é importante para Cross-Origin Resource Sharing (CORS)
+//-----------------------------------------------------------------------
+roteador.options('/', (requisicao, resposta) => {
+    resposta.set('Access-Control-Allow-Methods', 'GET, POST');
+    resposta.set('Access-Control-Allow-Headers', 'Content-Type');
+
+    resposta.status(204);
+    resposta.end();
+})
+
+//-----------------------------------------------------------------------
+// HTTP OPTIONS method para a url '/:id'
+// -------------------
+// The HTTP OPTIONS method requests permitted communication options for a given URL or server. 
+// Para saber mais: https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/OPTIONS
+// Isso é importante para Cross-Origin Resource Sharing (CORS)
+//-----------------------------------------------------------------------
+roteador.options('/:id', (requisicao, resposta) => {
+    resposta.set('Access-Control-Allow-Methods', 'DELETE, GET, HEAD, PUT');
+    resposta.set('Access-Control-Allow-Headers', 'Content-Type');
+    resposta.status(204);
+    resposta.end();
+})
+
+
+//-----------------------------------------------------------------------
+// HTTP OPTIONS method para a url '/:id/diminuir-estoque'
+// -------------------
+// The HTTP OPTIONS method requests permitted communication options for a given URL or server. 
+// Para saber mais: https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/OPTIONS
+// Isso é importante para Cross-Origin Resource Sharing (CORS)
+//-----------------------------------------------------------------------
+roteador.options('/:id/diminuir-estoque', (requisicao, resposta) => {
+    resposta.set('Access-Control-Allow-Methods', 'POST');
+    resposta.set('Access-Control-Allow-Headers', 'Content-Type');
+    resposta.status(204);
+    resposta.end();
+})
 
 
 //-------------------------------------------------------------
@@ -128,6 +171,44 @@ roteador.get('/:id', async (requisicao, resposta, next) => {
 
 })
 
+
+//-------------------------------------------------------------
+// envia apenas o head (cabeçalho da resposta)
+// The HTTP HEAD method requests the headers that would be returned if the HEAD request's URL was instead requested with the HTTP GET method. For example, if a URL might produce a large download, a HEAD request could read its Content-Length header to check the filesize without actually downloading the file.
+// Para saber mais: https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/HEAD
+//-------------------------------------------------------------
+roteador.head('/:id', async (requisicao, resposta, next) => {
+
+    try {
+        // requisicao.fornecedor é um dado enviado pelo método verificarFornecedor() dentro de "fornecedores/index.js"
+        const dados = {
+            id: requisicao.params.id,
+            fornecedor: requisicao.fornecedor.id
+        }
+        const produto = new Produto(dados);
+        await produto.carregar();
+ 
+        // coloca no header da resposta a versão do produto
+        // The ETag (or entity tag) HTTP response header is an identifier for a specific version of a resource.
+        resposta.set('ETag', produto.versao);
+
+        //formata a data de atualização do produto para colocar no header depois
+        const timestamp = (new Date(produto.dataAtualizacao)).getTime();
+        // coloca no header da resposta, o momento da ultima atualizacao do produto
+        resposta.set('Last-Modified', timestamp);
+        resposta.status(200);
+        resposta.end();
+
+    } catch (erro) {
+        next(erro);
+    }
+
+})
+
+
+
+
+
 //-------------------------------------------------------------
 // Atualizar produto
 //-------------------------------------------------------------
@@ -195,7 +276,7 @@ roteador.post('/:id/diminuir-estoque', async (requisicao, resposta, next) => {
         // coloca no header da resposta a versão do produto
         // The ETag (or entity tag) HTTP response header is an identifier for a specific version of a resource.
         resposta.set('ETag', produto.versao);
-        
+
         resposta.status(204);
         resposta.end();
 

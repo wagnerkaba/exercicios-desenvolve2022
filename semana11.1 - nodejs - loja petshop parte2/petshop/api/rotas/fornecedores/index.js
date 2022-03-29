@@ -4,6 +4,37 @@ const Fornecedor = require('./Fornecedor');
 const SerializadorFornecedor = require('../../Serializador').SerializadorFornecedor;
 const TabelaProduto = require('./produtos/TabelaProduto');
 
+
+//-----------------------------------------------------------------------
+// HTTP OPTIONS method para a url '/'
+// -------------------
+// The HTTP OPTIONS method requests permitted communication options for a given URL or server.
+// Para saber mais: https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/OPTIONS
+// Isso é importante para Cross-Origin Resource Sharing (CORS)
+//-----------------------------------------------------------------------
+roteador.options('/', (requisicao, resposta) => {
+    resposta.set('Access-Control-Allow-Methods', 'GET, POST');
+    resposta.set('Access-Control-Allow-Headers', 'Content-Type');
+
+    resposta.status(204);
+    resposta.end();
+})
+
+//-----------------------------------------------------------------------
+// HTTP OPTIONS method para a url '/:idFornecedor'
+// -------------------
+// The HTTP OPTIONS method requests permitted communication options for a given URL or server. 
+// Para saber mais: https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/OPTIONS
+// Isso é importante para Cross-Origin Resource Sharing (CORS)
+//-----------------------------------------------------------------------
+roteador.options('/:idFornecedor', (requisicao, resposta) => {
+    resposta.set('Access-Control-Allow-Methods', 'GET, PUT, DELETE');
+    resposta.set('Access-Control-Allow-Headers', 'Content-Type');
+    resposta.status(204);
+    resposta.end();
+})
+
+
 roteador.get('/', async (requisicao, resposta) => {
     const resultados = await TabelaFornecedor.listar();
     resposta.status(200);
