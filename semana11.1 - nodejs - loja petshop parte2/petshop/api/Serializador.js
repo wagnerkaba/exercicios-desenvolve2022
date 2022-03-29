@@ -104,7 +104,6 @@ class SerializadorFornecedor extends Serializador {
         this.contentType = contentType;
         this.camposPublicos = [
             'id', 
-            'empresa',
             'categoria'
         ].concat(camposExtras || []); // se camposExtras for undefined, vai causar erro. Para evitar erro, concat deve concatenar uma lista vazia caso camposExtras seja undefined
         

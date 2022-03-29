@@ -1,4 +1,4 @@
-# Visão geral do funcionamento da API
+# Síntese do que foi feito na semana 10.2
 
 Usamos uma biblioteca chamada express para criar a nossa API, também usamos a biblioteca bodyParser para gerenciar o tipo JSON da nossa aplicação.
 

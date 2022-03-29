@@ -1,4 +1,4 @@
-# API REST padronizada e escalável para cadastro de fornecedores
+# API REST padronizada e escalável para cadastro de fornecedores e produtos de um PETSHOP
 
 ## Para iniciar a API
 1. Inicie o servidor MySQL
@@ -21,5 +21,7 @@
 [Como instalar as bibliotecas](./README-BIBLIOTECAS.md)
 
 ## Visão geral do funcionamento da API
-[Visão geral de que a API é capaz de fazer](./README-funcionamento%20da%20api.md)
+* [Síntese do que foi feito na semana 10.2](./README-funcionamento%20da%20api.md)
+
+* [Síntese do que foi feito na semana 11.1](./README-funcionamento%20da%20api%202.md)
 

@@ -79,6 +79,15 @@ app.use((requisicao, resposta, next) => {
 const roteador = require('./rotas/fornecedores');
 app.use('/api/fornecedores', roteador);
 
+
+//----------------------------------------------------------------------------
+// ROTEADOR versão 2
+//----------------------------------------------------------------------------
+
+const roteadorV2 = require('./rotas/fornecedores/rotas.v2');
+app.use('/api/v2/fornecedores', roteadorV2);
+
+
 //----------------------------------------------------------------------------
 //Função que faz tratamento dos erros (error-handling middleware function)
 // Para entender sobre middleware, veja a pasta "api-middleware" nesta semana 10.
