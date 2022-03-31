@@ -1,3 +1,7 @@
+// api/models/index.js é o arquivo que gerencia todos os modelos da pasta models e é atraveś dele que o Sequelize conecta os modelos ao banco de dados de acordo com o ambiente escolhido (durante o projeto estamos trabalhando com o ambiente 'development', de desenvolvimento.
+// OBS: este código foi gerado automaticamente. Vide "aula 02.02 - Criando modelos" na pasta "notas-de-aula"
+
+
 'use strict';
 
 const fs = require('fs');
