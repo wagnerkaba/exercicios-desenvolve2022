@@ -2,7 +2,7 @@
 
 
 
-[00:00] Na pasta de arquivos que deixamos pronta para você, [vai ter esse PDF aqui que é o diagrama relacional do banco que usaremos no nosso projeto da escola de inglês.](./Diagrama%20Relacional%20-%20escola%20de%20ingl%C3%AAs.pdf)
+[00:00] Na pasta de arquivos que deixamos pronta para você, vai ter essa imagem aqui que é o diagrama relacional do banco que usaremos no nosso projeto da escola de inglês.![Diagrama Relacional](./Diagrama%20Relacional%20-%20escola%20de%20ingl%C3%AAs.jpg)
 
 
 
@@ -27,7 +27,21 @@
 [04:04] As linhas de código do *test* não precisamos preencher porque não vamos trabalhar, só trabalharemos com desenvolvimento por enquanto. O outro arquivo que o Sequelize criou quando demos o comando `sequelize-cli init`, e já tem código nele, é o arquivo index.js, que está dentro da pasta modelo. Não é o `index.js`, que criamos para subir o servidor.
 
 ```
-use strict';const fs = require('fs');const path = require('path');const Sequelize = require('sequelize');const basename = path.basename(__filename);const env = process.env.NODE_ENV || 'development';const config = require(__dirname + '/../config/config.json')[env];const db = {};let sequelize;if (config.use_env_variable) {  sequelize = new Sequelize(process.env[config.use_env_variable], config);} else {  sequelize = new Sequelize(config.database, config.username, config.password, config);}
+use strict';
+const fs = require('fs');
+const path = require('path');
+const Sequelize = require('sequelize');
+const basename = path.basename(__filename);
+const env = process.env.NODE_ENV || 'development';
+const config = require(__dirname + '/../config/config.json')[env];
+const db = {};
+
+let sequelize;
+if (config.use_env_variable) {  
+    sequelize = new Sequelize(process.env[config.use_env_variable], config);
+} else {  
+        sequelize = new Sequelize(config.database, config.username, config.password, config);
+}
 ```
 
 [04:29] Esse arquivo vai gerenciar todos os modelos do banco. Por enquanto, não temos modelo nenhum, começaremos a criá-los em seguida, de acordo com nossas tabelas. Por enquanto não temos modelos, mas quando criarmos, eles entrarão na pasta index.js e o trabalho que esse arquivo index, que já veio pronto, vai fazer, é gerenciar esses modelos.

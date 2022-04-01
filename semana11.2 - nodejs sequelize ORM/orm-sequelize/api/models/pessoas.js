@@ -1,3 +1,5 @@
+// OBS: parte deste código foi gerado automaticamente. Vide "aula 02.02 - Criando modelos" na pasta "notas-de-aula"
+
 'use strict';
 const {
   Model
@@ -11,6 +13,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Pessoas.hasMany(models.Turmas, {foreignKey: 'docente_id'});
+      Pessoas.hasMany(models.Matriculas, {foreignKey: 'estudante_id'});
     }
   }
   Pessoas.init({
