@@ -6,6 +6,8 @@ API para um sistema de controle de alunos e turmas de uma escola de inglês que 
 
  A aplicação está organizada no padrão MVC.
 
+ Para iniciar a API: `npm start`
+
 
 ## Tecnologias
 * NodeJS
