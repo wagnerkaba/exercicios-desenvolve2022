@@ -16,6 +16,18 @@ router.put('/pessoas/:idPessoa', PessoaController.atualizaPessoa);
 
 router.delete('/pessoas/:idPessoa', PessoaController.apagaPessoa);
 
+//---------------------------------------------------------------
+//      MATRICULAS
+//---------------------------------------------------------------
+router.get('/pessoas/:estudanteId/matricula/:matriculaId', PessoaController.pegaUmaMatricula);
+router.post('/pessoas/:estudanteId/matricula', PessoaController.criaMatricula);
+router.put('/pessoas/:estudanteId/matricula/:matriculaId', PessoaController.atualizaMatricula);
+router.delete('/pessoas/:estudanteId/matricula/:matriculaId', PessoaController.apagaMatricula);
+
+
+
+
+
 
 
 module.exports = router;
