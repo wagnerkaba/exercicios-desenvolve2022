@@ -24,6 +24,8 @@ module.exports = (sequelize, DataTypes) => {
     data_inicio: DataTypes.DATEONLY
   }, {
     sequelize,
+    paranoid: true, // A paranoid table is one that, when told to delete a record, it will not truly delete it. 
+
     modelName: 'Turmas',
   });
   return Turmas;

@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.STRING
   }, {
     sequelize,
+    paranoid: true, // A paranoid table is one that, when told to delete a record, it will not truly delete it. 
     modelName: 'Matriculas',
   });
   return Matriculas;
