@@ -1,4 +1,4 @@
-# API para um sistema de controle de alunos e turmas de uma escola de inglês
+# API para um sistema de controle de alunos e turmas de uma escola de inglês - PARTE 1
 
 API para um sistema de controle de alunos e turmas de uma escola de inglês que utiliza o ORM Sequelize, um mapeador de objeto relacional.
 
