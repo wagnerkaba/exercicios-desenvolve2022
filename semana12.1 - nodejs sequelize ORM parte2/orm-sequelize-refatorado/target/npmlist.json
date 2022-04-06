@@ -1,0 +1,1 @@
+{"version":"1.0.0","name":"orm-sequelize","dependencies":{"body-parser":{"version":"1.19.2"},"express":{"version":"4.17.3"},"mysql2":{"version":"2.3.3"},"path":{"version":"0.12.7"},"sequelize-cli":{"version":"6.4.1"},"sequelize":{"version":"6.17.0"}}}
