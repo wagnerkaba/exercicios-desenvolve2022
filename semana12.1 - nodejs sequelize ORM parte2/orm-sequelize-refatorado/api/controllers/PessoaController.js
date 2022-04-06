@@ -1,13 +1,12 @@
-const database = require('../models');
-const Sequelize = require('sequelize');
+const { PessoasServices } = require('../services');
+const pessoasServices = new PessoasServices();
+
 
 class PessoaController {
     static async pegaTodasAsPessoas(req, res) {
 
         try {
-            //no arquivo "models/pessoas.js" foi definido que por padrão, findAll busca apenas pessoas ativas 
-            //por esse motivo, agora é preciso adicionar "scope('todos')" para buscar pessoas ativas e inativas 
-            const todasAsPessoas = await database.Pessoas.scope('todos').findAll();
+            const todasAsPessoas = await pessoasServices.pegaTodosOsRegistros();
             return res.status(200).json(todasAsPessoas);
         } catch (error) {
             return res.status(500).json(error.message);
@@ -19,7 +18,7 @@ class PessoaController {
     static async pegaPessoasAtivas(req, res) {
 
         try {
-            const pessoasAtivas = await database.Pessoas.findAll();
+            const pessoasAtivas = await pessoasServices.pegaRegistrosAtivos();
             return res.status(200).json(pessoasAtivas);
         } catch (error) {
             return res.status(500).json(error.message);
@@ -104,34 +103,7 @@ class PessoaController {
     static async cancelaPessoa(req, res) {
         const { estudanteId } = req.params;
         try {
-
-            // faz as operações dentro de um transaction: https://en.wikipedia.org/wiki/Database_transaction
-            // Para testar se a transação está funcionando, troque a variavel estudanteId dentro de Matriculas.update por uma variavel que não existe (por exemplo "x")
-            // vide nota de aula 04.03 para saber mais  sobre como testar a transação
-            await database.sequelize.transaction(async transacao => {
-
-                // marca a pessoa como desativada
-                await database.Pessoas.scope('todos')
-                    .update({ ativo: false }, 
-                        //atenção: transaction deve estar no segundo parâmetro.
-                        //For methods that take values, like .create, .update(), etc. transaction should be passed to the option in the second argument. (vide https://sequelize.org/docs/v6/other-topics/transactions/#usage-with-other-sequelize-methods)
-                        //a professora colocou transaction como um terceiro parâmetro. Por causa disso, o transaction não estava fazendo rollback quando ocorria um erro.
-                        { 
-                            where: { id: Number(estudanteId) }, 
-                            transaction: transacao
-                        }
-                    );
-
-                
-                // todas as matriculas do aluno desativado são canceladas
-                await database.Matriculas
-                     .update({ status: 'cancelado' }, {
-                         where: { estudante_id: Number(estudanteId) },
-                         transaction: transacao
-                    } );
-
-            })
-
+            await pessoasServices.cancelaPessoaEMatriculas(Number(estudanteId));
             return res.status(200).json({ mensagem: `Matrículas referente estudante ${estudanteId} canceladas` });
 
 
@@ -145,24 +117,8 @@ class PessoaController {
     static async reverteCancelaPessoa(req, res) {
         const { estudanteId } = req.params;
         try {
-
-            await database.sequelize.transaction(async transacao => {
-
-                await database.Pessoas.scope('todos')
-                    .update({ ativo: true }, { 
-                        where: { id: Number(estudanteId) }, 
-                        transaction: transacao
-                    });
-
-                
-                await database.Matriculas
-                     .update({ status: 'confirmado' }, {
-                         where: { estudante_id: Number(estudanteId) },
-                         transaction: transacao
-                    } );
-
-                return res.status(200).json({ mensagem: `Cancelamento de matrículas referente ao estudante ${estudanteId} foi REVERTIDO` });
-            })
+            await pessoasServices.reverteCancelaPessoaEMatriculas(Number(estudanteId));
+            return res.status(200).json({ mensagem: `Cancelamento de matrículas referente ao estudante ${estudanteId} foi REVERTIDO` });
 
         } catch (error) {
             return res.status(500).json(error.message);

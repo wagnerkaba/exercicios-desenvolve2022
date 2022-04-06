@@ -6,9 +6,9 @@ const router = require('express').Router();
 const PessoaController = require('../controllers/PessoaController');
 
 
-router.get('/pessoas', PessoaController.pegaPessoasAtivas);
+router.get('/pessoas', PessoaController.pegaTodasAsPessoas);
 
-router.get('/pessoas/todos', PessoaController.pegaTodasAsPessoas);
+router.get('/pessoas/ativas', PessoaController.pegaPessoasAtivas);
 
 router.get('/pessoas/:idPessoa', PessoaController.pegaUmaPessoa);
 
