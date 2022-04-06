@@ -60,7 +60,10 @@ class PessoaController {
         const { idPessoa } = req.params;
         const novasInfos = req.body;
         try {
-            await database.Pessoas.update(novasInfos, { where: { id: Number(idPessoa) } });
+            //no arquivo "models/pessoas.js" foi definido que por padrão, o sistema busca apenas pessoas ativas 
+            //por esse motivo, agora é preciso adicionar "scope('todos')" para buscar pessoas ativas e inativas
+            //se não colocar esse scope, o sistema não consegue mudar um aluno desativado para ativo 
+            await database.Pessoas.scope('todos').update(novasInfos, { where: { id: Number(idPessoa) } });
 
             //no arquivo "models/pessoas.js" foi definido que por padrão, o sistema busca apenas pessoas ativas 
             //por esse motivo, agora é preciso adicionar "scope('todos')" para buscar pessoas ativas e inativas 
@@ -97,9 +100,74 @@ class PessoaController {
         }
     }
 
+    // O cliente gostaria que, uma vez que o cadastro de um estudante fosse desativado, todas as matrículas relativas a este estudante automaticamente passassem a constar como “canceladas”.
+    static async cancelaPessoa(req, res) {
+        const { estudanteId } = req.params;
+        try {
+
+            // faz as operações dentro de um transaction: https://en.wikipedia.org/wiki/Database_transaction
+            // Para testar se a transação está funcionando, troque a variavel estudanteId dentro de Matriculas.update por uma variavel que não existe (por exemplo "x")
+            // vide nota de aula 04.03 para saber mais  sobre como testar a transação
+            await database.sequelize.transaction(async transacao => {
+
+                // marca a pessoa como desativada
+                await database.Pessoas.scope('todos')
+                    .update({ ativo: false }, 
+                        //atenção: transaction deve estar no segundo parâmetro.
+                        //For methods that take values, like .create, .update(), etc. transaction should be passed to the option in the second argument. (vide https://sequelize.org/docs/v6/other-topics/transactions/#usage-with-other-sequelize-methods)
+                        //a professora colocou transaction como um terceiro parâmetro. Por causa disso, o transaction não estava fazendo rollback quando ocorria um erro.
+                        { 
+                            where: { id: Number(estudanteId) }, 
+                            transaction: transacao
+                        }
+                    );
+
+                
+                // todas as matriculas do aluno desativado são canceladas
+                await database.Matriculas
+                     .update({ status: 'cancelado' }, {
+                         where: { estudante_id: Number(estudanteId) },
+                         transaction: transacao
+                    } );
+
+            })
+
+            return res.status(200).json({ mensagem: `Matrículas referente estudante ${estudanteId} canceladas` });
 
 
+        } catch (error) {
+            return res.status(500).json(error.message);
+        }
+    }
 
+
+    // criei este método para reverter o cancelamento feito pelo método cancelaPessoa
+    static async reverteCancelaPessoa(req, res) {
+        const { estudanteId } = req.params;
+        try {
+
+            await database.sequelize.transaction(async transacao => {
+
+                await database.Pessoas.scope('todos')
+                    .update({ ativo: true }, { 
+                        where: { id: Number(estudanteId) }, 
+                        transaction: transacao
+                    });
+
+                
+                await database.Matriculas
+                     .update({ status: 'confirmado' }, {
+                         where: { estudante_id: Number(estudanteId) },
+                         transaction: transacao
+                    } );
+
+                return res.status(200).json({ mensagem: `Cancelamento de matrículas referente ao estudante ${estudanteId} foi REVERTIDO` });
+            })
+
+        } catch (error) {
+            return res.status(500).json(error.message);
+        }
+    }
 
 
     //---------------------------------------------------------------
@@ -142,13 +210,13 @@ class PessoaController {
     }
     // O cliente quer poder consultar as matrículas por turma e saber quais delas estão lotadas, para organizar melhor as matrículas.
     static async pegaTurmasLotadas(req, res) {
-        const lotacaoTurma = 2; //se a turma tiver dois alunos, ela está lotada
+        const lotacaoTurma = 2; //lotacaoTurma = numero de alunos para sala ser considerada lotada
         try {
             const turmasLotadas = await database.Matriculas
                 .findAndCountAll({
                     where: {
                         status: 'confirmado'
-                    }, 
+                    },
                     attributes: ['turma_id'],
                     group: ['turma_id'],
                     //sequelize.literal allows you to directly insert arbitrary content into the query 
