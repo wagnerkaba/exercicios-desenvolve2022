@@ -4,7 +4,7 @@ const TurmaController = require('../controllers/TurmaController')
 
 const router = Router()
 router
- .get('/turmas', TurmaController.pegaTodasAsTurmas)
+ .get('/turmas', TurmaController.pegaTodasAsTurmas) //esta rota aceita query Strings. Veja o método pegaTodasAsTurmas() para mais detalhes.
  .get('/turmas/:id', TurmaController.pegaUmaTurma)
  .post('/turmas', TurmaController.criaTurma)
  .put('/turmas/:id', TurmaController.atualizaTurma)

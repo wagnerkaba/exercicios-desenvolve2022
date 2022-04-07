@@ -30,3 +30,7 @@ API para um sistema de controle de alunos e turmas de uma escola de inglês que 
 * Sequelize
 * [Sequelize-cli](https://www.npmjs.com/package/sequelize-cli)
 * [Path](https://nodejs.org/api/path.html)
+
+## Postman
+
+Para testar a API, utilize [este arquivo do POSTMAN](./orm-sequelize.postman_collection.json)

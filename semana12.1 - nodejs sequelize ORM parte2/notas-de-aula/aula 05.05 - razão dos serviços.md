@@ -13,3 +13,7 @@ Para manter a estrutura da aplicação organizada, é ideal que um controlador �
 ## Após a separação, a responsabilidade do serviço é se conectar aos modelos através dos métodos de query do Sequelize; já os controladores recebem as chamadas das rotas, passam para os serviços as informações necessárias e fazem os tratamentos de dados nos retornos.
 
 O controlador perdeu a responsabilidade de se conectar aos modelos; agora é encarregado de passar para o serviço correspondente as informações que ele precisa passar para a query (através dos parâmetros), receber o retorno e tratar os resultados.
+
+## Os serviços podem herdar e se conectar entre si, independente das outras camadas. Por exemplo: ProdutoServices.js pode utilizar métodos das classes FornecedorServices.js e herdar métodos a partir de uma classe Services mais genérica.
+
+Ao contrário do que acontece na relação entre controladores, entre os serviços não há problema em conectar as classes entre si e compartilhar seus métodos.

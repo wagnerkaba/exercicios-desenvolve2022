@@ -18,6 +18,17 @@ class PessoasServices extends Services {
             .findAll({ where: { ...where } });
     }
 
+
+    // criei este método para conseguir usar o scope "todos"
+    // o método super.pegaUmRegistro não tem scope "todos". Dessa forma, não consegue buscar por pessoas desativadas.
+    async pegaQualquerPessoa(where = {}) {
+
+        return database[this.nomeDoModelo]
+            .scope('todos')
+            .findOne({ where: { ...where } });
+    }
+
+
     //para maiores informações sobre transactions, vide "pessoaController.js" na pasta "orm-sequelize" (sem refatoração)
     async cancelaPessoaEMatriculas(estudanteId) {
         return database.sequelize.transaction(async transacao => {
@@ -27,14 +38,14 @@ class PessoasServices extends Services {
                 { status: 'cancelado' }, { estudante_id: estudanteId }, { transaction: transacao });
         })
     }
-    
+
     // criei este método para conseguir usar o scope "todos"
     // o método super.atualizaRegistro não tem scope "todos". Dessa forma, não consegue atualizar pessoas desativadas.
-    async atualizaQualquerPessoa(dadosAtualizados, id, transacao = {}){
+    async atualizaQualquerPessoa(dadosAtualizados, id, transacao = {}) {
         return database[this.nomeDoModelo]
             .scope('todos')
             .update(dadosAtualizados, {
-                where: {id: id},
+                where: { id: id },
                 ...transacao
             });
     }

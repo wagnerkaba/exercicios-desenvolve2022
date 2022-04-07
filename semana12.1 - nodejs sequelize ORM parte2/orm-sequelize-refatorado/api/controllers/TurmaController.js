@@ -1,9 +1,17 @@
-const database = require('../models');
+const { TurmasServices } = require('../services');
 const Sequelize = require('sequelize');
 // Sequelize Operators: https://sequelize.org/docs/v6/core-concepts/model-querying-basics/#operators
 const Op = Sequelize.Op;
 
+const turmasServices = new TurmasServices();
+
 class TurmaController {
+
+
+  // a rota "/turmas" aceita query strings
+  // por exemplo: localhost:3000/turmas?data_inicial=2020-01-01&data_final=2021-01-31
+  // no caso acima, serão exibidas as turmas que tiverem data_inicio no intervalo "data_inicial=2020-01-01&data_final=2021-01-31"
+  // no caso de "localhost:3000/turmas" (sem query strings), todas as turmas serão exibidas
   static async pegaTodasAsTurmas(req, res) {
 
     // data_inicial e data_final são usadas para filtrar turmas
@@ -38,7 +46,7 @@ class TurmaController {
 
     try {
 
-      const todasAsTurmas = await database.Turmas.findAll({ where });
+      const todasAsTurmas = await turmasServices.pegaTodosOsRegistros(where);
       return res.status(200).json(todasAsTurmas);
     } catch (error) {
       return res.status(500).json(error.message)
@@ -48,11 +56,7 @@ class TurmaController {
   static async pegaUmaTurma(req, res) {
     const { id } = req.params
     try {
-      const umaTurma = await database.Turmas.findOne({
-        where: {
-          id: Number(id)
-        }
-      })
+      const umaTurma = await turmasServices.pegaUmRegistro({id: Number(id)});
       return res.status(200).json(umaTurma)
     } catch (error) {
       return res.status(500).json(error.message)
@@ -62,10 +66,10 @@ class TurmaController {
   static async criaTurma(req, res) {
     const novaTurma = req.body
     try {
-      const novaTurmaCriada = await database.Turmas.create(novaTurma)
-      return res.status(200).json(novaTurmaCriada)
+      const novaTurmaCriada = await turmasServices.criaRegistro(novaTurma);
+      return res.status(200).json(novaTurmaCriada);
     } catch (error) {
-      return res.status(500).json(error.message)
+      return res.status(500).json(error.message);
     }
   }
 
@@ -73,11 +77,10 @@ class TurmaController {
     const { id } = req.params
     const novasInfos = req.body
     try {
-      await database.Turmas.update(novasInfos, { where: { id: Number(id) } })
-      const turmaAtualizada = await database.Turmas.findOne({ where: { id: Number(id) } })
-      return res.status(200).json(turmaAtualizada)
+      await turmasServices.atualizaRegistro(novasInfos, Number(id) );
+      return res.status(200).json({ mensagem: `id ${id} atualizado` });
     } catch (error) {
-      return res.status(500).json(error.message)
+      return res.status(500).json(error.message);
     }
   }
 
@@ -86,11 +89,11 @@ class TurmaController {
   static async apagaTurma(req, res) {
     const { id } = req.params
     try {
-      await database.Turmas.destroy({ where: { id: Number(id) } })
-      return res.status(200).json({ mensagem: `id ${id} deletado` })
+      await turmasServices.apagaRegistro(Number(id));
+      return res.status(200).json({ mensagem: `id ${id} deletado` });
 
     } catch (error) {
-      return res.status(500).json(error.message)
+      return res.status(500).json(error.message);
     }
   }
 
@@ -99,13 +102,13 @@ class TurmaController {
   static async restauraTurma(req, res) {
     const { id } = req.params
     try {
-      await database.Turmas.restore({ where: { id: Number(id) } })
-      return res.status(200).json({ mensagem: `id ${id} restaurado` })
+      await turmasServices.restauraRegistro(Number(id));
+      return res.status(200).json({ mensagem: `id ${id} restaurado` });
     } catch (error) {
-      return res.status(500).json(error.message)
+      return res.status(500).json(error.message);
     }
   }
 
 }
 
-module.exports = TurmaController
+module.exports = TurmaController;

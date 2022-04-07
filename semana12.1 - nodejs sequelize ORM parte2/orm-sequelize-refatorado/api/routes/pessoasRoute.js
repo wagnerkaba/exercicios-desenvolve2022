@@ -26,33 +26,4 @@ router.post('/pessoas/:estudanteId/descancela', PessoaController.reverteCancelaP
 
 
 
-
-
-
-//---------------------------------------------------------------
-//      MATRICULAS
-//---------------------------------------------------------------
-
-router.get('/pessoas/:estudanteId/matricula', PessoaController.pegaMatriculas);
-
-router.get('/pessoas/matricula/:turmaId/confirmadas', PessoaController.pegaMatriculasPorTurma);
-
-router.get('/pessoas/matricula/lotada', PessoaController.pegaTurmasLotadas);
-
-router.get('/pessoas/:estudanteId/matricula/:matriculaId', PessoaController.pegaUmaMatricula);
-
-router.post('/pessoas/:estudanteId/matricula', PessoaController.criaMatricula);
-
-router.post('/pessoas/:estudanteId/matricula/:matriculaId/restaura', PessoaController.restauraMatricula);
-
-router.put('/pessoas/:estudanteId/matricula/:matriculaId', PessoaController.atualizaMatricula);
-
-router.delete('/pessoas/:estudanteId/matricula/:matriculaId', PessoaController.apagaMatricula);
-
-
-
-
-
-
-
 module.exports = router;

@@ -1,0 +1,693 @@
+{
+	"info": {
+		"_postman_id": "d82636d1-f073-49e7-8211-f715355543f2",
+		"name": "orm-sequelize",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "pessoas",
+			"item": [
+				{
+					"name": "pegaPessoasAtivas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/pessoas",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"pessoas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pegaTodasPessoas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/pessoas/todos",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"pessoas",
+								"todos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/pessoas/5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"pessoas",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Paulo Pedra\"\r\n\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/pessoas/5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"pessoas",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/pessoas/5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"pessoas",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Leandro Bueno\",\r\n    \"ativo\": true,\r\n    \"email\": \"leandro@sandra.com\",\r\n    \"role\": \"estudante\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/pessoas",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"pessoas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "restaura",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/pessoas/1/restaura",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"pessoas",
+								"1",
+								"restaura"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cancela pessoa",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/pessoas/16/cancela",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"pessoas",
+								"16",
+								"cancela"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reverte cancela pessoa",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/pessoas/16/descancela",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"pessoas",
+								"16",
+								"descancela"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "niveis",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/niveis",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"niveis"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/niveis/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"niveis",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cria nivel",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"descr_nivel\": \"básico 1\"\r\n\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/niveis",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"niveis"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "atualiza",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"descr_nivel\": \"básico básico\"\r\n\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/niveis/4",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"niveis",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/niveis/4",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"niveis",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "restaura",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/niveis/1/restaura",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"niveis",
+								"1",
+								"restaura"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "turmas",
+			"item": [
+				{
+					"name": "findAll + queryStrings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/turmas?data_inicial=2020-01-01&data_final=2021-01-31",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"turmas"
+							],
+							"query": [
+								{
+									"key": "data_inicial",
+									"value": "2020-01-01"
+								},
+								{
+									"key": "data_final",
+									"value": "2021-01-31"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/turmas",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"turmas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/turmas/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"turmas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "criar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data_inicio\": \"2022-02-01\",\r\n    \"nivel_id\": 3,\r\n    \"docente_id\": 6\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/turmas",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"turmas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data_inicio\": \"2025-02-01\",\r\n    \"nivel_id\": 1,\r\n    \"docente_id\": 6\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/turmas/5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"turmas",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/turmas/5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"turmas",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "restaura",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/turmas/1/restaura",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"turmas",
+								"1",
+								"restaura"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "matriculas",
+			"item": [
+				{
+					"name": "pegaMatriculas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/pessoas/2/matricula",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"pessoas",
+								"2",
+								"matricula"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pegaMatriculasPorTurma",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/pessoas/matricula/4/confirmadas",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"pessoas",
+								"matricula",
+								"4",
+								"confirmadas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "busca turmas lotadas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/pessoas/matricula/lotada",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"pessoas",
+								"matricula",
+								"lotada"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pegaUmaMatricula",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/pessoas/1/matricula/5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"pessoas",
+								"1",
+								"matricula",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cria matricula",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"confirmado\",\r\n    \"turma_id\": 4\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/pessoas/1/matricula",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"pessoas",
+								"1",
+								"matricula"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "atualiza matricula",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"indefinido\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/pessoas/1/matricula/5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"pessoas",
+								"1",
+								"matricula",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/pessoas/1/matricula/6",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"pessoas",
+								"1",
+								"matricula",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "restaura",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/pessoas/1/matricula/5/restaura",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"pessoas",
+								"1",
+								"matricula",
+								"5",
+								"restaura"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
