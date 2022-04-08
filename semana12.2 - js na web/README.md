@@ -1,12 +1,17 @@
 # CEEP 
 
-CEEP é um aplicativo para criar tarefas feito em javascript.
+CEEP é um aplicativo para criar tarefas com os seguintes recursos:
 
-O aplicativo utiliza o [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API) para armazenar as tarefas, mesmo quando o browser é fechado.
+* É possível incluir e excluir tarefas, além de marcá-las como concluídas.
 
-É possível incluir e excluir tarefas, além de marcá-las como concluídas.
+* Cada tarefa possui uma data e horário.
 
-Cada tarefa possui uma data e horário e as tarefas são ordenadas pelo dia e hora.
+* As tarefas são ordenadas pelo dia e hora.
+
+* Tarefas que contenham a mesma data devem ficar agrupadas.
+
+* O aplicativo utiliza o [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API) para armazenar as tarefas, mesmo quando o browser é fechado.
+
 
 ## Tecnologias utilizadas
 * html

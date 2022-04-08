@@ -2,14 +2,18 @@ import BotaoConclui from './concluiTarefa.js';
 import BotaoDeleta from './deletaTarefa.js';
 import { carregaTarefa } from './carregaTarefa.js';
 
-
+//--------------------------------------------------
+// Cria uma tarefa a partir do momento que o usuário clica no botão "Novo item"
+//--------------------------------------------------
 export const criarTarefa = (evento) => {
     evento.preventDefault();
 
 
-    // captura 'tarefas' de localStorage 
+    // recupera os dados salvos no localStorage
     // como localStorage apenas armazena strings, é preciso tranformar 'tarefas' em um objeto por meio de JSON.parse
     const tarefas = JSON.parse(localStorage.getItem('tarefas')) || []; // VIDE NOTA DE AULA SOBRE short-circuit evaluation
+    
+    //######## CAPTURA OS DADOS DO INPUT 
     //Em document.querySelector estou indicando o que vou buscar. 
     //Repare que usamos o data-attributes para localização do elemento. As classes deixamos somente para estilo.
     const input = document.querySelector('[data-form-input]');
@@ -31,23 +35,24 @@ export const criarTarefa = (evento) => {
         concluida
     }
 
-
+    // pega os dados capturados no input e coloca no array de tarefas
     tarefas.push(dados);
 
-    // OBSERVAÇÃO 1:
-    //The Web Storage API provides mechanisms by which browsers can store key/value pairs, in a much more intuitive fashion than using cookies.
-    //The two mechanisms within Web Storage are as follows:
-    //sessionStorage maintains a separate storage area for each given origin that's available for the duration of the page session (as long as the browser is open, including page reloads and restores)
-    //localStorage does the same thing, but persists even when the browser is closed and reopened.
-    // OBSERVAÇÃO 2:
-    // o LocalStorage só aceita guardar informações no formato de strings. Por isso, é preciso tranformar dados em string através de JSON.stringfy
+    // SALVA TAREFAS NO LOCALSTORAGE
+    // OBSERVAÇÃO 1: localStorage serve para armazenar dados no browser que são persistidos mesmo quando o brower é fechado.
+    // Para saber mais: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API
+    // OBSERVAÇÃO 2: o LocalStorage só aceita guardar informações no formato de strings. Por isso, é preciso tranformar dados em string através de JSON.stringfy
     localStorage.setItem("tarefas", JSON.stringify(tarefas));
 
     input.value = " ";
 
+    //faz com que a lista de tarefas atualizada fique visível ao usuário
     carregaTarefa();
 }
 
+//--------------------------------------------------
+// Cria o elemento dom que contém cada tarefa
+//--------------------------------------------------
 export const Tarefa = ({ valor, horario, concluida }, id) => {
 
     const tarefa = document.createElement('li')
