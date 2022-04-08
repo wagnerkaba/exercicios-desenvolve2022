@@ -1,6 +1,7 @@
 import BotaoConclui from './componentes/concluiTarefa.js';
 import BotaoDeleta from './componentes/deletaTarefa.js';
 
+let tarefas = [];
 
 const criarTarefa = (evento) => {
     evento.preventDefault();
@@ -22,8 +23,20 @@ const criarTarefa = (evento) => {
     }
 
     const elementoDomTarefa = criarElementoDomTarefa(dados);
-
+    
     lista.appendChild(elementoDomTarefa);
+
+    tarefas.push(dados);
+
+    // OBSERVAÇÃO 1:
+    //The Web Storage API provides mechanisms by which browsers can store key/value pairs, in a much more intuitive fashion than using cookies.
+    //The two mechanisms within Web Storage are as follows:
+    //sessionStorage maintains a separate storage area for each given origin that's available for the duration of the page session (as long as the browser is open, including page reloads and restores)
+    //localStorage does the same thing, but persists even when the browser is closed and reopened.
+    // OBSERVAÇÃO 2:
+    // o LocalStorage só aceita guardar informações no formato de strings. Por isso, é preciso tranformar dados em string através de JSON.stringfy
+    localStorage.setItem("tarefas", JSON.stringify(tarefas));
+
     input.value = " ";
 
 
