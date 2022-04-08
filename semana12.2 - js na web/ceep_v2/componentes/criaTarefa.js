@@ -1,16 +1,17 @@
 import BotaoConclui from './concluiTarefa.js';
 import BotaoDeleta from './deletaTarefa.js';
+import { carregaTarefa } from './carregaTarefa.js';
 
 
 export const criarTarefa = (evento) => {
     evento.preventDefault();
-    
+
+
     // captura 'tarefas' de localStorage 
     // como localStorage apenas armazena strings, é preciso tranformar 'tarefas' em um objeto por meio de JSON.parse
-    const tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
+    const tarefas = JSON.parse(localStorage.getItem('tarefas')) || []; // VIDE NOTA DE AULA SOBRE short-circuit evaluation
     //Em document.querySelector estou indicando o que vou buscar. 
     //Repare que usamos o data-attributes para localização do elemento. As classes deixamos somente para estilo.
-    const lista = document.querySelector('[data-list]');
     const input = document.querySelector('[data-form-input]');
     const valor = input.value;
 
@@ -19,14 +20,14 @@ export const criarTarefa = (evento) => {
 
     const dataFormatada = data.format('DD/MM/YYYY');
 
+    const concluida = false;
+
     const dados = {
         valor,
-        dataFormatada
+        dataFormatada,
+        concluida
     }
 
-    const elementoDomTarefa = Tarefa(dados);
-    
-    lista.appendChild(elementoDomTarefa);
 
     tarefas.push(dados);
 
@@ -41,18 +42,22 @@ export const criarTarefa = (evento) => {
 
     input.value = " ";
 
-
+    carregaTarefa();
 }
 
-export const Tarefa = ({ valor, dataFormatada }) => {
+export const Tarefa = ({ valor, dataFormatada, concluida }, id) => {
 
     const tarefa = document.createElement('li')
-    tarefa.classList.add('task')
     const conteudo = `<p class="content">${dataFormatada} - ${valor}</p>`
+
+    if (concluida) {
+        tarefa.classList.add('done');
+    } 
+    tarefa.classList.add('task');
 
     tarefa.innerHTML = conteudo
 
-    tarefa.appendChild(BotaoConclui())
+    tarefa.appendChild(BotaoConclui(carregaTarefa, id))
     tarefa.appendChild(BotaoDeleta())
 
     return tarefa;
