@@ -12,6 +12,7 @@ const BotaoConclui = (atualiza, id) => {
 
 const concluirTarefa = (atualiza, id) => {
     const tarefasCadastradas = JSON.parse(localStorage.getItem('tarefas'));
+    // se "concluida" é falso, então agora "concluida" deve ser verdadeiro, pois o usuário clicou no botão "concluir"
     tarefasCadastradas[id].concluida = !tarefasCadastradas[id].concluida;
     localStorage.setItem('tarefas', JSON.stringify(tarefasCadastradas));
     atualiza();

@@ -18,6 +18,8 @@ export const criarTarefa = (evento) => {
     const calendario = document.querySelector('[data-form-date]');
     const data = moment(calendario.value); // moment() é uma função da biblioteca moment.js
 
+    const horario = data.format('HH:mm');
+
     const dataFormatada = data.format('DD/MM/YYYY');
 
     const concluida = false;
@@ -25,6 +27,7 @@ export const criarTarefa = (evento) => {
     const dados = {
         valor,
         dataFormatada,
+        horario,
         concluida
     }
 
@@ -45,20 +48,21 @@ export const criarTarefa = (evento) => {
     carregaTarefa();
 }
 
-export const Tarefa = ({ valor, dataFormatada, concluida }, id) => {
+export const Tarefa = ({ valor, horario, concluida }, id) => {
 
     const tarefa = document.createElement('li')
-    const conteudo = `<p class="content">${dataFormatada} - ${valor}</p>`
+    const conteudo = `<p class="content">${horario} - ${valor}</p>`
 
     if (concluida) {
+        // se a tarefa está marcada como "concluida", então deve ter formatação especial no css
         tarefa.classList.add('done');
     } 
     tarefa.classList.add('task');
 
-    tarefa.innerHTML = conteudo
+    tarefa.innerHTML = conteudo;
 
-    tarefa.appendChild(BotaoConclui(carregaTarefa, id))
-    tarefa.appendChild(BotaoDeleta())
+    tarefa.appendChild(BotaoConclui(carregaTarefa, id));
+    tarefa.appendChild(BotaoDeleta(carregaTarefa, id));
 
     return tarefa;
 
