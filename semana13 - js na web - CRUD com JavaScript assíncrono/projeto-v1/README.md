@@ -1,5 +1,4 @@
-abrir a pasta admin no vscode e 
-rodar o json server: 
+abrir a pasta no vscode e rodar o json server: 
 ```js
 json-server --watch db.json
 ```
