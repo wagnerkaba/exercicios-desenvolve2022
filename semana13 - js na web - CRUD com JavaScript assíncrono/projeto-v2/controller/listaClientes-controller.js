@@ -1,7 +1,4 @@
-//-------------------------------------------------------------
-// Versão de cliente-service refatorado utilizando Fetch API
-//-------------------------------------------------------------
-
+import { clienteService } from "../service/cliente-service.js";
 
 const criaNovaLinha = (nome, email) => {
     const linhaNovoCliente = document.createElement('tr');
@@ -19,18 +16,9 @@ const criaNovaLinha = (nome, email) => {
 
 const tabela = document.querySelector('[data-tabela]');
 
-const listaClientes = () => {
-    return fetch(`http://localhost:3000/profile`)
-        .then(resposta => {
-            return resposta.json();
-        })
-}
-
-
-listaClientes()
+clienteService.listaClientes()
     .then(data => {
         data.forEach(elemento => {
             tabela.appendChild(criaNovaLinha(elemento.nome, elemento.email));
         })
     });
-
