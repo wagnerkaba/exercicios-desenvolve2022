@@ -1,5 +1,8 @@
 # JS na web: CRUD com JavaScript assíncrono
 
+![Imagem do Projeto](projeto.jpg)
+
+
 Neste curso foi criado um front-end que consome dados de uma api e os exibe ao usuário.
 
 No front-end é possível realizar todas as operações do CRUD (create, read, update e delete) para manipular os dados de um back-end.
