@@ -17,3 +17,4 @@ json-server --watch db.json
 ```
 browser-sync start --server --file . --host --port 5000 --startPath telas/lista_cliente.html
 ```
+* OBS: se não quiser usar o browser-sync, vc pode abrir o arquivo [lista_cliente.html](./telas/lista_cliente.html) através do Live Server do VS Code.
