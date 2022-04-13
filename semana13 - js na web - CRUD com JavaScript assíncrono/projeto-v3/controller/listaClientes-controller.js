@@ -1,3 +1,12 @@
+
+//--------------------------------------------------------------------
+// as funções foram declaradas como "const" ao invés de serem declaradas como "function"
+// creio que se fossem declaradas como "function", a legibilidade seria bem melhor
+// vide notas de aula: Constant confusion: why I still use JavaScript function statements
+//--------------------------------------------------------------------
+
+
+
 import { clienteService } from "../service/cliente-service.js";
 
 const criaNovaLinha = (nome, email, id) => {
@@ -17,26 +26,43 @@ const criaNovaLinha = (nome, email, id) => {
 
 const tabela = document.querySelector('[data-tabela]');
 
-tabela.addEventListener('click', (evento)=>{
+tabela.addEventListener('click', async (evento) => {
     let ehBotaoDeletar = evento.target.className === 'botao-simples botao-simples--excluir';
-    if(ehBotaoDeletar){
-        //busca o elemento mais próximo do botão (closest), que é a linha que contém os dados a serem removidos
-        // sobre o método closest(): https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
-        const linhaCliente = evento.target.closest('[data-id');
-        let id = linhaCliente.dataset.id;
+    if (ehBotaoDeletar) {
 
-        //remove cliente do banco de dados
-        clienteService.removeCliente(id)
-            .then(()=>{
-                //após remover cliente no banco de dados, remove a linha do cliente no html
-                linhaCliente.remove(); 
-            })
+        try {
+
+            //busca o elemento mais próximo do botão (closest), que é a linha que contém os dados a serem removidos
+            // sobre o método closest(): https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
+            const linhaCliente = evento.target.closest('[data-id');
+            let id = linhaCliente.dataset.id;
+
+            //remove cliente do banco de dados
+            await clienteService.removeCliente(id)
+            //após remover cliente no banco de dados, remove a linha do cliente no html
+            linhaCliente.remove();
+        }
+        catch (erro) {
+            console.log(erro);
+            window.location.href = '../telas/erro.html';
+        }
     }
 })
 
-clienteService.listaClientes()
-    .then(data => {
-        data.forEach(elemento => {
+const renderizarHTML = async () => {
+
+    try {
+        const listaClientes = await clienteService.listaClientes();
+        listaClientes.forEach(elemento => {
             tabela.appendChild(criaNovaLinha(elemento.nome, elemento.email, elemento.id));
         })
-    });
+    }
+    catch (erro) {
+        console.log(erro);
+        window.location.href = '../telas/erro.html';
+    }
+}
+
+renderizarHTML();
+
+

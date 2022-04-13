@@ -1,7 +1,8 @@
 
 # Primeira versão do projeto
 
-Utilização do Fetch API para popular a página [lista_cliente.html](./telas/lista_cliente.html).
+* Criação da versão inicial do [cliente-service.js](./service/cliente-service.old.js) utilizando `Promises` e `XMLHttpRequest()`.
+* Refatoração do [cliente-service.js](./service/cliente-service.js) para uso do Fetch API para popular a página [lista_cliente.html](./telas/lista_cliente.html).
 
 ## Setup
 

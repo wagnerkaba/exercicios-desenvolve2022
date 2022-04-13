@@ -1,7 +1,7 @@
 # Terceira versão do projeto
 
-Refatoração do projeto-v2 para utilizar async/await.
-
+* Refatoração do projeto-v2 para utilizar [async/await](../notas-de-aula/async-await.md).
+* Tratamento de erros do Fetch API.
 
 
 
