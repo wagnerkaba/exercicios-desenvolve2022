@@ -1,8 +1,6 @@
-# Segunda versão do projeto
+# Terceira versão do projeto
 
-Refatoração do projeto-v1 com separação de responsabilidades.
-
-Foram implementadas as funções do CRUD (create, read, update e delete) para manipular os dados do json server.
+Refatoração do projeto-v2 para utilizar async/await.
 
 
 
