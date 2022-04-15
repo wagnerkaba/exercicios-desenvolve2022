@@ -9,12 +9,23 @@ export function valida(input) {
 
     // se o input digitado pelo usuário não for válido, a classe "input-container--invalido" é utilizada para mostrar mensagem de erro
     if (input.validity.valid) {
+        renderizaHTMLcomMensagemDeErro("", input);
+    } else {
+        const mensagemDeErro = criaMensagemDeErro(tipoDeInput, input);
+        renderizaHTMLcomMensagemDeErro(mensagemDeErro, input);
+
+    }
+}
+
+// exibe o html com a mensagem de erro
+// se a mensagem for uma string vazia, então a mensagem de erro não é mostrada
+function renderizaHTMLcomMensagemDeErro(mensagem, input) {
+    if (mensagem === "") {
         input.parentElement.classList.remove('input-container--invalido');
-        input.parentElement.querySelector('.input-mensagem-erro').innerHTML = '';
     } else {
         input.parentElement.classList.add('input-container--invalido');
-        input.parentElement.querySelector('.input-mensagem-erro').innerHTML = mostraMensagemDeErro(tipoDeInput, input);
     }
+    input.parentElement.querySelector('.input-mensagem-erro').innerHTML = mensagem;
 }
 
 
@@ -29,7 +40,8 @@ const tiposDeErro = [
 
 
 //---------------------------------------------------------
-// TODAS AS MENSAGENS DE ERRO EXISTENTES
+// MENSAGENS DE ERRO PADRONIZADAS
+// OBS: Caso o erro seja 'customError', o sistema irá mostrar a mensagem existente em "input.validationMessage"
 const mensagensDeErro = {
     nome: {
         valueMissing: 'O campo nome não pode estar vazio.'
@@ -44,16 +56,13 @@ const mensagensDeErro = {
     },
     dataNascimento: {
         valueMissing: 'O campo de data de nascimento não pode estar vazio.',
-        customError: 'Você deve ser maior que 18 anos para se cadastrar'
     },
     cpf: {
         valueMissing: 'O campo de cpf não pode estar vazio.',
-        customError: 'O CPF digitado não é válido.'
     },
     cep: {
         valueMissing: 'O campo de CEP não pode estar vazio.',
         patternMismatch: 'O CEP digitado não é válido.',
-        customError: 'O CEP informado não existe'
     },
     logradouro: {
         valueMissing: 'O campo de logradouro não pode estar vazio.',
@@ -77,14 +86,22 @@ const validadores = {
 }
 
 //---------------------------------------------------------
-// FUNÇÃO PARA MOSTRAR MENSAGEM DE ERRO
-function mostraMensagemDeErro(tipoDeInput, input) {
+// FUNÇÃO PARA CRIAR MENSAGEM DE ERRO
+function criaMensagemDeErro(tipoDeInput, input) {
     let mensagem = '';
+    console.log(`Tipo de Input: ${tipoDeInput}`);
 
     tiposDeErro.forEach(erro => {
 
+
         if (input.validity[erro]) {
-            mensagem = mensagensDeErro[tipoDeInput][erro];
+            console.log(`Tipo de Input: ${tipoDeInput}, Erro: ${erro}`);
+            if (erro === 'customError') {
+                //Se o erro for "customError" então mostra a mensagem definida através de "input.setCustomValidity"
+                mensagem = input.validationMessage;
+            } else {
+                mensagem = mensagensDeErro[tipoDeInput][erro];
+            }
         }
     })
     return mensagem;
@@ -119,7 +136,7 @@ function maiorQue18(data) {
 //**************************************************************
 // VERIFICAÇÃO DO CPF
 //**************************************************************
-// OBS: O ALGORITMO DO PROFESSOR ESTÁ ERRADO. ELE NÃO VALIDA O SEGUINTE CPF 34996770910
+// OBS: APARENTEMENTE O ALGORITMO DO PROFESSOR ESTÁ ERRADO. ELE NÃO VALIDA O SEGUINTE CPF 34996770910
 // BAIXEI O CÓDIGO PRONTO (PASTA "validacao-doguito-aula4") E O CÓDIGO PRONTO TAMBÉM NÃO FUNCIONA COM ESSE CPF
 // FÓRMULA PARA CALCULAR CPF VÁLIDO ESTÁ NO ARQUIVO "cpf-formula.md" 
 //**************************************************************
@@ -190,10 +207,10 @@ function confirmaDigito(soma) {
 // VERIFICAÇÃO DO CEP
 //**************************************************************
 
-function recuperarCEP(input) {
+async function recuperarCEP(input) {
     //substitui qualquer caracter que não seja um número por vazio
     const cep = input.value.replace(/D/g, '');
-    const url = `https://viacep.com.br/ws/${cep}/json`;
+    const url = `https://viacep.com.br/ws/${cep}/json/`;
     const options = {
         method: 'GET',
         mode: 'cors',
@@ -201,31 +218,74 @@ function recuperarCEP(input) {
             'content-type': 'application/json;charset=utf-8'
         }
     };
-
     // verifica se o input não contém erros "patternMismatch" ou "valueMissing"
     if (!input.validity.patternMismatch && !input.validity.valueMissing) {
-        //busca informações sobre CEP na API do VIACEP
-        fetch(url, options)
-            .then(
-                response => response.json()
-            ).then(
+
+        try {
+
+            // fiz uma refatoração do código para usar async/await
+            // para ver o código sem async await, vide pasta "codigo-do-professor"
+            // Para saber mais: vide notas de aula sobre fetch api
+            const responseCEP = await fetch(url, options);
+            const promiseCEP = responseCEP.json();
+            promiseCEP.then(
                 data => {
-                    console.log(data);
-                    //se a api VIACEP retornar um erro
-                    if(data.erro){
-                        input.setCustomValidity('O CEP informado não existe');
+                    if (data.erro) {
+
+                        
+                        console.log(`Validade do input digitado (antes de invocar método setCustomValidity): ${input.validity.valid}`);
+
+                        const mensagemDeErro = "Não foi possível buscar o CEP";
+
+                        //The HTMLSelectElement.setCustomValidity() method sets the custom validity message for the selection element to the specified message. 
+                        //Use the empty string to indicate that the element does not have a custom validity error.
+                        input.setCustomValidity(mensagemDeErro);
+
+                        console.log(`input.validationMessage: ${input.validationMessage}`);
+
+                        // se foi definido uma mensagem através do método 'setCustomValidity' então o input.validity é falso
+                        console.log(`Validade do input digitado  (depois de invocar método setCustomValidity): ${input.validity.valid}`);
+
+                        // se a função abaixo não for invocada, o erro não vai aparecer imediatamente no html após o fetch retornar um resultado
+                        // veja o código disponibilizado pelo professor (na pasta "codigo-do-professor") para entender melhor
+                        renderizaHTMLcomMensagemDeErro(mensagemDeErro, input);
+
                         return;
                     }
+
+                    // é preciso definir setCustomValidity como string vazia, caso contrário input.validity será falso
                     input.setCustomValidity('');
+                    
+                    // se a função abaixo não for invocada, mensagens de erro que eventualmente estejam sendo mostradas pelo input, não serão imediatamente retiradas após o fetch retornar um resultado
+                    //Por exemplo:
+                    // 1. digite um cep que não existe e espere surgir uma mensagem de erro
+                    // 2. digite um cep correto
+                    // 3. quando os campos de endereço forem preenchidos, a mensagem de erro do cep irá sumir
+                    // veja o código disponibilizado pelo professor (na pasta "codigo-do-professor") para entender melhor
+                    renderizaHTMLcomMensagemDeErro("", input);
                     preencheCamposComCEP(data);
-                    return;
+
                 }
             )
+        }
+
+        catch (erro) {
+            const mensagemDeErro = "Erro no servidor do VIACEP";
+            //Para simular este erro, utilize uma URL errada na Fetch API
+            input.setCustomValidity(mensagemDeErro);
+            // se a função abaixo não for invocada, o erro não vai aparecer imediatamente no html após o fetch retornar um resultado
+            // veja o código disponibilizado pelo professor (na pasta "codigo-do-professor") para entender melhor
+            renderizaHTMLcomMensagemDeErro(mensagemDeErro, input);
+            return;
+
+        }
+
 
     }
+
 }
 
-function preencheCamposComCEP(data){
+function preencheCamposComCEP(data) {
     const logradouro = document.querySelector('[data-tipo="logradouro"]');
     const cidade = document.querySelector('[data-tipo="cidade"]');
     const estado = document.querySelector('[data-tipo="estado"]');
