@@ -55,24 +55,27 @@ const mensagensDeErro = {
         patternMismatch: 'A senha deve ter entre 4 e 20 caracteres e pelo menos um numero'
     },
     dataNascimento: {
-        valueMissing: 'O campo de data de nascimento não pode estar vazio.',
+        valueMissing: 'O campo de data de nascimento não pode estar vazio.'
     },
     cpf: {
-        valueMissing: 'O campo de cpf não pode estar vazio.',
+        valueMissing: 'O campo de cpf não pode estar vazio.'
     },
     cep: {
         valueMissing: 'O campo de CEP não pode estar vazio.',
-        patternMismatch: 'O CEP digitado não é válido.',
+        patternMismatch: 'O CEP digitado não é válido.'
     },
     logradouro: {
-        valueMissing: 'O campo de logradouro não pode estar vazio.',
+        valueMissing: 'O campo de logradouro não pode estar vazio.'
     },
     cidade: {
-        valueMissing: 'O campo de cidade não pode estar vazio.',
+        valueMissing: 'O campo de cidade não pode estar vazio.'
     },
     estado: {
-        valueMissing: 'O campo de estado não pode estar vazio.',
+        valueMissing: 'O campo de estado não pode estar vazio.'
     },
+    preco: {
+        valueMissing: 'O campo de preço não pode estar vazio'
+    }
 
 
 }
