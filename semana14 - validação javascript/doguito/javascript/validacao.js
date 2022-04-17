@@ -140,7 +140,7 @@ function maiorQue18(data) {
 // VERIFICAÇÃO DO CPF
 //**************************************************************
 // OBS: APARENTEMENTE O ALGORITMO DO PROFESSOR ESTÁ ERRADO. ELE NÃO VALIDA O SEGUINTE CPF 34996770910
-// BAIXEI O CÓDIGO PRONTO (PASTA "validacao-doguito-aula4") E O CÓDIGO PRONTO TAMBÉM NÃO FUNCIONA COM ESSE CPF
+// BAIXEI O CÓDIGO PRONTO (PASTA "codigo-do-professor") E O CÓDIGO PRONTO TAMBÉM NÃO FUNCIONA COM ESSE CPF
 // FÓRMULA PARA CALCULAR CPF VÁLIDO ESTÁ NO ARQUIVO "cpf-formula.md" 
 //**************************************************************
 function validaCPF(input) {
