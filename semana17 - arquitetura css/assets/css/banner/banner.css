@@ -1,0 +1,6 @@
+.banner {
+    /* os filhos do ".banner" precisam ter posição relativa em relação ao banner*/
+    /* dessa forma, o banner__titulo tem posição absoluta em relação ao banner e ele fica "top:50%" em relação ao banner */
+    /* caso contrário, o banner__titulo teria posição absoluta em relação à pagina inteira e ficaria "top:50%" em relação à pagina */
+    position: relative;
+}
