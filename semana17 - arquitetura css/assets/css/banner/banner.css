@@ -4,3 +4,4 @@
     /* caso contrário, o banner__titulo teria posição absoluta em relação à pagina inteira e ficaria "top:50%" em relação à pagina */
     position: relative;
 }
+

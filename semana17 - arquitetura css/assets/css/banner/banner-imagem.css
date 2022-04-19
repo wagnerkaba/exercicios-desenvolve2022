@@ -1,5 +1,22 @@
 .banner__imagem {
-    /* a altura é 100vh menos 72px, que é o tamanho do cabeçalho */
-    height: calc(100vh - 72px);
+    background: url('../../img/banner.jpg') no-repeat center / cover;
+
     width: 100%;
+}
+
+@media screen and (min-width: 0) {
+    .banner__imagem {
+        /* a altura é 100vh menos 51px, que é o tamanho do cabeçalho */
+        height: calc(100vh - 51px);
+
+    }
+}
+
+
+@media screen and (min-width: 0) {
+    .banner__imagem {
+        /* a altura é 100vh menos 72px, que é o tamanho do cabeçalho */
+        height: calc(100vh - 72px);
+
+    }
 }
