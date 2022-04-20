@@ -10,7 +10,7 @@ The selector methods accept [selectors](https://developer.mozilla.org/en-US/docs
 
 ## Exemplo 1:
 
-![Imagem de exemplo](document.querySelector.jpg)
+![Imagem de exemplo](01-05%20document.querySelector.jpg)
 
 No exemplo da imagem, o browser está apontando onde está a classe `cabecalho__navegacao`.
 
