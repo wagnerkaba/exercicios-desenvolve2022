@@ -1,9 +1,5 @@
 
 
-//Esta é uma maneira mais concisa de declarar variaveis e construtor que é aceito pelo typescript
-//Para ver a maneira mais verbosa, veja negociaco.verboso.ts
-//Veja o video da aula 05.02 (Declaração no próprio construtor) para entender melhor
-
 export class Negociacao {
     
     constructor(

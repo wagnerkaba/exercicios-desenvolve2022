@@ -2,7 +2,9 @@
 
 ## Tópicos em destaque
 
-
+* [Data Modifiers: public, private and protected.](./notas-de-aula/TypeScript%20-%20Data%20Modifiers.md)
+* [Generic Classes](./notas-de-aula/TypeScript%20-%20Generic%20Classes.md)
+* Abstract Class
 
 ## Setup
 
