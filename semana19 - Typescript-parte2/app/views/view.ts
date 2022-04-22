@@ -8,17 +8,20 @@ export abstract class View<TipoGenerico> {
         this.elemento = document.querySelector(seletor);
     }
 
-    //template() é um método abstrato da classe View. 
-    //Os filhos de View devem implementar este método obrigatoriamente.
-    abstract template(model: TipoGenerico): string;
-    
 
-
-    update(model: TipoGenerico): void{
+    public update(model: TipoGenerico): void{
         const template = this.template(model);
         this.elemento.innerHTML = template;
 
     }
+
+    //template() é um método abstrato da classe View. 
+    //Os filhos de View devem implementar este método obrigatoriamente.
+    protected abstract template(model: TipoGenerico): string;
+    
+
+
+
 
 
 }
