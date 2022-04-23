@@ -24,7 +24,6 @@ export class NegociacoesView extends View {
             </table>
         `;
     }
-    // este é um método privado. Outras classes não precisam ter conhecimento deste método
     formatarData(data) {
         return new Intl.DateTimeFormat().format(data);
     }

@@ -5,10 +5,6 @@ export class Negociacao {
         this._valor = _valor;
     }
     get data() {
-        // Porque não escrever apenas: return: this._date?
-        // o código abaixo é exemplo de "programação defensiva"
-        // o código abaixo impede que outro programador altere a data chamando por ex: negociacao.data.setDate(24);
-        // vide: https://cursos.alura.com.br/course/typescript-evoluindo-javascript/task/91985
         return new Date(this._data.getTime());
     }
     get quantidade() {
@@ -19,5 +15,15 @@ export class Negociacao {
     }
     get volume() {
         return this._quantidade * this._valor;
+    }
+    static criaNegociacao(dataString, quantidadeString, valorString) {
+        const expressaoRegular = /-/g;
+        const parametroDate = dataString.replace(expressaoRegular, ',');
+        console.log(parametroDate);
+        const data = new Date(parametroDate);
+        console.log(data);
+        const quantidade = parseInt(quantidadeString);
+        const valor = parseFloat(valorString);
+        return new Negociacao(data, quantidade, valor);
     }
 }

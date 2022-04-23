@@ -1,11 +1,22 @@
-// View é uma classe genérica e abstrata
-// vide nota de aula sobre classes genéricas
 export class View {
-    constructor(seletor) {
-        this.elemento = document.querySelector(seletor);
+    constructor(seletor, removeScriptInjection) {
+        this.removeScriptInjection = false;
+        const elemento = document.querySelector(seletor);
+        if (elemento) {
+            this.elemento = elemento;
+        }
+        else {
+            throw Error(`Seletor ${seletor} não existe no DOM.`);
+        }
+        if (removeScriptInjection) {
+            this.removeScriptInjection = removeScriptInjection;
+        }
     }
     update(model) {
-        const template = this.template(model);
+        let template = this.template(model);
+        if (this.removeScriptInjection) {
+            template = template.replace(/<script>[\s\S]*?<\/script>/, '');
+        }
         this.elemento.innerHTML = template;
     }
 }

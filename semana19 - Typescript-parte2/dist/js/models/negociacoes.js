@@ -7,7 +7,6 @@ export class Negociacoes {
     }
     lista() {
         console.log('lista');
-        // negociacoes é um Array, mas o typescript converte em ReadonlyArray na hora do return
         return this.negociacoes;
     }
 }

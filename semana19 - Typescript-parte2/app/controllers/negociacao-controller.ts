@@ -9,18 +9,27 @@ export class NegociacaoController {
     private inputQuantidade: HTMLInputElement;
     private inputValor: HTMLInputElement;
     private negociacoes = new Negociacoes();
-    private negociacoesView = new NegociacoesView('#negociacoesView');
+    private negociacoesView = new NegociacoesView('#negociacoesView', true);
     private mensagemView = new MensagemView('#mensagemView');
 
     constructor() {
-        this.inputData = document.querySelector('#data');
-        this.inputQuantidade = document.querySelector('#quantidade');
-        this.inputValor = document.querySelector('#valor');
+        // o input pode retornar um valor nulo ou um HTMLInputElement
+        // se ele retornar nulo, o código vai gerar erro apenas quando estiver sendo executado
+        // para obrigar o desenvolvedor a tratar esses erros, pode-se colocar "strictNullChecks" como parâmetro do compilador TS
+        // Nos casos abaixo, o desenvolvedor não quer tratar os possíveis nulos porque ele tem certeza que input vai retornar um HTMLInputElement
+        // Por isso, foi feito type casting (vide notas de aula) informando o input vai retornar HTMLInputElement
+        this.inputData = <HTMLInputElement>document.querySelector('#data');
+        this.inputQuantidade = document.querySelector('#quantidade') as HTMLInputElement;
+        this.inputValor = document.querySelector('#valor') as HTMLInputElement;
         this.negociacoesView.update(this.negociacoes);
     }
 
     public adiciona(): void{
-        const negociacao = this.criaNegociacao();
+        const negociacao = Negociacao.criaNegociacao(
+            this.inputData.value,
+            this.inputQuantidade.value,
+            this.inputValor.value
+        );
 
         //negociação deve ser feita apenas em dias úteis
         //caso a data fornecida não seja dia útil, a negociação não é adicionada
@@ -38,21 +47,6 @@ export class NegociacaoController {
         return data.getDay() > DiasDaSemana.DOMINGO && data.getDay() < DiasDaSemana.SABADO;
     }
 
-    private criaNegociacao(): Negociacao{
-                //inputData.value traz uma string do tipo "2022-04-13"
-                console.log(this.inputData.value);
-                //Date aceita como construtor uma string do tipo "2022,04,13"
-                //Por isso é preciso converter inputData.value em um valor aceitável pelo Date
-                const expressaoRegular = /-/g;
-                const parametroDate = this.inputData.value.replace(expressaoRegular, ',')
-                console.log(parametroDate);
-                const data = new Date(parametroDate);
-                console.log(data);
-        
-                const quantidade = parseInt(this.inputQuantidade.value);
-                const valor = parseFloat(this.inputValor.value);
-                return new Negociacao(data, quantidade, valor);
-    }
 
     private limparFormulario(): void{
         this.inputData.value = '';

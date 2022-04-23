@@ -6,7 +6,7 @@ import { NegociacoesView } from "../views/negociacoes-view.js";
 export class NegociacaoController {
     constructor() {
         this.negociacoes = new Negociacoes();
-        this.negociacoesView = new NegociacoesView('#negociacoesView');
+        this.negociacoesView = new NegociacoesView('#negociacoesView', true);
         this.mensagemView = new MensagemView('#mensagemView');
         this.inputData = document.querySelector('#data');
         this.inputQuantidade = document.querySelector('#quantidade');
@@ -14,9 +14,7 @@ export class NegociacaoController {
         this.negociacoesView.update(this.negociacoes);
     }
     adiciona() {
-        const negociacao = this.criaNegociacao();
-        //negociação deve ser feita apenas em dias úteis
-        //caso a data fornecida não seja dia útil, a negociação não é adicionada
+        const negociacao = Negociacao.criaNegociacao(this.inputData.value, this.inputQuantidade.value, this.inputValor.value);
         if (!this.ehDiaUtil(negociacao.data)) {
             this.mensagemView.update('Apenas negociações em dias útes são aceitas');
             return;
@@ -27,20 +25,6 @@ export class NegociacaoController {
     }
     ehDiaUtil(data) {
         return data.getDay() > DiasDaSemana.DOMINGO && data.getDay() < DiasDaSemana.SABADO;
-    }
-    criaNegociacao() {
-        //inputData.value traz uma string do tipo "2022-04-13"
-        console.log(this.inputData.value);
-        //Date aceita como construtor uma string do tipo "2022,04,13"
-        //Por isso é preciso converter inputData.value em um valor aceitável pelo Date
-        const expressaoRegular = /-/g;
-        const parametroDate = this.inputData.value.replace(expressaoRegular, ',');
-        console.log(parametroDate);
-        const data = new Date(parametroDate);
-        console.log(data);
-        const quantidade = parseInt(this.inputQuantidade.value);
-        const valor = parseFloat(this.inputValor.value);
-        return new Negociacao(data, quantidade, valor);
     }
     limparFormulario() {
         this.inputData.value = '';
