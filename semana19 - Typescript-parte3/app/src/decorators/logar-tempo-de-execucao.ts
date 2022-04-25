@@ -23,7 +23,7 @@ export function logarTempoDeExecucao(emSegundos: boolean = false) {
             const retorno = metodoOriginal.apply(this, args);
             const t2 = performance.now();
             //mostra o tempo de execução do método original
-            console.log(`Tempo de execução do método ${propertyKey}:  ${(t2 - t1)/divisor} ${unidade}`);
+            console.log(`@logarTempoDeExecucao - Tempo de execução do método ${propertyKey}:  ${(t2 - t1)/divisor} ${unidade}`);
 
             return retorno;
         };

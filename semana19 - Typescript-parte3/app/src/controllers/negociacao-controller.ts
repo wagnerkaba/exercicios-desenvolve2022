@@ -8,6 +8,10 @@ import { NegociacoesView } from '../views/negociacoes-view.js';
 
 export class NegociacaoController {
 
+    // Sobre o decorator @inserirDOM:
+    // Na parte 2 do curso, o construtor de NegociacaoController era responsável para atribuir elementos DOM a inputs. 
+    // Por exemplo: this.inputData = <HTMLInputElement>document.querySelector('#data');
+    // Agora esta tarefa ficou a cargo do decorator @inserirDOM
     @inserirDOM('#data')
     private inputData: HTMLInputElement;
     @inserirDOM('#quantidade')
@@ -21,6 +25,7 @@ export class NegociacaoController {
     constructor() {
         this.negociacoesView.update(this.negociacoes);
     }
+
 
     @logarTempoDeExecucao()
     public adiciona(): void {
