@@ -32,15 +32,15 @@ export class NegociacaoController {
 
 
         const negociacao = Negociacao.criaDe(
-            this.inputData.value, 
+            this.inputData.value,
             this.inputQuantidade.value,
             this.inputValor.value
         );
-     
+
         if (!this.ehDiaUtil(negociacao.data)) {
             this.mensagemView
                 .update('Apenas negociações em dias úteis são aceitas');
-            return ;
+            return;
         }
 
         this.negociacoes.adiciona(negociacao);
@@ -50,8 +50,29 @@ export class NegociacaoController {
 
     }
 
+    public importaDados(): void {
+        fetch('http://localhost:8080/dados')
+            // obs: Em uma arrow function de apenas uma linha, a palavra "return" não é necessária, pois está subentendida
+            .then(resposta => resposta.json())
+            // obs: any[] é a mesma coisa que Array<any>
+            .then((dados: any[]) => {
+                return dados.map(dadoDeHoje => {
+                    return new Negociacao(
+                        new Date(), 
+                        dadoDeHoje.vezes, 
+                        dadoDeHoje.montante)
+                })
+            })
+            .then(negociacoesDeHoje => {
+                for(let negociacao of negociacoesDeHoje) {
+                    this.negociacoes.adiciona(negociacao);
+                }
+                this.negociacoesView.update(this.negociacoes);
+            });
+    }
+
     private ehDiaUtil(data: Date) {
-        return data.getDay() > DiasDaSemana.DOMINGO 
+        return data.getDay() > DiasDaSemana.DOMINGO
             && data.getDay() < DiasDaSemana.SABADO;
     }
 

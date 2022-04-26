@@ -174,6 +174,7 @@ function recuperarCEP(input) {
 
     if(!input.validity.patternMismatch && !input.validity.valueMissing) {
         fetch(url,options).then(
+            // obs: Em uma arrow function de apenas uma linha, a palavra "return" não é necessária, pois está subentendida
             response => response.json()
         ).then(
             data => {
