@@ -12,3 +12,4 @@ export function inserirDOM(seletor) {
         Object.defineProperty(target, propertyKey, { get: getter });
     };
 }
+//# sourceMappingURL=inserirDOM.js.map

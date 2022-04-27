@@ -10,3 +10,4 @@ export function inspecionarMetodo() {
         };
     };
 }
+//# sourceMappingURL=inspecionarMetodo.js.map

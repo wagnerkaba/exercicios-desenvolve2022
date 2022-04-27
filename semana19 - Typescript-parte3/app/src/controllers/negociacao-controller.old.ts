@@ -3,8 +3,6 @@ import { logarTempoDeExecucao } from '../decorators/logar-tempo-de-execucao.js';
 import { DiasDaSemana } from '../enums/dias-da-semana.js';
 import { Negociacao } from '../models/negociacao.js';
 import { Negociacoes } from '../models/negociacoes.js';
-import { NegociacoesService } from '../services/negociacoes-service.js';
-import { imprimirNoConsole } from '../utils/imprimir.js';
 import { MensagemView } from '../views/mensagem-view.js';
 import { NegociacoesView } from '../views/negociacoes-view.js';
 
@@ -23,8 +21,6 @@ export class NegociacaoController {
     private negociacoes = new Negociacoes();
     private negociacoesView = new NegociacoesView('#negociacoesView');
     private mensagemView = new MensagemView('#mensagemView');
-    private negociacoesService = new NegociacoesService();
-
 
     constructor() {
         this.negociacoesView.update(this.negociacoes);
@@ -48,7 +44,6 @@ export class NegociacaoController {
         }
 
         this.negociacoes.adiciona(negociacao);
-        imprimirNoConsole(negociacao, this.negociacoes);
         this.limparFormulario();
         this.atualizaView();
 
@@ -56,32 +51,25 @@ export class NegociacaoController {
     }
 
     public importaDados(): void {
-        this.negociacoesService
-            .obterNegociacoesDoDia()
-            .then(
-                //este trecho "then" impede que seja feita uma importação de dados repetida
-                //para entender melhor, clique no botão "importar" várias vezes. O resultado é que a importação só será feita uma vez
-                //mas se este trecho "then" ficar em comentários, e o usuário clicar em "importar" várias vezes, a importação será feita várias vezes
-                negociacoesDeHoje =>
-                    negociacoesDeHoje.filter(
-                        negociacaoDeHoje => {
-                            return !this.negociacoes
-                                .lista()
-                                .some(negociacao => negociacao.ehIgual(negociacaoDeHoje));
-                        })
-
-            )
+        fetch('http://localhost:8080/dados')
+            // obs: Em uma arrow function de apenas uma linha, a palavra "return" não é necessária, pois está subentendida
+            .then(resposta => resposta.json())
+            // obs: any[] é a mesma coisa que Array<any>
+            .then((dados: any[]) => {
+                return dados.map(dadoDeHoje => {
+                    return new Negociacao(
+                        new Date(), 
+                        dadoDeHoje.vezes, 
+                        dadoDeHoje.montante)
+                })
+            })
             .then(negociacoesDeHoje => {
-                for (let negociacao of negociacoesDeHoje) {
+                for(let negociacao of negociacoesDeHoje) {
                     this.negociacoes.adiciona(negociacao);
                 }
                 this.negociacoesView.update(this.negociacoes);
             });
     }
-
-
-
-
 
     private ehDiaUtil(data: Date) {
         return data.getDay() > DiasDaSemana.DOMINGO

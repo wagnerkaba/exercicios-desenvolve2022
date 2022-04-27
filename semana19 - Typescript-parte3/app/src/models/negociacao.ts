@@ -1,9 +1,20 @@
-export class Negociacao {
+import { Modelo } from "../interfaces/modelo.js";
+
+export class Negociacao implements Modelo<Negociacao> {
     constructor(
         private _data: Date, 
         public readonly quantidade: number, 
         public readonly valor: number
-    ) {}
+    ) {
+    }
+
+    public static criaDe(dataString: string, quantidadeString: string, valorString: string): Negociacao {
+        const exp = /-/g;
+        const date = new Date(dataString.replace(exp, ','));
+        const quantidade = parseInt(quantidadeString);
+        const valor = parseFloat(valorString);
+        return new Negociacao(date, quantidade, valor);
+    }
 
     get volume(): number {
         return this.quantidade * this.valor;
@@ -14,11 +25,22 @@ export class Negociacao {
         return data;
     }
 
-    public static criaDe(dataString: string, quantidadeString: string, valorString: string): Negociacao {
-        const exp = /-/g;
-        const date = new Date(dataString.replace(exp, ','));
-        const quantidade = parseInt(quantidadeString);
-        const valor = parseFloat(valorString);
-        return new Negociacao(date, quantidade, valor);
+    public paraTexto(): string {
+        return `Negociacao.paraTexto() sendo executado...
+        Data: ${this.data},
+        Quantidade: ${this.quantidade},
+        Valor: ${this.valor}
+
+        `;
     }
+
+    // método para verificar se a negociação atual é igual a negociação enviada como parâmetro
+    public ehIgual(negociacao: Negociacao): boolean{
+        // para verificar se as negociações são iguais, o professor escolheu comparar apenas as datas
+        return this.data.getDate() === negociacao.data.getDate()
+            && this.data.getMonth() === negociacao.data.getMonth()
+            && this.data.getFullYear() === negociacao.data.getFullYear(); 
+    }
+
+
 }

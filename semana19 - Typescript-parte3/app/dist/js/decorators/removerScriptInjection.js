@@ -10,3 +10,4 @@ export function removerScriptInjection(target, propertyKey, descriptor) {
     };
     return descriptor;
 }
+//# sourceMappingURL=removerScriptInjection.js.map
