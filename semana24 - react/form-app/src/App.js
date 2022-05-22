@@ -20,6 +20,8 @@ class App extends Component {
 
 }
 
+
+// Quando o usuário submete os dados do formulário, eles são impressos no console.log
 function aoEnviarForm(dados){
   console.log(dados);
 }
