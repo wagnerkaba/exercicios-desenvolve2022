@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { TextField, Button, Switch, FormControlLabel } from "@mui/material";
+import ValidacoesCadastro from "../../contexts/ValidacoesCadastro";
 
-function DadosPessoais({ aoEnviar, validacoes })
-//em vez de "{aoEnviar, validarCPF}", poderia ter colocado apenas "props" como parâmetro
+function DadosPessoais({ aoEnviar })
+//em vez de "{aoEnviar}", poderia ter colocado apenas "props" como parâmetro
 // se tivesse usado "props", dai para chamar a função "aoEnviar" seria necessário usar "props.aoEnviar"
 // usando "{aoEnviar, validarCPF}" estamos fazendo um "Destructuring assignment"
 {
@@ -12,6 +13,8 @@ function DadosPessoais({ aoEnviar, validacoes })
   const [promocoes, setPromocoes] = useState(true);
   const [novidades, setNovidades] = useState(true);
   const [erros, setErros] = useState({ cpf: { valido: true, texto: "" }, nome: { valido: true, texto: "" }});
+
+  const validacoes = useContext(ValidacoesCadastro);
 
   // OBS: as functions validarCampos e possoEnviar estão repetidas em DadosPessoais.jsx e DadosUsuario.jsx. Isso viola o princípio DRY (Don't repeat yourself)
   function validarCampos(event) {
@@ -54,6 +57,7 @@ function DadosPessoais({ aoEnviar, validacoes })
         id="nome"
         label="Nome"
         margin="normal"
+        required
         fullWidth />
 
       <TextField

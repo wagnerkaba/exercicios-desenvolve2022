@@ -1,12 +1,15 @@
 import { TextField, Button } from "@mui/material";
-import React, { useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
+import ValidacoesCadastro from "../../contexts/ValidacoesCadastro";
 
 
-function DadosUsuario({ aoEnviar, validacoes }) {
+function DadosUsuario({ aoEnviar }) {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
 
     const [erros, setErros] = useState({ senha: { valido: true, texto: "" } });
+
+    const validacoes = useContext(ValidacoesCadastro);
 
     // OBS: as functions validarCampos e possoEnviar estão repetidas em DadosPessoais.jsx e DadosUsuario.jsx. Isso viola o princípio DRY (Don't repeat yourself)
     function validarCampos(event) {
