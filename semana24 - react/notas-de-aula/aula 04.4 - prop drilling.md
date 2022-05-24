@@ -1,6 +1,6 @@
 # 04 Diminuindo responsabilidades
 
-Da maneira que temos nosso componente `FormularioCadastro` até esse momento ele recebe algumas propriedades que ele não faz nada com elas, o único que ele faz é repassar essas propriedades para os componentes filhos dele.
+Da maneira que temos nosso componente [FormularioCadastro](../form-app/src/components/FormularioCadastro/FormularioCadastro.jsx) até esse momento ele recebe algumas propriedades que ele não faz nada com elas, o único que ele faz é repassar essas propriedades para os componentes filhos dele (vide primeira versão do [form-app](../form-app/src/components/FormularioCadastro/FormularioCadastro.jsx)
 
 Essa maneira de trabalhar com propriedades é chamada de `prop drilling` e é considerada uma má prática. Reflita sobre o problema e assinale a alternativa que mostra o problema com essa abordagem.
 
