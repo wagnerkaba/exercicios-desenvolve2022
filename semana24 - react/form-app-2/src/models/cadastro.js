@@ -17,4 +17,13 @@ function validarSenha(senha) {
     }
 }
 
-export {validarCPF, validarSenha};
+function validarNome(nome){
+    if (nome.length < 4) {
+        return { valido: false, texto: "Nome deve ter mais de 4 letras" };
+    } else {
+        return { valido: true, texto: "" };
+
+    }
+}
+
+export {validarCPF, validarSenha, validarNome};

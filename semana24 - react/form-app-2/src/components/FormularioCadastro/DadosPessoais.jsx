@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { TextField, Button, Switch, FormControlLabel } from "@mui/material";
 import ValidacoesCadastro from "../../contexts/ValidacoesCadastro";
+import useErros from "../../hooks/useErros";
 
 function DadosPessoais({ aoEnviar })
 //em vez de "{aoEnviar}", poderia ter colocado apenas "props" como parâmetro
@@ -12,31 +13,8 @@ function DadosPessoais({ aoEnviar })
   const [cpf, setCpf] = useState('');
   const [promocoes, setPromocoes] = useState(true);
   const [novidades, setNovidades] = useState(true);
-  const [erros, setErros] = useState({ cpf: { valido: true, texto: "" }, nome: { valido: true, texto: "" }});
-
   const validacoes = useContext(ValidacoesCadastro);
-
-  // OBS: as functions validarCampos e possoEnviar estão repetidas em DadosPessoais.jsx e DadosUsuario.jsx. Isso viola o princípio DRY (Don't repeat yourself)
-  function validarCampos(event) {
-    const { name, value } = event.target;
-    const novoEstado = { ...erros };
-    novoEstado[name] = validacoes[name](value);
-    setErros(novoEstado);
-  }
-
-  function possoEnviar() {
-    let posso = true;
-    for (let campo in erros) {
-      if (!erros[campo].valido) {
-        return false;
-      }
-    }
-    return true;
-
-  }
-
-
-
+  const [erros, validarCampos, possoEnviar] = useErros(validacoes);
 
   return (
     <form onSubmit={(event) => {
