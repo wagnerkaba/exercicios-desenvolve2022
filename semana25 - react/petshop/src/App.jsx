@@ -5,6 +5,7 @@ import Sobre from './paginas/Sobre';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Pagina404 from './paginas/Pagina404';
 import Cabecalho from './components/Cabecalho';
+import Post from './paginas/Post';
 
 function App() {
 
@@ -19,6 +20,10 @@ function App() {
           </Route>
           <Route path='/sobre'>
             <Sobre />
+          </Route>
+
+          <Route path='/posts/:id'>
+            <Post />
           </Route>
           <Route>
             {/* se o usuário digitar um caminho que não existe no browser, será renderizada a página 404 */}
