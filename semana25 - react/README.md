@@ -1,5 +1,10 @@
 # Blog criado com REACT
 
+* O blog está dividido em duas categorias: "bem-estar" e "comportamento". 
+* Ao clicar nas categorias, surgem as subcategorias.
+* Ao clicar nos posts, surge o texto completo do post.
+
+
 ## Tópicos importantes
 * [React Router DOM](https://www.npmjs.com/package/react-router-dom)
 * [Single Page Application](./notas-de-aula/aula%2002.04%20-%20single%20page%20application.md)

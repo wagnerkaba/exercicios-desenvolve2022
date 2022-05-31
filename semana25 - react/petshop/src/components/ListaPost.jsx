@@ -12,8 +12,11 @@ const ListaPost = ({url}) => {
         <section className='posts container'>
             {
                 posts.map((post)=>(
-                    <Link className={`cartao-post cartao-post--${post.categoria}`} to={`/posts/${post.id}`}>
-                        <article key={post.id}>
+                    // OBS 1: No projeto do professor, "key={post.id}" estava dentro de <article>
+                    // coloquei dentro de <Link> para evitar dar o erro no console: Warning: Each child in a list should have a unique "key" prop
+                    // OBS 2: O projeto do professor estava funcionando perfeitamente apesar de aparecer o erro no console. Mas este erro no console estava me incomodando.
+                    <Link className={`cartao-post cartao-post--${post.categoria}`} to={`/posts/${post.id}`} key={post.id}>
+                        <article >
                             <h3 className='cartao-post__titulo'>
                                 {post.title}
                             </h3>
