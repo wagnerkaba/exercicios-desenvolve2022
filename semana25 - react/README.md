@@ -4,6 +4,7 @@
 * [React Router DOM](https://www.npmjs.com/package/react-router-dom)
 * [Single Page Application](./notas-de-aula/aula%2002.04%20-%20single%20page%20application.md)
 * [Links in React](./notas-de-aula/aula%2003.05%20-%20Links%20in%20React.md)
+* [useParams] - In our React app sometimes we want to access the parameters of the current route in this case useParams hook comes into action. The react-router-dom package has useParams hooks that let you access the parameters of the current route.
 * [useEffect](./notas-de-aula/useEffect.md)
 * [useHistory do react router dom](./notas-de-aula/aula%2004.4%20-%20useHistory.md)
 
