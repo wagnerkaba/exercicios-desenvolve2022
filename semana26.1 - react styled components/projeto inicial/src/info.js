@@ -1,7 +1,3 @@
-
-// este arquivo contém dados fictícios para alimentar o extrato
-
-
 export const extratoLista = {
   updates: [
     {
