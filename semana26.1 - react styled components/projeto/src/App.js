@@ -18,11 +18,14 @@ function App() {
   return (
     <ThemeProvider theme={tema ? temaClaro : temaEscuro}>
       <GlobalStyle/>
+
+
+      <Cabecalho />
+
+      <Container />
       <BtnTema onClick={toggleTema}>
         <TrocaTema tema={tema}/>
       </BtnTema>
-      <Cabecalho />
-      <Container />
     </ThemeProvider>
   );
 }

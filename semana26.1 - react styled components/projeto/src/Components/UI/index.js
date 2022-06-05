@@ -51,7 +51,7 @@ export const Saldo = styled.div`
 export const BtnTema = styled.button`
   position: absolute;
   top: 4vh;
-  right: 20 px;
+  right: 50px;
   background-color: inherit;
   border: none;
   cursor: pointer;
