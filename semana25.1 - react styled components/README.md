@@ -17,3 +17,12 @@ Além, disso foram acrescentados novos itens ao site do banco:
 * [Como tratar de media queries dentro dos componentes estilizados](./notas-de-aula/aula%2003.05%20-%20Media%20Query.md)
 * [ThemeProvider](https://styled-components.com/docs/advanced) utilizado para mudar o tema para claro ou escuro.
 * [variable declaration in jsx](./notas-de-aula/variable%20declaration%20in%20jsx.md) - No JSX é possível fazer declarações como: `const element = <h1>Hello, world!</h1>;`
+
+
+## Setup
+
+Para iniciar, entre na pasta "projeto" e digite:
+
+```
+npm start
+```
