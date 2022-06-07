@@ -30,3 +30,5 @@ Repositório no Github:
 [Demonstra o uso de useCallback](../notas-de-aula/useCallback.md)
 
 ## React-performance-3
+
+[Utilização de keys para evitar renderizações desnecessárias](../notas-de-aula/utiliza%C3%A7%C3%A3o%20de%20keys.md)
