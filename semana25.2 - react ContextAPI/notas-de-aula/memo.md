@@ -6,7 +6,7 @@ If your component renders the same result given the same props, you can wrap it 
 
 ## Exemplo
 
-Na pasta "extra", o projeto "react-performance" mostra o uso de "memo".
+Na pasta "extra", o projeto "react-performance-1" mostra o uso de "memo".
 
 Veja o arquivo [Pessoa](../extra/react-performance-1/src/ListaPessoas/Pessoa/index.js).
 
