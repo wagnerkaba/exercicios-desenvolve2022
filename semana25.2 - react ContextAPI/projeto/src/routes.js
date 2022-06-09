@@ -1,25 +1,25 @@
 import Login from "pages/Login"; //importar desse jeito é possível por causa do arquivo jsconfig.json
 import Feira from "pages/Feira"; //importar desse jeito é possível por causa do arquivo jsconfig.json
 import Carrinho from "pages/Carrinho"; //importar desse jeito é possível por causa do arquivo jsconfig.json
-import { UsuarioContext } from "common/context/Usuario"; //importar desse jeito é possível por causa do arquivo jsconfig.json
-import { useState } from 'react';
+import { UsuarioProvider } from "common/context/Usuario"; //importar desse jeito é possível por causa do arquivo jsconfig.json
 
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 function Router() {
-    const [nome, setNome] = useState("");
-    const [saldo, setSaldo] = useState(0);
+
     return (
         <BrowserRouter>
             <Switch>
-                <Route exact path="/">
-                    <UsuarioContext.Provider value={{nome, setNome, saldo, setSaldo}}>
+                <UsuarioProvider>
+
+                    <Route exact path="/">
                         <Login />
-                    </UsuarioContext.Provider>
-                </Route>
-                <Route path="/feira">
-                    <Feira />
-                </Route>
+                    </Route>
+                    <Route path="/feira">
+                        <Feira />
+                    </Route>
+                </UsuarioProvider>
+
                 <Route path="/carrinho">
                     <Carrinho />
                 </Route>
