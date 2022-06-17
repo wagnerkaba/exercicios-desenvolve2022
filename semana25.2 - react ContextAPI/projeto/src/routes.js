@@ -5,6 +5,7 @@ import { UsuarioProvider } from "common/context/Usuario"; //importar desse jeito
 import { CarrinhoProvider } from "common/context/Carrinho"; //importar desse jeito é possível por causa do arquivo jsconfig.json
 
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { PagamentoProvider } from "common/context/Pagamento";
 
 function Router() {
 
@@ -20,12 +21,16 @@ function Router() {
                         <Route path="/feira">
                             <Feira />
                         </Route>
+                        <PagamentoProvider>
+                            <Route path="/carrinho">
+                                <Carrinho />
+                            </Route>
+                        </PagamentoProvider>
+
                     </CarrinhoProvider>
                 </UsuarioProvider>
 
-                <Route path="/carrinho">
-                    <Carrinho />
-                </Route>
+
             </Switch>
         </BrowserRouter>
     )

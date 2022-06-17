@@ -49,6 +49,9 @@ function Login() {
       <Button
         variant="contained"
         color="primary"
+        
+        //se nome.length < 4 o botão é desabilitado
+        disabled={nome.length < 4}
         onClick={() => history.push('/feira')}
       >
         Avançar

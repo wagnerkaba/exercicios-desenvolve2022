@@ -1,5 +1,7 @@
 
+# Loja online criada com REACT
 
+Criação de uma loja online onde o cliente pode colocar e retirar produtos no carrinho.
 
 ## Tópicos Importantes
 * [React.memo](./notas-de-aula/memo.md)

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 export const CarrinhoContext = createContext();
 
@@ -6,10 +6,21 @@ CarrinhoContext.displayName = "Carrinho";
 
 export const CarrinhoProvider = ({ children }) => {
     const [carrinho, setCarrinho] = useState([]);
+    const [quantidadeProdutos, setQuantidadeProdutos] = useState(0);
+    const [valorTotalCarrinho, setValorTotalCarrinho] = useState(0);
+
     const estilo = { backgroundColor: "lightblue" };
 
     return (
-        <CarrinhoContext.Provider value={{ carrinho, setCarrinho }}>
+        <CarrinhoContext.Provider
+            value={{
+                carrinho,
+                setCarrinho,
+                quantidadeProdutos,
+                setQuantidadeProdutos,
+                valorTotalCarrinho,
+                setValorTotalCarrinho
+            }}>
 
             {children}
 
@@ -18,10 +29,17 @@ export const CarrinhoProvider = ({ children }) => {
 }
 
 export const useCarrinhoContext = () => {
-    const { carrinho, setCarrinho } = useContext(CarrinhoContext);
+    const { 
+        carrinho, 
+        setCarrinho, 
+        quantidadeProdutos, 
+        setQuantidadeProdutos,
+        valorTotalCarrinho,
+        setValorTotalCarrinho 
+    } = useContext(CarrinhoContext);
 
     // function auxiliar usada em adicionarProduto e removerProduto
-    function mudarQuantidade(id, quantidadeParaSomar){
+    function mudarQuantidade(id, quantidadeParaSomar) {
         return carrinho.map(
             itemDoCarrinho => {
                 if (itemDoCarrinho.id === id) itemDoCarrinho.quantidade += quantidadeParaSomar;
@@ -64,11 +82,32 @@ export const useCarrinhoContext = () => {
     }
 
 
+    useEffect(() => {
+
+        // Utilizando o useEffect, conseguiremos escutar o estado carrinho 
+        // sempre que acontecer uma atualização no hook carrinho, será feito um cálculo para reduzir o array de carrinho em apenas um número com a quantidade de produtos atual dentro do carrinho. 
+        const {novoTotal, novaQuantidade} = carrinho.reduce(  //array.reduce tem dois parâmetros: callback function e initialValue
+            (contador, produto) => ({
+                novaQuantidade: contador.novaQuantidade + produto.quantidade,
+                novoTotal: contador.novoTotal + (produto.valor * produto.quantidade)
+            }), //callback function
+            {
+                novaQuantidade: 0,
+                novoTotal: 0
+            } // initialValue
+        );
+        setQuantidadeProdutos(novaQuantidade);
+        setValorTotalCarrinho(novoTotal);
+    }, [carrinho, setQuantidadeProdutos, setValorTotalCarrinho])
+
 
     return {
         carrinho,
         setCarrinho,
         adicionarProduto,
-        removerProduto
+        removerProduto,
+        quantidadeProdutos,
+        setQuantidadeProdutos,
+        valorTotalCarrinho
     }
 }
