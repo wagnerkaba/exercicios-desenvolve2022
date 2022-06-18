@@ -25,7 +25,7 @@ export const PagamentoProvider = ({ children }) => {
         {
             nome: "Crediário",
             juros: 1.5,
-            id:4
+            id: 4
         }
     ];
     const [formaPagamento, setFormaPagamento] = useState(tiposPagamento[0]);
@@ -50,7 +50,8 @@ export const usePagamentoContext = () => {
     } = useContext(PagamentoContext);
 
     function mudarFormaPagamento(id){
-        const pagamentoAtual = tiposPagamento.find(pagamento => pagamento.id === id);
+        const formaNova = tiposPagamento.find(pagamento => pagamento.id === id);
+        setFormaPagamento(formaNova)
     }
 
     return {

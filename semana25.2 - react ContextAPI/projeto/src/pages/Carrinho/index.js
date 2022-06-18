@@ -1,19 +1,21 @@
 import { Button, Snackbar, InputLabel, Select, MenuItem } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import { useCarrinhoContext } from 'common/context/Carrinho';
-import { PagamentoContext, usePagamentoContext } from 'common/context/Pagamento';
+import { usePagamentoContext } from 'common/context/Pagamento';
+import { UsuarioContext } from 'common/context/Usuario';
 import Produto from 'components/Produto';
-import { useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Container, Voltar, TotalContainer, PagamentoContainer} from './styles';
 
 function Carrinho() {
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const {carrinho, valorTotalCarrinho} = useCarrinhoContext();
-
+  const {carrinho, valorTotalCarrinho, efetuarCompra} = useCarrinhoContext();
+  const {saldo = 0 } = useContext(UsuarioContext); // se saldo não foi definido, o valor default é zero (veja nota de aula 6.06 - default parameters)
   const {tiposPagamento, formaPagamento, mudarFormaPagamento } = usePagamentoContext();
 
   const history = useHistory();
+  const total = useMemo(()=>saldo - valorTotalCarrinho, [saldo, valorTotalCarrinho]);
   return (
     <Container>
       <Voltar onClick={()=>history.goBack()}/>
@@ -47,17 +49,19 @@ function Carrinho() {
           </div>
           <div>
             <h2> Saldo: </h2>
-            <span> R$ </span>
+            <span> R$ {Number(saldo).toFixed(2)} </span>
           </div>
           <div>
             <h2> Saldo Total: </h2>
-            <span> R$ </span>
+            <span> R$ {total.toFixed(2) /* toFixed não deve ser usado na vida real, pois ele arredonda valores */}</span>
           </div>
         </TotalContainer>
       <Button
         onClick={() => {
+          efetuarCompra();
           setOpenSnackbar(true);
         }}
+        disabled={total < 0 || carrinho.length === 0} // se o saldo total for negativo ou o carrinho estiver vazio, o botão comprar é desabilitado
         color="primary"
         variant="contained"
       >

@@ -10,7 +10,7 @@ Fonte: [w3schools](https://www.w3schools.com/react/react_usecallback.asp)
 
 Para solucionar este problema, usamos `useCallback`.
 
-> The `useCallback` and `useMemo` Hooks are similar. The main difference is that `useMemo` returns a memoized value and `useCallback` returns a memoized function.
+
 
 Código anterior em [ListaPessoas](../extra/react-performance-2/src/ListaPessoas/index.js):
 
@@ -27,3 +27,7 @@ Código alterado para usar `useCallback`:
         setPessoas(ListaAnterior => ListaAnterior.filter((pessoa, indexAnterior) => indexAnterior !== id));
     },[]);
 ```
+
+## useMemo
+
+The `useCallback` and `useMemo` Hooks are similar. The main difference is that `useMemo` returns a memoized value and `useCallback` returns a memoized function. Para saber mais sobre useMemo: [Aula 6.07](../notas-de-aula/aula%206.07%20-%20useMemo.md)
