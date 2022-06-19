@@ -24,4 +24,10 @@ OBS: Para a extensão funcionar, é preciso também instalar [React Developer To
 * styled-components
 * react-router-dom
 
+## Setup
 
+Para iniciar, vá até a pasta "projeto" e digite:
+
+```
+npm start
+```
