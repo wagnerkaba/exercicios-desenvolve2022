@@ -1,0 +1,7 @@
+# Ferramenta para testes
+
+Quando escrevemos testes automatizados para aplicações em React, provavelmente uma grande parte dos nossos testes será sobre algum componente de UI e não apenas funções de regras de negócio. Por isso, precisamos de uma biblioteca que nos auxilie a interagir com o DOM, renderizando e encontrando os elementos que precisamos verificar nos testes.
+
+Por muito tempo a principal ferramenta para isso foi o Enzyme, porém alguns anos atrás, o **React Testing Library** surgiu com uma abordagem centrada no usuário e com padrões para enfatizar boas práticas de semântica e acessibilidade. A biblioteca ganhou bastante força e hoje já faz parte do pacote padrão de uma aplicação feita com o Create React App, por isso vamos usá-la aqui no curso.
+
+Uma das maiores vantagens de escrever nossos testes focados em como os usuários interagem com nossa aplicação é que conseguimos garantir que nossos cenários de teste se parecem ainda mais com os casos do mundo real. Além disso, passamos a nos preocupar muito mais com a funcionalidade da aplicação e não com implementações internas dos componentes, como estados e ciclos de vida. O que faz com que nossos testes quebrem cada vez menos por mudanças na forma de implementar, em vez de garantir que a funcionalidade se mantenha inalterada.
