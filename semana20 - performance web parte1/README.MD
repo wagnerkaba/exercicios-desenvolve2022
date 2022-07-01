@@ -1,6 +1,8 @@
-# Performance Web I: otimizando o front-end
+## WEB PERFORMANCE OPTIMIZATION
+## *Curso: Performance Web I - otimizando o front-end*
 
 ## Tópicos importantes
+* [Importância da Web Performance Optimization](./notas-de-aula/aula%209.04%20-%20Transcri%C3%A7%C3%A3o%20das%20aulas.pdf)
 * [Minimificação](./notas-de-aula/aula%201.06%20-%20minificando%20com%20gulp.md)
 * [Análise com DevTools](./notas-de-aula/Aula%201.11%20-%20An%C3%A1lise%20com%20DevTools.pdf)
 * [Compressão GZIP no servidor](./notas-de-aula/aula%201.12%20-%20compress%C3%A3o%20GZIP.md)
@@ -9,6 +11,9 @@
 * [Otimizar imagens](./notas-de-aula/aula%202.12%20-%20otimizar%20imagens.md)
 * [Concatenação de CSS e JS](./notas-de-aula/aula%204.03%20-%20Concatena%C3%A7%C3%A3o%20de%20CSS%20e%20JS.md)
 * [Sprites](./notas-de-aula/aula%205.10%20-%20Transcri%C3%A7%C3%A3o%20das%20aulas%20SPRITES.pdf) - An image sprite is a collection of images put into a single image. A web page with many images can take a long time to load and generates multiple server requests. Using image sprites will reduce the number of server requests and save bandwidth.
+* [Inline de recursos](./notas-de-aula/aula%206.06%20-%20Transcri%C3%A7%C3%A3o%20das%20aulas%20-%20inline%20de%20recursos.pdf)
+* [Hostname paralelo](./notas-de-aula/aula%207.06%20-%20Transcri%C3%A7%C3%A3o%20das%20aulas%20-%20Paraleliza%C3%A7%C3%A3o%20de%20requests.pdf) - Como temos um limite de ~6 conexões por hostname, uma técnica para paralelizar os requests é usar mais de um hostname. 
+* [Como utilizar o cache para melhorar a performance web](./notas-de-aula/aula%208.08%20-%20Transcri%C3%A7%C3%A3o%20das%20aulas%20-%20CACHE.pdf).
 
 ## Sites recomendados
 * [Kraken.io](https://kraken.io/) - ultra-fast image optimizer and compressor with best-in-class algorithms.
