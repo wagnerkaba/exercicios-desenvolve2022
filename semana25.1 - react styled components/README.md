@@ -1,6 +1,8 @@
 
 # Smart Bank 
 
+![Preview do Smart Bank](./smart-bank-preview.jpg)
+
 Durante o curso foi realizado a refatoração de um site criado em React e CSS (vide pasta "projeto inicial") para que utilize styled-components.
 
 Além, disso foram acrescentados novos itens ao site do banco:

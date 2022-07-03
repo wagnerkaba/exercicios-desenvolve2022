@@ -2,6 +2,8 @@
 
 Formulário com validação de CPF criado com React e Material UI.
 
+![Preview do formulário](./formulario-preview.jpg)
+
 ## Tópicos importantes
 * [Conditional Rendering in React Applications](https://reactjs.org/docs/conditional-rendering.html)
 * [useEffect()](https://reactjs.org/docs/hooks-effect.html) - O fato de useState ser assíncrono [pode ser contornado utilizando useEffect](./notas-de-aula/aula%2003.4%20-%20useState%20%C3%A9%20assincrono.md).

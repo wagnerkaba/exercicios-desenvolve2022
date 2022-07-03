@@ -2,6 +2,8 @@
 
 Formulário com validação de CPF criado com React e Material UI.
 
+![Preview do Formulário](./formulario-preview.jpg)
+
 ## Tecnologias
 * React
 * [Material UI](https://mui.com/pt/)

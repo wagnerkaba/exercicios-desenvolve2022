@@ -3,6 +3,11 @@
 
 Criação de uma loja online onde o cliente pode colocar e retirar produtos no carrinho e efetuar uma compra através de diversas formas de pagamento.
 
+![Preview loja 1](./eshop-preview1.jpg)
+![Preview loja 1](./eshop-preview2.jpg)
+
+
+
 ## Tópicos Importantes
 * [React.memo](./notas-de-aula/memo.md)
 * [Bulma CSS FrameWork](./notas-de-aula/bulma%20css%20framework.md) CSS Framework utilizado no projeto extra (pasta "extra/react-performance").

@@ -1,5 +1,7 @@
 # Blog criado com REACT
 
+![Imagem do blog](./petshop-preview.jpg)
+
 * O blog está dividido em duas categorias: "bem-estar" e "comportamento". 
 * Ao clicar nas categorias, surgem as subcategorias.
 * Ao clicar nos posts, surge o texto completo do post.
