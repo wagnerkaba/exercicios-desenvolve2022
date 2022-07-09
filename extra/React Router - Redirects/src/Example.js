@@ -57,17 +57,6 @@ export default function AuthExample() {
     );
 }
 
-const fakeAuth = {
-    isAuthenticated: false,
-    signin(cb) {
-        fakeAuth.isAuthenticated = true;
-        setTimeout(cb, 100); // fake async
-    },
-    signout(cb) {
-        fakeAuth.isAuthenticated = false;
-        setTimeout(cb, 100);
-    }
-};
 
 /** For more details on
  * `authContext`, `ProvideAuth`, `useAuth` and `useProvideAuth`
@@ -91,18 +80,16 @@ function useAuth() {
 function useProvideAuth() {
     const [user, setUser] = useState(null);
 
-    const signin = cb => {
-        return fakeAuth.signin(() => {
-            setUser("user");
-            cb();
-        });
+    const signin = callbackFunction => {
+
+        setUser("user");
+        callbackFunction();
+
     };
 
-    const signout = cb => {
-        return fakeAuth.signout(() => {
-            setUser(null);
-            cb();
-        });
+    const signout = callbackFunction => {
+        setUser(null);
+        callbackFunction();
     };
 
     return {
@@ -116,6 +103,8 @@ function AuthButton() {
     let history = useHistory();
     let auth = useAuth();
 
+    // se user existe, mostra pagina de boas vindas
+    // se user não existe, diz que user não está logado
     return auth.user ? (
         <p>
             Welcome!{" "}
@@ -169,10 +158,13 @@ function LoginPage() {
     let auth = useAuth();
 
     let { from } = location.state || { from: { pathname: "/" } };
+
     let login = () => {
-        auth.signin(() => {
-            history.replace(from);
-        });
+        auth.signin(
+            () => {
+                history.replace(from);
+            }
+        );
     };
 
     return (
