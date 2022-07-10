@@ -24,6 +24,7 @@ interface Props {
    * You won't need it on your project.
    */
   window?: () => Window;
+
 }
 
 export default function ResponsiveDrawer(props: Props) {
@@ -93,12 +94,16 @@ export default function ResponsiveDrawer(props: Props) {
           </Typography>
         </Toolbar>
       </AppBar>
+      
+      
+      
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
         aria-label="mailbox folders"
       >
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+        {/*==================================== TEMPORARY DRAWER ====================================*/}
         <Drawer
           container={container}
           variant="temporary"
@@ -114,6 +119,8 @@ export default function ResponsiveDrawer(props: Props) {
         >
           {drawer}
         </Drawer>
+
+        {/*==================================== PERMANENT DRAWER ====================================*/}
         <Drawer
           variant="permanent"
           sx={{
@@ -125,6 +132,10 @@ export default function ResponsiveDrawer(props: Props) {
           {drawer}
         </Drawer>
       </Box>
+
+      {/*==================================== MAIN ====================================*/}
+
+
       <Box
         component="main"
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
