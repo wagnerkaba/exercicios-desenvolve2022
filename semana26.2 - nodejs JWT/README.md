@@ -12,6 +12,7 @@
 * BCrypt 3.0.8 (Para instalar: `npm insatall bcrypt@3.0.8`)
 * Passport 0.4.1 (Para instalar: `npm install passport@0.4.1`)
 * Passport-local 1.0.0 (Para instalar: `npm install passport-local@1.0.0`)
+* jsonwebtoken 8.5.1 (Para instalar: `npm install jsonwebtoken@8.5.1`)
 
 
 ## Setup
