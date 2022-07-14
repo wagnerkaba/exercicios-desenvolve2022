@@ -1,10 +1,12 @@
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const BearerStrategy = require('passport-http-bearer').Strategy;
 
 const Usuario = require('./usuarios-modelo');
 const {InvalidArgumentError} = require('../erros');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 function verificaUsuario(usuario){
 
@@ -47,4 +49,12 @@ passport.use(
             done(erro);
         }
     })
+);
+
+passport.use(
+    new BearerStrategy(
+        (token, done) => {
+
+        }
+    )
 )

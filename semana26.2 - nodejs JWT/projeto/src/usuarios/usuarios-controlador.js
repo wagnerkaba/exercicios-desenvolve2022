@@ -9,8 +9,9 @@ function criaTokenJWT(usuario){
   const payload = {
     id: usuario.id
   };
-
-  const token = jwt.sign(payload, 'senha-secreta');
+  // process.env.CHAVE_JWT é uma variavel de ambiente salva no arquivo .env
+  // para conseguir ler essa variável, é preciso ter instalado dotenv
+  const token = jwt.sign(payload, process.env.CHAVE_JWT);
   return token;
 }
 
