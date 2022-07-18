@@ -44,7 +44,12 @@ module.exports = {
 
                 // aqui é tratado a hipótese em que a credencial não é válida
                 if (erro && erro.name === 'JsonWebTokenError') {
-                    return res.status(401).json
+                    return res.status(401).json({ erro: erro.message });
+                }
+
+                // aqui é tratado a hipótese em que o tempo do token expirou
+                if (erro && erro.name === 'TokenExpiredError') {
+                    return res.status(401).json({ erro: erro.message, expiradoEm: erro.expiredAt });
                 }
 
                 // aqui são tratados quaisquer erros que não foram previstos
@@ -55,9 +60,10 @@ module.exports = {
                 // Aqui é tratado a hipótese em que o input está mal formatado
                 // Ou seja, a função call-back do passport authenticate é chamada com os atributos erro como null e usuário como false.
                 if (!usuario) {
-                    return res.status(401).json({ erro: 'usuario: false'});
+                    return res.status(401).json({ erro: 'usuario = false' });
                 }
 
+                req.token = info.token;
                 req.user = usuario; // caso a autenticação tenha dado certo, usuario é inserido em req.user
                 return next(); // chama o próximo middleware
             }

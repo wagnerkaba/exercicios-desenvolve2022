@@ -1,8 +1,9 @@
 const Usuario = require('./usuarios-modelo');
 const { InvalidArgumentError, InternalServerError } = require('../erros');
 const jwt = require('jsonwebtoken');
+const blacklist = require('../../redis/manipula-blacklist');
 
-function criaTokenJWT(usuario){
+function criaTokenJWT(usuario) {
 
   // payload é informação a ser enviada no token
   // Para saber mais, vide estrutura de um JWT no endereço: https://jwt.io/
@@ -11,7 +12,7 @@ function criaTokenJWT(usuario){
   };
   // process.env.CHAVE_JWT é uma variavel de ambiente salva no arquivo .env
   // para conseguir ler essa variável, é preciso ter instalado dotenv
-  const token = jwt.sign(payload, process.env.CHAVE_JWT);
+  const token = jwt.sign(payload, process.env.CHAVE_JWT, { expiresIn: '15m' });
   return token;
 }
 
@@ -49,6 +50,18 @@ module.exports = {
     // envia o token JWT no header "authorization"
     res.set('Authorization', token);
     res.status(204).send();
+  },
+
+
+  logout: async (req, res) => {
+    try {
+      const token = req.token;
+      await blacklist.adiciona(token);
+      res.status(204).send();
+    } catch(erro){
+      res.status(500).json({erro: erro.message});
+    }
+
   },
 
   lista: async (req, res) => {
