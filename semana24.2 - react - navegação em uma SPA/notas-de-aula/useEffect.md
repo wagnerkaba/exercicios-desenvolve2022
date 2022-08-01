@@ -23,4 +23,5 @@ useEffect(callback[, dependencies]);
 
 *Put your side-effect logic into the `callback` function, then use the `dependencies` argument to control when you want the side-effect to run. That's the sole purpose of `useEffect()`.*
 
-Para maiores explicações, vide [A Simple Explanation of React.useEffect()](A%20Simple%20Explanation%20of%20React.useEffect().pdf)
+Para maiores explicações, vide [A Simple Explanation of React.useEffect()](A%20Simple%20Explanation%20of%20React.useEffect().pdf): 
+> https://dmitripavlutin.com/react-useeffect-explanation/

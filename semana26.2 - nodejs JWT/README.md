@@ -11,7 +11,8 @@ Para testar o sistema, utilize o Postman e importe [este arquivo](nodejs%20%2B%2
 * [Bcrypt](./notas-de-aula/aula%201.07%20-%20Funcionamento%20do%20bcrypt.pdf)
 * Implementação de um sistema de autenticação onde o usuário fornece email e senha como credenciais e recebe um token JWT.
 * Como guardar a senha secreta para assinatura do JWT em uma variável de ambiente utilizando [dotenv](https://www.npmjs.com/package/dotenv).
-* [Como invalidar JSON Web Tokens com uma blacklist](./notas-de-aula/aula%204.06%20-%20blacklist.md)
+* [Como invalidar JSON Web Tokens através de uma blacklist quando o usuário faz logout](./notas-de-aula/aula%204.06%20-%20blacklist.md)
+* [Desvantagens da rota de logout](./notas-de-aula/Desvantagens%20da%20rota%20de%20logout.md)
 
 
 ## Tecnologias utilizadas
@@ -42,7 +43,8 @@ Iniciando o blog:
 npm start
 ```
 
-Iniciar o servidor REDIS no terminal do WSL2:
+Iniciar o servidor REDIS
+OBS: O comando abaixo deve ser digitado no terminal do WSL2, pois o REDIS está instalado no ubuntu.
 ```
 sudo service redis-server start
 ```
