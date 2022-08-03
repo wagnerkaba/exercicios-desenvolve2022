@@ -1,0 +1,3 @@
+# Para saber mais: Projeto de software
+
+Decisões sobre a arquitetura do seu software são cruciais para uma comunicação e desenvolvimento mais eficientes. Para isso, é sempre importante consultar materiais como os do Refactoring.Guru sobre [padrões de projeto](https://refactoring.guru/pt-br/design-patterns) e [refatoração](https://refactoring.guru/refactoring) (em inglês), que apresentam explicações ilustradas e abrangentes, na hora de definir a arquitetura do seu projeto.
