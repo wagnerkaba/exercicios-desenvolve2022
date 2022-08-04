@@ -8,7 +8,7 @@ Este curso é uma continuação da [semana 26.2 - NodeJS JWT](../semana26.2%20-%
 * Token Opaco (Opaque Tokens) - The opaque token is a random unique string of characters issued by the authorization server. It is one of the possible formats that access tokens or refresh tokens can take. The opaque token does not pass any identifiable information on the user so it’s impossible for the resource server to make any authorization decisions based on the opaque token itself. The opaque contains an identifier to information stored on the authorization server. To validate the token and retrieve the information on the token and the user, the resource server calls the authorization server and requests the token introspection. 
 * [Fluxo de autenticação](./notas-de-aula/aula%201.09%20-%20Como%20funcionam%20os%20refresh%20tokens%20-%20fluxo%20de%20autentica%C3%A7%C3%A3o.pdf)
 
-## Tecnologias utilizadas
+## Tecnologias utilizadas (semana 26)
 * NodeJS
 * BCrypt 3.0.8 (Para instalar: `npm install bcrypt@3.0.8`)
 * Passport 0.4.1 (Para instalar: `npm install passport@0.4.1`) - `Passport` is nodejs 'Connect style middleware' for user authentication. You're most likely to see it as Express middleware. To use passport you need to use passport and a 'strategy' defining what you are using to authenticate against. This could for example be Facebook or Google via oauth, SAML, or simply cookies. So to use Passport you need to require both the passport module itself and the relevant **'strategy'** module.
@@ -19,7 +19,10 @@ Este curso é uma continuação da [semana 26.2 - NodeJS JWT](../semana26.2%20-%
 *A security token with the property that any party in possession of the token (a "bearer") can use the token in any way that any other party in possession of it can.*
 * Redis - Redis is an in-memory data structure store, used as a distributed, in-memory key–value database, cache and message broker, with optional durability. OBS: a maneira mais fácil de instalar o REDIS no windows é [através do WSL2](https://redis.io/docs/getting-started/installation/install-redis-on-windows/).
 * Node-Redis - node-redis is a modern, high performance Redis client for Node.js (Para instalar: `npm install redis@3.0.2`)
+
+## Tecnologias utilizadas (semana 26)
 * MomentJS - MomentJS is a JavaScript library which helps is parsing, validating, manipulating and displaying date/time in JavaScript in a very easy way.
+* nodemailer - Send emails from Node.js.
 
 ## Setup
 
