@@ -7,6 +7,7 @@ Este curso é uma continuação da [semana 26.2 - NodeJS JWT](../semana26.2%20-%
 * [Como funcionam os refresh tokens](./notas-de-aula/aula%201.05%20-%20como%20funcionam%20os%20refresh%20tokens.md)
 * Token Opaco (Opaque Tokens) - The opaque token is a random unique string of characters issued by the authorization server. It is one of the possible formats that access tokens or refresh tokens can take. The opaque token does not pass any identifiable information on the user so it’s impossible for the resource server to make any authorization decisions based on the opaque token itself. The opaque contains an identifier to information stored on the authorization server. To validate the token and retrieve the information on the token and the user, the resource server calls the authorization server and requests the token introspection. 
 * [Fluxo de autenticação](./notas-de-aula/aula%201.09%20-%20Como%20funcionam%20os%20refresh%20tokens%20-%20fluxo%20de%20autentica%C3%A7%C3%A3o.pdf)
+* [Como criar um processo de verificação de endereço de e-mail](./notas-de-aula/aula%204.03%20-%20Modelo%20de%20verifica%C3%A7%C3%A3o%20de%20emails.md)
 
 ## Tecnologias utilizadas (semana 26)
 * NodeJS

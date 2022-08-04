@@ -3,11 +3,11 @@ const { InvalidArgumentError } = require('../erros');
 const tokens = require('./tokens');
 const {EmailVerificacao} = require('./emails');
 
-function geraEndereco(rota, id){
+function geraURLVerificacao(rota, token){
 
   // pega baseURL do arquivo .env (arquivo de variaveis do ambiente)
-  const baseURL = process.env.baseURL;
-  return `${baseURL}${rota}${id}`;
+  const baseURL = process.env.BASE_URL;
+  return `${baseURL}${rota}${token}`;
 }
 
 module.exports = {
@@ -18,11 +18,13 @@ module.exports = {
       const usuario = new Usuario({
         nome,
         email,
+        emailVerificado: false 
       });
       await usuario.adicionaSenha(senha);
       await usuario.adiciona();
 
-      const urlVerificacao = geraEndereco('/usuario/verifica_email/', usuario.id);
+      const token = tokens.verificacaoEmail.cria(usuario.id);
+      const urlVerificacao = geraURLVerificacao('/usuario/verifica_email/', token);
       const emailVerificacao = new EmailVerificacao(usuario, urlVerificacao);
 
       //como o envio do email pode demorar muito, então neste caso não é usado a palavra "await"
@@ -67,6 +69,16 @@ module.exports = {
       res.json(usuarios);
     } catch (erro) {
       res.status(500).json({ erro: erro.message });
+    }
+  },
+
+  async verificaEmail(req,res){
+    try {
+      const usuario = req.user;
+      await usuario.verificaEmail();
+      res.status(200).json();
+    } catch (erro){
+      res.status(500).json({erro: erro.message});
     }
   },
 
