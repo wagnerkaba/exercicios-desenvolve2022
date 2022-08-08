@@ -36,10 +36,11 @@ npm install
 ```
 
 Iniciando o blog:
+```
+npm run dev
+```
+OBS: para entender a diferença entre `npm start` e `npm run` vide arquivo nas [notas de aula](./notas-de-aula/npm%20start.md)
 
-```
-npm start
-```
 
 Iniciar o servidor REDIS
 OBS: O comando abaixo deve ser digitado no terminal do WSL2, pois o REDIS está instalado no ubuntu.

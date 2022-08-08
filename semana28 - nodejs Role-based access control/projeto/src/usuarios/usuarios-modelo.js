@@ -10,6 +10,7 @@ class Usuario {
     this.email = usuario.email
     this.senhaHash = usuario.senhaHash
     this.emailVerificado = usuario.emailVerificado
+    this.cargo = usuario.cargo
     this.valida()
   }
 
@@ -34,6 +35,12 @@ class Usuario {
   valida () {
     validacoes.campoStringNaoNulo(this.nome, 'nome')
     validacoes.campoStringNaoNulo(this.email, 'email')
+    const cargosValidos = ['admin', 'editor', 'assinante'];
+
+    //The indexOf() method returns the first index at which a given element can be found in the array, or -1 if it is not present.
+    if (cargosValidos.indexOf(this.cargo)===-1){
+      throw new InvalidArgumentError('O campo cargo está inválido');
+    }
   }
 
   async verificaEmail () {
