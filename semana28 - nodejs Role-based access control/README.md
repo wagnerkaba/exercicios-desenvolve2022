@@ -4,11 +4,17 @@ Este curso é uma continuação da [semana 27.1 - NodeJS Refresh Tokens](../sema
 
 
 ## Tópicos importantes
-* 
+* [Política de acesso ao conteúdo](./notas-de-aula/aula%202.04%20-%20Pol%C3%ADtica%20de%20acesso.md).
+* [Remoção de posts do blog de acordo com o controle de acesso](./notas-de-aula/aula%203.06%20-%20Apenas%20admin%20pode%20remover%20quaisquer%20posts.md) Pessoas com cargo de admin podem apagar posts de qualquer pessoa, e quem possui o acesso de editor apenas consegue apagar seus próprios posts.
 
 
+## Tecnologias utilizadas (semana 28)
+* [Access Control](https://www.npmjs.com/package/accesscontrol) - Role and Attribute based Access Control for Node.js
 
 
+## Tecnologias utilizadas (semana 27)
+* MomentJS - MomentJS is a JavaScript library which helps is parsing, validating, manipulating and displaying date/time in JavaScript in a very easy way.
+* nodemailer - Send emails from Node.js.
 
 
 ## Tecnologias utilizadas (semana 26)
@@ -23,9 +29,6 @@ Este curso é uma continuação da [semana 27.1 - NodeJS Refresh Tokens](../sema
 * Redis - Redis is an in-memory data structure store, used as a distributed, in-memory key–value database, cache and message broker, with optional durability. OBS: a maneira mais fácil de instalar o REDIS no windows é [através do WSL2](https://redis.io/docs/getting-started/installation/install-redis-on-windows/).
 * Node-Redis - node-redis is a modern, high performance Redis client for Node.js (Para instalar: `npm install redis@3.0.2`)
 
-## Tecnologias utilizadas (semana 27)
-* MomentJS - MomentJS is a JavaScript library which helps is parsing, validating, manipulating and displaying date/time in JavaScript in a very easy way.
-* nodemailer - Send emails from Node.js.
 
 ## Setup
 

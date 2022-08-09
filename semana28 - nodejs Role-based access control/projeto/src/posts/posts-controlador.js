@@ -19,7 +19,12 @@ module.exports = {
 
   async lista (req, res) {
     try {
-      const posts = await Post.listarPorAutor(req.user.id)
+      let posts = await Post.listarTodos()
+
+      // se o usuário não estiver autenticado, ele pode ver apenas o titulo e o conteudo do post
+      if(!req.estaAutenticado){
+        posts = posts.map(post => ({titulo: post.titulo, conteudo: post.conteudo}))
+      }
 
       res.json(posts)
     } catch (erro) {
@@ -38,7 +43,20 @@ module.exports = {
 
   async remover (req, res) {
     try {
-      const post = await Post.buscaPorId(req.params.id, req.user.id)
+
+      let post;
+
+      console.log(req.acesso);
+
+      if (req.acesso.todos.permitido === true){
+        post = await Post.buscaPorId(req.params.id)
+      } else if (req.acesso.apenasSeu.permitido === true){
+        post = await Post.buscaPorIdAutor(req.params.id, req.user.id)
+
+      }
+
+      //CORRIGIR: SE UM EDITOR TENTA APAGAR UM POST QUE NÃO É SEU, post será nulo (RESPOSTA DO MÉTODO buscaPorIdAutor)
+      //SE POST É NULO, post.remover vai dar erro!!!!
       post.remover()
       res.status(204)
       res.end()
