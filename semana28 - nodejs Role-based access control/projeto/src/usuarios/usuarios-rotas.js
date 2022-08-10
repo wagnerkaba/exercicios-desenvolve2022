@@ -35,5 +35,12 @@ module.exports = app => {
 
   app
     .route('/usuario/:id')
-    .delete(middlewaresAutenticacao.bearer, usuariosControlador.deleta)
+    .delete(
+      //para deletar um usuario é preciso ter o token JWT e também é preciso enviar login e senha no body  
+      //trata-se de dupla autenticação para evitar uma deleção acidental   
+      [middlewaresAutenticacao.bearer, middlewaresAutenticacao.local, autorizacao('usuario', 'remover')],
+      usuariosControlador.deleta
+    )
+
+
 }

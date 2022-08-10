@@ -22,7 +22,9 @@ module.exports = app => {
       postsControlador.obterDetalhes
     )
     .delete(
-      [middlewaresAutenticacao.bearer, autorizacao('post', 'remover')],
+      //para deletar um post é preciso ter o token JWT e também é preciso enviar login e senha no body  
+      //trata-se de dupla autenticação para evitar uma deleção acidental    
+      [middlewaresAutenticacao.bearer, middlewaresAutenticacao.local, autorizacao('post', 'remover')],
       postsControlador.remover
     )
 }
