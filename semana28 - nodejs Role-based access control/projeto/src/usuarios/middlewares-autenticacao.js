@@ -10,7 +10,7 @@ module.exports = {
       (erro, usuario, info) => {
 
         if(erro){
-          //segue para middleware de tratamento de erros
+          //segue para middleware de tratamento de erros em server.js
           return next(erro);
         }
         req.user = usuario
@@ -27,7 +27,7 @@ module.exports = {
       (erro, usuario, info) => {
 
         if (erro){
-          //segue para middleware tratamento de erros
+          //segue para middleware tratamento de erros em server.js
           return next(erro);
         }
 
@@ -63,7 +63,7 @@ module.exports = {
       req.user = usuario
       next()
     } catch (erro) {
-      //segue para middleware de tratamento de erros
+      //segue para middleware de tratamento de erros em server.js
       next(erro);
     }
   }

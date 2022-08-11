@@ -30,7 +30,7 @@ module.exports = {
 
       res.status(201).json()
     } catch (erro) {
-      //segue para middleware de tratamento de erros
+      //segue para middleware de tratamento de erros em server.js
       proximo(erro);
     }
   },
@@ -42,7 +42,7 @@ module.exports = {
       res.set('Authorization', accessToken)
       res.status(200).json({ refreshToken })
     } catch (erro) {
-      //segue para middleware de tratamento de erros
+      //segue para middleware de tratamento de erros em server.js
       proximo(erro);
     }
   },
@@ -53,7 +53,7 @@ module.exports = {
       await tokens.access.invalida(token)
       res.status(204).json()
     } catch (erro) {
-      //segue para middleware de tratamento de erros
+      //segue para middleware de tratamento de erros em server.js
       proximo(erro);
     }
   },
@@ -63,7 +63,7 @@ module.exports = {
       const usuarios = await Usuario.lista()
       res.json(usuarios)
     } catch (erro) {
-      //segue para middleware de tratamento de erros
+      //segue para middleware de tratamento de erros em server.js
       proximo(erro);
     }
   },
@@ -74,7 +74,7 @@ module.exports = {
       await usuario.verificaEmail()
       res.status(200).json()
     } catch (erro) {
-      //segue para middleware de tratamento de erros
+      //segue para middleware de tratamento de erros em server.js
       proximo(erro);
     }
   },
@@ -85,7 +85,7 @@ module.exports = {
       await usuario.deleta()
       res.status(200).json()
     } catch (erro) {
-      //segue para middleware de tratamento de erros
+      //segue para middleware de tratamento de erros em server.js
       proximo(erro);
     }
   }
