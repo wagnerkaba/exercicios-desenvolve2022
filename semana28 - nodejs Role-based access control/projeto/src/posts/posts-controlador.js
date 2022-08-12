@@ -1,5 +1,6 @@
 const Post = require('./posts-modelo')
 const { InvalidArgumentError } = require('../erros')
+const ConversorPost = require('../conversores');
 
 module.exports = {
   async adiciona (req, res) {
@@ -20,13 +21,18 @@ module.exports = {
   async lista (req, res) {
     try {
       let posts = await Post.listarTodos()
+      const conversor = new ConversorPost('json');
 
-      // se o usuário não estiver autenticado, ele pode ver apenas o titulo e o conteudo do post
+      // se o usuário não estiver autenticado, ele será avisado que precisa assinar o blog para ver todo conteudo
       if(!req.estaAutenticado){
-        posts = posts.map(post => ({titulo: post.titulo, conteudo: post.conteudo}))
+        posts = posts.map(post => {
+          post.conteudo = post.conteudo.substr(0,10) + '... Você precisa assinar o blog para ler o restante do post.';
+          return post;
+        })
       }
 
-      res.json(posts)
+      //converter faz com que apenas o titulo e o conteudo do post sejam mostrados
+      res.send(conversor.converter(posts));
     } catch (erro) {
       return res.status(500).json({ erro: erro.message })
     }
@@ -55,8 +61,6 @@ module.exports = {
 
       }
 
-      //CORRIGIR: SE UM EDITOR TENTA APAGAR UM POST QUE NÃO É SEU, post será nulo (RESPOSTA DO MÉTODO buscaPorIdAutor)
-      //SE POST É NULO, post.remover vai dar erro!!!!
       post.remover()
       res.status(204)
       res.end()
