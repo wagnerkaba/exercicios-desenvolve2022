@@ -1,6 +1,6 @@
 const Post = require('./posts-modelo')
 const { InvalidArgumentError } = require('../erros')
-const ConversorPost = require('../conversores');
+const {ConversorPost} = require('../conversores');
 
 module.exports = {
   async adiciona (req, res) {
@@ -20,8 +20,19 @@ module.exports = {
 
   async lista (req, res) {
     try {
-      let posts = await Post.listarTodos()
-      const conversor = new ConversorPost('json');
+      let posts = await Post.listarTodos();
+            
+      // OBSERVAÇÃO 1
+      // para entender atributos, veja nota de aula: attributes.md
+      // se a pessoa tiver acesso a todos os dados, então os atributos são capturados de todos. 
+      // caso contrário, os atributos serão capturados de apenasSeu
+      // OBSERVAÇÃO 2
+      // req.acesso pode ser undefined caso o usuário não esteja autenticado. Isso pode dar erro "Cannot read Properties of Undefined"
+      // Para evitar erro, eu coloquei "?"
+      // Para entender melhor "?", veja nota de aula "Cannot read Properties of Undefined.md"  
+      const atributos = req.acesso?.todos.permitido ? req.acesso.todos.atributos : req.acesso?.apenasSeu.atributos;
+
+      const conversor = new ConversorPost('json', atributos);
 
       // se o usuário não estiver autenticado, ele será avisado que precisa assinar o blog para ver todo conteudo
       if(!req.estaAutenticado){
@@ -31,7 +42,7 @@ module.exports = {
         })
       }
 
-      //converter faz com que apenas o titulo e o conteudo do post sejam mostrados
+      //converter faz com que apenas o titulo e o conteudo do post sejam mostrados, caso usuario não esteja autenticado
       res.send(conversor.converter(posts));
     } catch (erro) {
       return res.status(500).json({ erro: erro.message })

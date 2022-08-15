@@ -41,6 +41,7 @@ module.exports = (entidade, acao) => (requisicao, resposta, proximo) => {
     requisicao.acesso = {
         todos: {
             permitido: permissaoTodos.granted,
+            // Para entender atributos, veja nota de aula: attributes.md
             atributos: permissaoTodos.attributes
         },
         apenasSeu: {

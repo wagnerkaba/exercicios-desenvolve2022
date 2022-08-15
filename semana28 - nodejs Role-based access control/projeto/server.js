@@ -10,6 +10,8 @@ const routes = require('./rotas')
 const { InvalidArgumentError, NaoEncontrado, NaoAutorizado } = require('./src/erros')
 const jwt = require('jsonwebtoken');
 
+const { conversorErro, ConversorErro } = require('./src/conversores');
+
 //Objetivos deste middleware:
 //      1. colocar o Content-Type no header da resposta para indicar que a resposta está em json
 //      2. se uma requisição pedir um formato diferente de json, encerrar requisição
@@ -52,6 +54,8 @@ app.use((erro, requisicao, resposta, proximo) => {
     //http response status 500 é a resposta padrão desta api quando o erro não está previsto
     //Para saber mais sobre http response status: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
     let status = 500;
+
+    const conversor = new ConversorErro('json');
     const corpo = {
         mensagem: erro.message
     }
@@ -76,7 +80,9 @@ app.use((erro, requisicao, resposta, proximo) => {
         corpo.expiradoEm = erro.expiredAt;
     }
     resposta.status(status);
-    resposta.json(corpo);
+
+    
+    resposta.send(conversor.converter(corpo));
 
 })
 
