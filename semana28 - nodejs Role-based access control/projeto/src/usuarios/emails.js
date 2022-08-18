@@ -14,7 +14,7 @@ const configuracaoEmailTeste = (contaTeste) => ({
   auth: contaTeste
 })
 
-async function criaConfiguracaoEmail () {
+async function criaConfiguracaoEmail() {
   if (process.env.NODE_ENV === 'production') {
     return configuracaoEmailProducao
   } else {
@@ -24,7 +24,7 @@ async function criaConfiguracaoEmail () {
 }
 
 class Email {
-  async enviaEmail () {
+  async enviaEmail() {
     const configuracaoEmail = await criaConfiguracaoEmail()
     const transportador = nodemailer.createTransport(configuracaoEmail)
     const info = await transportador.sendMail(this)
@@ -36,7 +36,7 @@ class Email {
 }
 
 class EmailVerificacao extends Email {
-  constructor (usuario, endereco) {
+  constructor(usuario, endereco) {
     super()
     this.from = '"Blog do Código" <noreply@blogdocodigo.com.br>'
     this.to = usuario.email
@@ -47,7 +47,7 @@ class EmailVerificacao extends Email {
 }
 
 class EmailRedefinicaoSenha extends Email {
-  constructor (usuario,token) {
+  constructor(usuario, token) {
     super()
     this.from = '"Blog do Código" <noreply@blogdocodigo.com.br>'
     this.to = usuario.email
@@ -57,4 +57,22 @@ class EmailRedefinicaoSenha extends Email {
   }
 }
 
-module.exports = { EmailVerificacao, EmailRedefinicaoSenha }
+
+/**
+ * Classe com objetivo de enviar email para notificar o usuário de que um novo post foi criado por ele.
+ */
+class EmailNovoPost extends Email {
+
+  constructor(usuario, tituloPost) {
+    super()
+    this.from = '"Blog do Código" <noreply@blogdocodigo.com.br>'
+    this.to = usuario.email
+    this.subject = 'Novo Post criado'
+    this.text = `Olá! Você criou um novo post com titulo "${tituloPost}".`
+    this.html = `<h1>Olá!</h1> Você criou um novo post com titulo "${tituloPost}".`
+  }
+
+}
+
+
+module.exports = { EmailVerificacao, EmailRedefinicaoSenha, EmailNovoPost }

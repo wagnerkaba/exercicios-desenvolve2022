@@ -2,12 +2,16 @@
 
 Este curso é uma continuação da [semana 27.1 - NodeJS Refresh Tokens](../semana27.1%20-%20nodejs%20refresh%20tokens/README.md) e da [semana 26.2 - nodejs JWT](../semana26.2%20-%20nodejs%20JWT/README.md).
 
-
 ## Tópicos importantes
 * [Política de acesso ao conteúdo](./notas-de-aula/aula%202.04%20-%20Pol%C3%ADtica%20de%20acesso.md).
 * [Remoção de posts do blog de acordo com o controle de acesso](./notas-de-aula/aula%203.06%20-%20Apenas%20admin%20pode%20remover%20quaisquer%20posts.md) Pessoas com cargo de admin podem apagar posts de qualquer pessoa, e quem possui o acesso de editor apenas consegue apagar seus próprios posts.
 * [Middleware para tratamento de erros](./notas-de-aula/error-handling%20middleware%20function.md)
 * [Como gerar documentação do código](./notas-de-aula/aula%205.07%20-%20Documentando%20uma%20fun%C3%A7%C3%A3o.md) utilizando [ESDoc](https://esdoc.org/)
+* Criação de rotas para redefinição de senha. Para redefinir uma senha, o usuário deve utilizar a rota *localhost:3000/usuario/esqueci-minha-senha* com o email no *body* da requisição. Caso o email esteja cadastrado, a API irá responder com um *token* enviado por email. Em seguida, o usuário deve utilizar a rota *localhost:3000/usuario/trocar-senha* com o token e a nova senha no *body* da requisição. Assim, a senha do usuário será redefinida com sucesso.
+
+## Postman
+
+Para testar a API com postman, importe este [arquivo](nodejs%20%2BRBAC%20(semana%2028).postman_collection.json) para o postman.
 
 
 ## Tecnologias utilizadas (semana 28)
