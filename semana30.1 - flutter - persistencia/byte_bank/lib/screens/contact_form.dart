@@ -51,8 +51,8 @@ class _ContactFormState extends State<ContactForm> {
                 child: ElevatedButton(
                   onPressed: () {
                     final String name = _nameController.text;
-                    final int? accountNumber = int.tryParse(_accountNumberController.text);
-                    final Contact newContact = Contact(name, accountNumber);
+                    final int accountNumber = int.tryParse(_accountNumberController.text)!; // using the ! operator to explicitly tell the dart compiler that although the variable can be nullable I guarantee that it's not null
+                    final Contact newContact = Contact(0, name, accountNumber);
                     debugPrint(newContact.toString());
                     debugPrint('Estou em elevated button');
 
