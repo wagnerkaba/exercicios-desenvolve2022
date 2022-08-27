@@ -4,6 +4,7 @@
 
 ## Tópicos importantes
 
+* [Effective Dart: Style](https://dart.dev/guides/language/effective-dart/style) - Página que mostra os padrões de nomes para dart. 
 
 
 
