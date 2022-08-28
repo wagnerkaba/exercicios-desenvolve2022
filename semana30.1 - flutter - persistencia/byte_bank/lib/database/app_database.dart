@@ -33,7 +33,10 @@ Future<List<Contact>> findAll() {
       final List<Contact> contacts = [];
       for (Map<String, dynamic> map in maps) {
         final Contact contact =
-            Contact(map['id'], map['name'], map['accountNumber']);
+            Contact(
+                map['id'],
+                map['name'],
+                map['account_number']);
         contacts.add(contact);
       }
       return contacts;
