@@ -7,38 +7,66 @@ import '../models/Contact.dart';
 class ContactsList extends StatelessWidget {
   ContactsList({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Contacts'),
       ),
-      body: FutureBuilder(
-        future: findAll(),
+      body: FutureBuilder<List<Contact>>(
+        initialData: [],
+        future: Future.delayed(Duration(seconds: 1)).then((value) => findAll()),
         builder: (context, snapshot) {
-          final List<Contact> contacts = snapshot.data as List<Contact>;
-          return ListView.builder(
-            itemBuilder: (context, index) {
-              final Contact contact = contacts[index];
-              return _ContactItem(contact);
-            },
-            itemCount: contacts.length,
-          );
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              // Not currently connected to any asynchronous computation.
+              // For example, a FutureBuilder whose FutureBuilder.future is null.
+              // Não é o caso de ser implementado
+              break;
+            case ConnectionState.waiting:
+              // Connected to an asynchronous computation and awaiting interaction.
+              // Neste caso, deve aparecer o indicador de progresso para o usuário
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: const <Widget>[
+                    CircularProgressIndicator(),
+                    Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Text("Loading..."),
+                    )
+                  ],
+                ),
+              );
+            case ConnectionState.active:
+              // Connected to an active asynchronous computation.
+              // For example, a Stream that has returned at least one value, but is not yet done.
+              // Não é o caso de ser implementado
+              break;
+            case ConnectionState.done:
+              // Connected to a terminated asynchronous computation.
+              final List<Contact> contacts = snapshot.data as List<Contact>;
+              return ListView.builder(
+                itemBuilder: (context, index) {
+                  final Contact contact = contacts[index];
+                  return _ContactItem(contact);
+                },
+                itemCount: contacts.length,
+              );
+          }
+
+          // O código só vai chegar neste ponto se ocorrer algum erro imprevisto
+          return const Text('Unknown error');
         },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context)
-              .push(
-                MaterialPageRoute(
-                  builder: (context) => ContactForm(),
-                ),
-              )
-              .then(
-                (newContact) => debugPrint(newContact.toString()),
-              );
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ContactForm(),
+            ),
+          );
         },
         child: const Icon(Icons.add),
       ),

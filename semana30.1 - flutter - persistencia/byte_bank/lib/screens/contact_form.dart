@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../database/app_database.dart';
 import '../models/Contact.dart';
 
 class ContactForm extends StatefulWidget {
@@ -55,8 +56,9 @@ class _ContactFormState extends State<ContactForm> {
                     final Contact newContact = Contact(0, name, accountNumber);
                     debugPrint(newContact.toString());
                     debugPrint('Estou em elevated button');
+                    save(newContact).then((id) => Navigator.pop(context));
 
-                    Navigator.pop(context,newContact);
+
                   },
                   child: Text('Create'),
                 ),

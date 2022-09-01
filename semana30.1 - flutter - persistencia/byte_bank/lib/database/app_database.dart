@@ -2,24 +2,29 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import '../models/Contact.dart';
 
-Future<Database> createDatabase(){
-  return getDatabasesPath()
-      .then(
-        (dbPath){
-            final String path = join(dbPath, 'bytebank.db');
-            return openDatabase(path, onCreate: (db, version){
-              db.execute(
-                  'CREATE TABLE contacts('
-                  'id INTEGER PRIMARY KEY, '
-                  'name TEXT, '
-                  'account_number INTEGER)');
-            }, version: 1);
+Future<Database> createDatabase() {
+  return getDatabasesPath().then(
+    (dbPath) {
+      final String path = join(dbPath, 'bytebank.db');
+      return openDatabase(
+        path,
+        onCreate: (db, version) {
+          db.execute('CREATE TABLE contacts('
+              'id INTEGER PRIMARY KEY, '
+              'name TEXT, '
+              'account_number INTEGER)');
         },
+        version: 1,
+        //gambiarra ensinada na aula 5.1 para limpar o banco de dados
+        //fazer upgrade do banco de dados e depois fazer downgrade e ativar opção para apagar bd no downgrade (vide linha abaixo)
+        //onDowngrade: onDatabaseDowngradeDelete,
       );
+    },
+  );
 }
 
-Future<int> save(Contact contact){
-  return createDatabase().then((db){
+Future<int> save(Contact contact) {
+  return createDatabase().then((db) {
     final Map<String, dynamic> contactMap = Map();
     contactMap['name'] = contact.name;
     contactMap['account_number'] = contact.accountNumber;
@@ -33,10 +38,7 @@ Future<List<Contact>> findAll() {
       final List<Contact> contacts = [];
       for (Map<String, dynamic> map in maps) {
         final Contact contact =
-            Contact(
-                map['id'],
-                map['name'],
-                map['account_number']);
+            Contact(map['id'], map['name'], map['account_number']);
         contacts.add(contact);
       }
       return contacts;

@@ -8,7 +8,6 @@ import 'models/Contact.dart';
 
 void main() {
   runApp(ByteBankApp());
-  save(Contact(0,'Frankstein',1000));
 }
 
 class ByteBankApp extends StatelessWidget {
