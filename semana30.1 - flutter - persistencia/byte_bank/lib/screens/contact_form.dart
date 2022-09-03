@@ -1,7 +1,7 @@
 
+import 'package:byte_bank/database/dao/contact_dao.dart';
 import 'package:flutter/material.dart';
 
-import '../database/app_database.dart';
 import '../models/Contact.dart';
 
 class ContactForm extends StatefulWidget {
@@ -13,12 +13,13 @@ class ContactForm extends StatefulWidget {
 class _ContactFormState extends State<ContactForm> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _accountNumberController = TextEditingController();
+  final ContactDao _dao = ContactDao();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-      title: Text('New Contact'),),
+      title: const Text('New Contact'),),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -56,7 +57,7 @@ class _ContactFormState extends State<ContactForm> {
                     final Contact newContact = Contact(0, name, accountNumber);
                     debugPrint(newContact.toString());
                     debugPrint('Estou em elevated button');
-                    save(newContact).then((id) => Navigator.pop(context));
+                    _dao.save(newContact).then((id) => Navigator.pop(context));
 
 
                   },
