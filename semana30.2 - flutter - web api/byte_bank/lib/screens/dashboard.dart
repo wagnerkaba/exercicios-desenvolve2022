@@ -1,4 +1,5 @@
 import 'package:byte_bank/screens/contacts_list.dart';
+import 'package:byte_bank/screens/transactions_list.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatelessWidget {
@@ -15,49 +16,98 @@ class Dashboard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(8.0),
             child: Image.asset('images/bytebank_logo.png'),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Material(
-              // No curso, o professor utiliza a linha embaixo para tornar o container verde. Mas no meu código, isso não está funcionando
-              // color: Theme.of(context).primaryColor,
-              color: Colors.green[900],
-              child: InkWell( // Container não possui detecção de gestos. Por isso, é preciso adicionar InkWell (que precisa ser filho de Material)
-                onTap: (){
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(
-                      builder: (context) => ContactsList(),
-                  ));
-                },
-                child: Container(
-                    padding: EdgeInsets.all(8.0),
-                    height: 100,
-                    width: 150,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const <Widget>[
-                        Icon(
-                          Icons.monetization_on,
-                          color: Colors.white,
-                          size: 32.0,
-                        ),
-                        Text(
-                          'Transfer',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
-                          ),
-                        ),
-                      ],
-                    )),
-              ),
+
+          Container(
+            height: 120,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                _FeatureItem(
+                  'Transfer',
+                  Icons.monetization_on,
+                  onClick: () {
+                    _showContactsList(context);
+                  },
+                ),
+                _FeatureItem(
+                  'Transaction Feed',
+                  Icons.description,
+                  onClick: () {
+                    _showTransactionsList(context);
+                  },
+                ),
+              ],
             ),
-          )
+          ),
         ],
       ),
     );
   }
+
+
+}
+
+class _FeatureItem extends StatelessWidget {
+
+  final String name;
+  final IconData icon;
+  final Function onClick;
+
+  _FeatureItem(this.name,
+      this.icon,
+      {required this.onClick});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Material(
+        // No curso, o professor utiliza a linha embaixo para tornar o container verde. Mas no meu código, isso não está funcionando
+        // color: Theme.of(context).primaryColor,
+        color: Colors.green[900],
+        child: InkWell( // Container não possui detecção de gestos. Por isso, é preciso adicionar InkWell (que precisa ser filho de Material)
+          onTap: () => onClick(),
+          child: Container(
+              padding: EdgeInsets.all(8.0),
+              height: 100,
+              width: 150,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Icon(
+                    icon,
+                    color: Colors.white,
+                    size: 32.0,
+                  ),
+                  Text(
+                    name,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ],
+              )),
+        ),
+      ),
+    );
+  }
+}
+
+void _showContactsList(BuildContext context) {
+  Navigator.of(context)
+      .push(MaterialPageRoute(
+    builder: (context) => ContactsList(),
+  ));
+}
+
+void _showTransactionsList(BuildContext context) {
+  Navigator.of(context)
+      .push(MaterialPageRoute(
+    builder: (context) => TransactionsList(),
+  ));
 }
