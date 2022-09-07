@@ -34,7 +34,7 @@ Future<List<Transaction>> findAll() async {
   // descobri que consigo acessar a rota "transactions", através do endereço: http://192.168.15.8:8080/transactions
   // O endereço 192.168.15.8:8080 estava em IPv4 dentro de Wireless LAN adapter wi-fi
   final Response response =
-      await client.get(Uri.http('192.168.15.8:8080', 'transactions'));
+      await client.get(Uri.http('192.168.15.8:8080', 'transactions')).timeout(Duration(seconds: 5));
   final List<dynamic> decodedJson = jsonDecode(response.body);
   final List<Transaction> transactions = [];
   for (Map<String, dynamic> transactionJson in decodedJson) {
