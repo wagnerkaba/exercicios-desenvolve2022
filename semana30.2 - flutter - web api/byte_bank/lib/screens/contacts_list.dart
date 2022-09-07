@@ -1,3 +1,4 @@
+import 'package:byte_bank/components/progress.dart';
 import 'package:byte_bank/database/dao/contact_dao.dart';
 import 'package:byte_bank/screens/contact_form.dart';
 import 'package:flutter/material.dart';
@@ -34,19 +35,7 @@ class _ContactsListState extends State<ContactsList> {
             case ConnectionState.waiting:
               // Connected to an asynchronous computation and awaiting interaction.
               // Neste caso, deve aparecer o indicador de progresso para o usuário
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const <Widget>[
-                    CircularProgressIndicator(),
-                    Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Text("Loading..."),
-                    )
-                  ],
-                ),
-              );
+              return Progress();
             case ConnectionState.active:
               // Connected to an active asynchronous computation.
               // For example, a Stream that has returned at least one value, but is not yet done.
