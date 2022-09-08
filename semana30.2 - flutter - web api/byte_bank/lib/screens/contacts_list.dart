@@ -1,6 +1,7 @@
 import 'package:byte_bank/components/progress.dart';
 import 'package:byte_bank/database/dao/contact_dao.dart';
 import 'package:byte_bank/screens/contact_form.dart';
+import 'package:byte_bank/screens/transaction_form.dart';
 import 'package:flutter/material.dart';
 
 import '../models/Contact.dart';
@@ -13,7 +14,6 @@ class ContactsList extends StatefulWidget {
 }
 
 class _ContactsListState extends State<ContactsList> {
-
   final ContactDao _dao = ContactDao();
 
   @override
@@ -24,7 +24,8 @@ class _ContactsListState extends State<ContactsList> {
       ),
       body: FutureBuilder<List<Contact>>(
         initialData: [],
-        future: Future.delayed(Duration(seconds: 1)).then((value) => _dao.findAll()),
+        future: Future.delayed(Duration(seconds: 1))
+            .then((value) => _dao.findAll()),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
@@ -47,7 +48,14 @@ class _ContactsListState extends State<ContactsList> {
               return ListView.builder(
                 itemBuilder: (context, index) {
                   final Contact contact = contacts[index];
-                  return _ContactItem(contact);
+                  return _ContactItem(contact, onClick: () {
+                    print('============================================= ON CLICK ===================================================================================');
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => TransactionForm(contact),
+                      ),
+                    );
+                  });
                 },
                 itemCount: contacts.length,
               );
@@ -75,13 +83,15 @@ class _ContactsListState extends State<ContactsList> {
 
 class _ContactItem extends StatelessWidget {
   final Contact contact;
+  final Function onClick;
 
-  _ContactItem(this.contact);
+  _ContactItem(this.contact, {required this.onClick});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
+        onTap: () => onClick(),
         title: ListTile(
           title: Text(
             contact.name,

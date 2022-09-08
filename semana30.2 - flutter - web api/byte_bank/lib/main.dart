@@ -8,8 +8,6 @@ import 'models/Contact.dart';
 void main() {
   runApp(ByteBankApp());
 
-  // linha abaixo tem a finalidade de testar a função save
-  save(Transaction(666.0, Contact(0,'Barnabé',1697))).then((transaction) => print(transaction));
 }
 
 class ByteBankApp extends StatelessWidget {
