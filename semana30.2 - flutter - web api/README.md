@@ -8,7 +8,8 @@ Este projeto é continuação da semana 30.1.
 
 * [Como como compartilhar o localhost do seu computador na internet com ngrok](./notas-de-aula/aula%202.08%20-%20Acessando%20a%20web%20API%20local%20via%20endere%C3%A7o%20p%C3%BAblico.md).
 
-
+* [JSON and serialization](https://docs.flutter.dev/development/data-and-backend/json) - It is hard to think of a mobile app that doesn’t need to communicate with a web server or easily store structured data at some point. When making network-connected apps, the chances are that it needs to consume some good old JSON, sooner or later.This guide looks into ways of using JSON with Flutter. It covers which JSON solution to use in different scenarios, and why.
+* [Named Constructors and Initializer lists](./notas-de-aula/named%20constructor%20and%20initializer%20lists.md)
 
 
 
