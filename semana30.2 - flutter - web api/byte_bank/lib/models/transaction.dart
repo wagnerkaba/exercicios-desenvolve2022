@@ -1,4 +1,4 @@
-import 'Contact.dart';
+import 'contact.dart';
 
 class Transaction {
   final double value;

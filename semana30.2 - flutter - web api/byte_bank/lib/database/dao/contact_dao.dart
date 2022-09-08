@@ -1,5 +1,5 @@
 import 'package:sqflite/sqflite.dart';
-import '../../models/Contact.dart';
+import '../../models/contact.dart';
 import '../app_database.dart';
 
 class ContactDao {

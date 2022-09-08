@@ -24,7 +24,6 @@ class TransactionsList extends StatelessWidget {
               break;
             case ConnectionState.waiting:
               return Progress();
-              break;
             case ConnectionState.active:
               break;
             case ConnectionState.done:
@@ -64,7 +63,6 @@ class TransactionsList extends StatelessWidget {
                 'No transactions found',
                 icon: Icons.warning,
               );
-              break;
           }
           return CenteredMessage('Unknown error');
         },

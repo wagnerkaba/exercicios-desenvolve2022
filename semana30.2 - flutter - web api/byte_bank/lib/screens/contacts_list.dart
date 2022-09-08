@@ -4,7 +4,7 @@ import 'package:byte_bank/screens/contact_form.dart';
 import 'package:byte_bank/screens/transaction_form.dart';
 import 'package:flutter/material.dart';
 
-import '../models/Contact.dart';
+import '../models/contact.dart';
 
 class ContactsList extends StatefulWidget {
   ContactsList({Key? key}) : super(key: key);

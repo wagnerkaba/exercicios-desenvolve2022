@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../http/webclients/transaction_webclient.dart';
-import '../models/Contact.dart';
+import '../models/contact.dart';
 import '../models/transaction.dart';
 
 class TransactionForm extends StatefulWidget {
@@ -48,9 +48,9 @@ class _TransactionFormState extends State<TransactionForm> {
                 padding: const EdgeInsets.only(top: 16.0),
                 child: TextField(
                   controller: _valueController,
-                  style: TextStyle(fontSize: 24.0),
-                  decoration: InputDecoration(labelText: 'Value'),
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  style: const TextStyle(fontSize: 24.0),
+                  decoration: const InputDecoration(labelText: 'Value'),
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
                 ),
               ),
               Padding(

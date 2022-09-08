@@ -2,7 +2,7 @@
 import 'package:byte_bank/database/dao/contact_dao.dart';
 import 'package:flutter/material.dart';
 
-import '../models/Contact.dart';
+import '../models/contact.dart';
 
 class ContactForm extends StatefulWidget {
 
