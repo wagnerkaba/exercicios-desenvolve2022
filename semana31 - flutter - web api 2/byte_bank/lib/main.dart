@@ -1,3 +1,4 @@
+import 'package:byte_bank/components/transaction_auth_dialog.dart';
 import 'package:byte_bank/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ class ByteBankApp extends StatelessWidget {
               textTheme: ButtonTextTheme.primary
           ),
         ),
-        home: Dashboard(),
+        home: TransactionAuthDialog(),
     );
   }
 }
