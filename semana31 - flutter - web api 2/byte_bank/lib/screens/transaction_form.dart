@@ -1,3 +1,4 @@
+import 'package:byte_bank/components/response_dialog.dart';
 import 'package:byte_bank/components/transaction_auth_dialog.dart';
 import 'package:flutter/material.dart';
 import '../http/webclients/transaction_webclient.dart';
@@ -63,12 +64,13 @@ class _TransactionFormState extends State<TransactionForm> {
                     child: Text('Transfer'),
                     onPressed: () {
                       final double value;
-                      if(double.tryParse(_valueController.text) != null){
-                         value = double.tryParse(_valueController.text) as double;
+                      if (double.tryParse(_valueController.text) != null) {
+                        value =
+                            double.tryParse(_valueController.text) as double;
                       } else {
-                        throw Exception("Não foi digitado um valor para transferência");
+                        throw Exception(
+                            "Não foi digitado um valor para transferência");
                       }
-
 
                       final transactionCreated =
                           Transaction(value, widget.contact);
@@ -99,13 +101,24 @@ class _TransactionFormState extends State<TransactionForm> {
     );
   }
 
-  void _save(Transaction transactionCreated, String password, BuildContext context) async {
-    _webClient
+  void _save(Transaction transactionCreated, String password,
+      BuildContext context) async {
+    await _webClient
         .save(transactionCreated, password)
-        .then((transaction) {
-      Navigator.pop(context);
-    }).catchError((e){
-      print('Houve um erro $e');
-    });
+        .catchError((e) {
+      showDialog(
+          context: context,
+          builder: (contextDialog) {
+            return FailureDialog(e.message);
+          });
+    },
+            test: ((e) => e
+                is Exception)); // o parâmetro "e" pode receber qualquer coisa. Por isso, é bom testar para verificar se "e" é da classe "Exception"
+    showDialog(
+      context: context,
+      builder: (contextDialog) {
+        return SuccessDialog('Transação feita com sucesso');
+      },
+    ).then((value) => Navigator.pop(context));
   }
 }
