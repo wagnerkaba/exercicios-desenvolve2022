@@ -1,3 +1,4 @@
+import 'package:byte_bank/components/transaction_auth_dialog.dart';
 import 'package:flutter/material.dart';
 import '../http/webclients/transaction_webclient.dart';
 import '../models/contact.dart';
@@ -50,7 +51,8 @@ class _TransactionFormState extends State<TransactionForm> {
                   controller: _valueController,
                   style: const TextStyle(fontSize: 24.0),
                   decoration: const InputDecoration(labelText: 'Value'),
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
                 ),
               ),
               Padding(
@@ -58,15 +60,35 @@ class _TransactionFormState extends State<TransactionForm> {
                 child: SizedBox(
                   width: double.maxFinite,
                   child: ElevatedButton(
-                    child: Text('Transfer'), onPressed: () {
-                      final double value = double.tryParse(_valueController.text) as double;
-                      final transactionCreated = Transaction(value, widget.contact);
-                      _webClient.save(transactionCreated).then((transaction){
-                        if(transaction!=null){
-                          Navigator.pop(context);
-                        }
-                      });
-                  },
+                    child: Text('Transfer'),
+                    onPressed: () {
+                      final double value;
+                      if(double.tryParse(_valueController.text) != null){
+                         value = double.tryParse(_valueController.text) as double;
+                      } else {
+                        throw Exception("Não foi digitado um valor para transferência");
+                      }
+
+
+                      final transactionCreated =
+                          Transaction(value, widget.contact);
+                      try {
+                        showDialog(
+                            context: context,
+                            builder: (contextDialog) {
+                              // ATENÇÃO: é importante mudar o nome do context no parâmetro da função do builder para não ser confundido com o primeiro context
+                              // para entender melhor, veja nota de aula 1.09
+
+                              return TransactionAuthDialog(
+                                onConfirm: (String password) {
+                                  _save(transactionCreated, password, context);
+                                },
+                              );
+                            });
+                      } catch (e, s) {
+                        print(s);
+                      }
+                    },
                   ),
                 ),
               )
@@ -75,5 +97,15 @@ class _TransactionFormState extends State<TransactionForm> {
         ),
       ),
     );
+  }
+
+  void _save(Transaction transactionCreated, String password, BuildContext context) async {
+    _webClient
+        .save(transactionCreated, password)
+        .then((transaction) {
+      Navigator.pop(context);
+    }).catchError((e){
+      print('Houve um erro $e');
+    });
   }
 }

@@ -21,7 +21,7 @@ class TransactionWebClient {
         .toList();
   }
 
-  Future<Transaction> save(Transaction transaction) async{
+  Future<Transaction> save(Transaction transaction, String password) async{
 
 
     final String transactionJson = jsonEncode(transaction.toJson());
@@ -29,10 +29,14 @@ class TransactionWebClient {
         baseUrl,
         headers: {
           'Content-type': 'application/json',
-          'password': '1000',
+          'password': password,
         },
         body: transactionJson
     );
+
+    if (response.statusCode == 401){
+      throw Exception("Falha de autenticação");
+    }
 
     return Transaction.fromJson(jsonDecode(response.body));
   }
