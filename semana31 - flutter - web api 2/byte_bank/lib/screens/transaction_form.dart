@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:byte_bank/components/response_dialog.dart';
 import 'package:byte_bank/components/transaction_auth_dialog.dart';
 import 'package:flutter/material.dart';
@@ -103,22 +105,45 @@ class _TransactionFormState extends State<TransactionForm> {
 
   void _save(Transaction transactionCreated, String password,
       BuildContext context) async {
-    await _webClient
-        .save(transactionCreated, password)
-        .catchError((e) {
-      showDialog(
-          context: context,
-          builder: (contextDialog) {
-            return FailureDialog(e.message);
-          });
-    },
-            test: ((e) => e
-                is Exception)); // o parâmetro "e" pode receber qualquer coisa. Por isso, é bom testar para verificar se "e" é da classe "Exception"
+    await _send(transactionCreated, password, context);
+
     showDialog(
       context: context,
       builder: (contextDialog) {
         return SuccessDialog('Transação feita com sucesso');
       },
     ).then((value) => Navigator.pop(context));
+  }
+
+  Future<void> _send(Transaction transactionCreated, String password,
+      BuildContext context) async {
+    await _webClient
+        .save(
+      transactionCreated,
+      password,
+    )
+        .catchError(
+      (e) {
+        _showFailureMessage(context, message: 'Timeout submitting transaction');
+      },
+      test: ((e) => e is TimeoutException),
+    ).catchError(
+      (e) {
+        _showFailureMessage(context, message: e.message);
+      },
+      test: ((e) => e is HttpException),
+    ).catchError((e) {
+      _showFailureMessage(context);
+    }, test: ((e) => e is Exception));
+  }
+
+  void _showFailureMessage(BuildContext context,
+      {String message = 'Unknown Error'}) {
+    showDialog(
+      context: context,
+      builder: (contextDialog) {
+        return FailureDialog(message);
+      },
+    );
   }
 }
