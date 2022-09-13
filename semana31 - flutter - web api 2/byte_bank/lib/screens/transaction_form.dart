@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../http/webclients/transaction_webclient.dart';
 import '../models/contact.dart';
 import '../models/transaction.dart';
+import 'package:uuid/uuid.dart';
 
 class TransactionForm extends StatefulWidget {
   final Contact contact;
@@ -19,9 +20,11 @@ class TransactionForm extends StatefulWidget {
 class _TransactionFormState extends State<TransactionForm> {
   final TextEditingController _valueController = TextEditingController();
   final TransactionWebClient _webClient = TransactionWebClient();
+  final String transactionId = const Uuid().v4(); // cria um id único para cada transação
 
   @override
   Widget build(BuildContext context) {
+    print('transaction form Id: $transactionId');
     return Scaffold(
       appBar: AppBar(
         title: Text('New transaction'),
@@ -75,7 +78,7 @@ class _TransactionFormState extends State<TransactionForm> {
                       }
 
                       final transactionCreated =
-                          Transaction(value, widget.contact);
+                          Transaction(transactionId, value, widget.contact);
                       try {
                         showDialog(
                             context: context,
