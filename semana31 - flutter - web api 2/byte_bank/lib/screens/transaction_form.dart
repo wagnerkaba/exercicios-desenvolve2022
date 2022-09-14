@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:byte_bank/components/progress.dart';
 import 'package:byte_bank/components/response_dialog.dart';
 import 'package:byte_bank/components/transaction_auth_dialog.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,9 @@ class TransactionForm extends StatefulWidget {
 class _TransactionFormState extends State<TransactionForm> {
   final TextEditingController _valueController = TextEditingController();
   final TransactionWebClient _webClient = TransactionWebClient();
-  final String transactionId = const Uuid().v4(); // cria um id único para cada transação
+  final String transactionId =
+      const Uuid().v4(); // cria um id único para cada transação
+  bool _sending = false;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +38,15 @@ class _TransactionFormState extends State<TransactionForm> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              Visibility(
+                visible: _sending,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Progress(
+                    message: 'Sending...',
+                  ),
+                ),
+              ),
               Text(
                 widget.contact.name,
                 style: TextStyle(
@@ -108,6 +120,10 @@ class _TransactionFormState extends State<TransactionForm> {
 
   void _save(Transaction transactionCreated, String password,
       BuildContext context) async {
+    setState(() {
+      // faz com que o widget Visibility fique visível, mostrando a animação de progresso em andamento
+      _sending = true;
+    });
     await _send(transactionCreated, password, context);
 
     showDialog(
@@ -135,9 +151,17 @@ class _TransactionFormState extends State<TransactionForm> {
         _showFailureMessage(context, message: e.message);
       },
       test: ((e) => e is HttpException),
-    ).catchError((e) {
-      _showFailureMessage(context);
-    }, test: ((e) => e is Exception));
+    ).catchError(
+      (e) {
+        _showFailureMessage(context);
+      },
+      test: ((e) => e is Exception),
+    ).whenComplete(() {
+      // faz com que o widget Visibility não fique mais visivel, deixando de mostrar a animação de progresso em andamento
+      setState(() {
+        _sending = false;
+      });
+    });
   }
 
   void _showFailureMessage(BuildContext context,
