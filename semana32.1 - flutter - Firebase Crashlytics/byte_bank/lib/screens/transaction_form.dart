@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:byte_bank/components/progress.dart';
 import 'package:byte_bank/components/response_dialog.dart';
 import 'package:byte_bank/components/transaction_auth_dialog.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import '../http/webclients/transaction_webclient.dart';
 import '../models/contact.dart';
@@ -143,16 +144,25 @@ class _TransactionFormState extends State<TransactionForm> {
     )
         .catchError(
       (e) {
+        FirebaseCrashlytics.instance.setCustomKey('exception', e.toString());
+        FirebaseCrashlytics.instance.setCustomKey('http_body', transactionCreated.toString());
+        FirebaseCrashlytics.instance.recordError(e, null); //não temos informações sobre stack, por isso passamos "null"
         _showFailureMessage(context, message: 'Timeout submitting transaction');
       },
       test: ((e) => e is TimeoutException),
     ).catchError(
       (e) {
+        FirebaseCrashlytics.instance.setCustomKey('exception', e.toString());
+        FirebaseCrashlytics.instance.setCustomKey('http_body', transactionCreated.toString());
+        FirebaseCrashlytics.instance.recordError(e, null); //não temos informações sobre stack, por isso passamos "null"
         _showFailureMessage(context, message: e.message);
       },
       test: ((e) => e is HttpException),
     ).catchError(
       (e) {
+        FirebaseCrashlytics.instance.setCustomKey('exception', e.toString());
+        FirebaseCrashlytics.instance.setCustomKey('http_body', transactionCreated.toString());
+        FirebaseCrashlytics.instance.recordError(e, null); //não temos informações sobre stack, por isso passamos "null"
         _showFailureMessage(context);
       },
       test: ((e) => e is Exception),

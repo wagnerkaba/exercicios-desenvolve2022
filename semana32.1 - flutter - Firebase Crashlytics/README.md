@@ -5,7 +5,7 @@ Este projeto é continuação da semana 31.
 
 
 ## Tópicos importantes
-
+[Introdução ao Firebase Crashlytics](https://www.youtube.com/watch?v=k_mdNRZzd30)
 
 
 ## Tecnologias utilizadas
@@ -15,6 +15,10 @@ Este projeto é continuação da semana 31.
 * [http package](https://pub.dev/packages/http) - This package contains a set of high-level functions and classes that make it easy to consume HTTP resources. It's multi-platform, and supports mobile, desktop, and the browser.
 *[http_interceptor](https://pub.dev/packages/http_interceptor) - This is a plugin that lets you intercept the different requests and responses from Dart's http package. You can use to add headers, modify query params, or print a log of the response.
 * [uuid](https://pub.dev/packages/uuid) - Simple, fast generation of RFC4122 UUIDs.
+
+## Firebase Crashlytics
+[Firebase Crashlytics](https://firebase.google.com/products/crashlytics)
+
 
 ## Setup
 
@@ -42,8 +46,13 @@ Exemplo de url: http://192.168.15.8:8080/transactions
 
 É possível compartilhar o localhost através da internet por meio do [ngrok](https://ngrok.com/).
 
-**OBS: cada vez que o ngrok é reiniciado, será necessário mudar a variável `baseUrl` no arquivo [webclient.dart](./byte_bank/lib/http/webclient.dart).**
+Caso o ngrok esteja instalado, basta digitar:
 
+````
+ngrok http 8080
+```
+
+Cada vez que o ngrok é reiniciado, ele mostrará uma nova url para acessar o localhost. Portanto, será necessário mudar a variável `baseUrl` no arquivo [webclient.dart](./byte_bank/lib/http/webclient.dart)
 
 
 
