@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../components/editor.dart';
-import '../../model/transferencia.dart';
+import '../../models/transferencia.dart';
 
 const _tituloAppBar = 'Criar Transferência';
 const _rotuloCampoValor = 'Valor';
