@@ -18,30 +18,31 @@ class FormularioTransferencia extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(_tituloAppBar),
+      appBar: AppBar(
+        title: Text(_tituloAppBar),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Editor(
+              controlador: _controladorCampoNumeroConta,
+              rotulo: _rotuloCampoNumeroConta,
+              dica: _dicaCampoNumeroConta,
+            ),
+            Editor(
+              controlador: _controladorCampoValor,
+              rotulo: _rotuloCampoValor,
+              dica: _dicaCampoValor,
+              icone: Icons.monetization_on,
+            ),
+            ElevatedButton(
+              onPressed: () => _criaTransferencia(context),
+              child: Text(_textoBotaoConfirmar),
+            ),
+          ],
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Editor(
-                controlador: _controladorCampoNumeroConta,
-                rotulo: _rotuloCampoNumeroConta,
-                dica: _dicaCampoNumeroConta,
-              ),
-              Editor(
-                controlador: _controladorCampoValor,
-                rotulo: _rotuloCampoValor,
-                dica: _dicaCampoValor,
-                icone: Icons.monetization_on,
-              ),
-              ElevatedButton(
-                onPressed: () => _criaTransferencia(context),
-                child: Text(_textoBotaoConfirmar),
-              ),
-            ],
-          ),
-        ));
+      ),
+    );
   }
 
   void _criaTransferencia(BuildContext context) {
