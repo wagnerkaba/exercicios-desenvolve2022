@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/saldo.dart';
+import '../transferencia/formulario.dart';
 
 class Dashboard extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -17,15 +18,30 @@ class Dashboard extends StatelessWidget {
             alignment: Alignment.topCenter,
             child: SaldoCard(),
           ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) {
-                  return FormularioDeposito();
+          ButtonBar(
+            alignment: MainAxisAlignment.center,
+            children: <Widget>[
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return FormularioDeposito();
+                    },
+                  ));
                 },
-              ));
-            },
-            child: const Text('Receber depósito'),
+                child: const Text('Receber depósito'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return FormularioTransferencia();
+                    },
+                  ));
+                },
+                child: const Text('Nova Transferência'),
+              ),
+            ],
           ),
         ],
       ),
