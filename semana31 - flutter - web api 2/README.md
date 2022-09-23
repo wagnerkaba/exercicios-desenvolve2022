@@ -2,7 +2,12 @@
 
 Este projeto é continuação da semana 30.2.
 
-
+Faça esse curso de Flutter e:
+* Crie e mostre um Dialog
+* Capture erros em chamadas do web client
+* Apresente adequadamente a mensagem de resposta da requisição
+* Configura o App para lidar com diferentes tipos de erros
+* Adicione um progresso enquanto a requisição web é realizada
 
 ## Tópicos importantes
 * [Idempotência](https://en.wikipedia.org/wiki/Idempotence) - Suponha que o usuário faça uma transferência e esta demore para ser concluída por alguma lentidão da web api. O usuário pode ficar impaciente e tentar confirmar a transferência novamente. Isso pode gerar duas transferênias iguais. Para evitar esse problema, utilizou-se o conceito de idempotência. Ou seja, confirmar uma transferência é uma operação idempotente, uma vez que gerará apenas uma transferência mesmo que o usuário clique em confirmar por diversas vezes. Para fazer com que a confirmação da transferência seja uma operação idempotente, o app passou a gerar um id único, através do gerador de [uuid](https://en.wikipedia.org/wiki/Universally_unique_identifier). Assim, o formulário gera um id único para uma transação. Se o usuário confirmar uma transação e depois confirmá-la novamente, apenas uma transação será gerada. Isso porque o app não permite criar duas transações com o mesmo id.
