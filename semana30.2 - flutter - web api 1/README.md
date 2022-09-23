@@ -41,5 +41,21 @@ Caso o endereço seja diferente, basta informar o app acerca do endereço atual.
 
 Para informar o app acerca da url, modifique a variável `baseUrl` no arquivo [webclient.dart](./byte_bank/lib/http/webclient.dart).
 
+## Acessando o servidor por meio do NGROK
+
+É possível compartilhar o localhost através da internet por meio do [ngrok](https://ngrok.com/).
+
+To start a HTTP tunnel forwarding to your local port 8080, run this next:
+```
+ngrok http 8080
+```
+
+**OBS: cada vez que o ngrok é reiniciado, será necessário mudar a variável `baseUrl` no arquivo [webclient.dart](./byte_bank/lib/http/webclient.dart).**
+
+# Senha para transações
+
+O aplicativo pede uma senha para fazer transações.
+
+A senha é: `1000`, conforme [README](./servidor-webapi/README.md) do servidor.
 
 

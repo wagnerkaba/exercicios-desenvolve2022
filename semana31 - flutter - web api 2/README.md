@@ -47,7 +47,16 @@ Exemplo de url: http://192.168.15.8:8080/transactions
 
 É possível compartilhar o localhost através da internet por meio do [ngrok](https://ngrok.com/).
 
+To start a HTTP tunnel forwarding to your local port 80, run this next:
+```
+ngrok http 80
+```
+
 **OBS: cada vez que o ngrok é reiniciado, será necessário mudar a variável `baseUrl` no arquivo [webclient.dart](./byte_bank/lib/http/webclient.dart).**
 
 
+# Senha para transações
 
+O aplicativo pede uma senha para fazer transações.
+
+A senha é: `1000`, conforme [README](./servidor-webapi/README.md) do servidor.

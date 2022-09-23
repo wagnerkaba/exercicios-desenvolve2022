@@ -2,6 +2,15 @@
 
 Este projeto é continuação da semana 31.
 
+Faça esse curso de Flutter e:
+* Aprenda o que são exceções
+* Aprenda a capturar e gerar exceções corretamente
+* Crie diferentes formas de exibir mensagens de erro para os usuários
+* Monitore erros de aplicativo e de comunicação HTTP
+* Visualize o registro dos erros registrados pelo Crashlytics na aplicação em um dashboard
+* Segmente erros por usuários
+* Saiba como criar chaves e valores no registro das exceções
+* Entenda a parte estratégica da análise de dados de erros para correções inteligentes
 
 
 ## Tópicos importantes
@@ -48,11 +57,17 @@ Exemplo de url: http://192.168.15.8:8080/transactions
 
 Caso o ngrok esteja instalado, basta digitar:
 
-````
+```
 ngrok http 8080
 ```
 
-Cada vez que o ngrok é reiniciado, ele mostrará uma nova url para acessar o localhost. Portanto, será necessário mudar a variável `baseUrl` no arquivo [webclient.dart](./byte_bank/lib/http/webclient.dart)
+Cada vez que o ngrok é reiniciado, ele mostrará uma nova url para acessar o localhost. Portanto, será necessário mudar a variável `baseUrl` no arquivo [webclient.dart](./byte_bank/lib/http/webclient.dart).
+
+## Senha para transações
+
+O aplicativo pede uma senha para fazer transações.
+
+A senha é: `1000`, conforme [README](./servidor-webapi/README.md) do servidor.
 
 
 
