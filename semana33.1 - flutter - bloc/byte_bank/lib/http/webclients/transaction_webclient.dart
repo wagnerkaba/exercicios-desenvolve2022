@@ -13,7 +13,7 @@ class TransactionWebClient {
   }
 
   Future<Transaction> save(Transaction transaction, String password) async {
-    await Future.delayed(Duration(seconds: 10));
+    //await Future.delayed(Duration(seconds: 10)); //OBS: este comando serve para que uma transação demore 10s para que seja possivel testar o app como se o servidor estivesse demorando para responder
 
     final String transactionJson = jsonEncode(transaction.toJson());
     final Response response = await client.post(baseUrl,
