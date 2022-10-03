@@ -12,11 +12,7 @@ class NameContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      // Para entender (_) veja nota de aula: underscore as parameter
-      create: (_) => NameCubit("Guilherme"),
-      child: NameView(),
-    );
+    return NameView();
   }
 }
 
