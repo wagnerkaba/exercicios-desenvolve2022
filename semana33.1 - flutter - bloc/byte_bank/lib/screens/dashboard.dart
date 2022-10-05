@@ -1,11 +1,12 @@
+import 'package:byte_bank/components/container.dart';
 import 'package:byte_bank/screens/contacts_list.dart';
 import 'package:byte_bank/screens/name.dart';
 import 'package:byte_bank/screens/transactions_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../models/name.dart';
 
-class DashboardContainer extends StatelessWidget {
-  const DashboardContainer({Key? key}) : super(key: key);
+class DashboardContainer extends BlocContainer {
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,9 @@ class DashboardView extends StatelessWidget {
     final name = context.read<NameCubit>().state;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Welcome $name'),
+        title: BlocBuilder<NameCubit, String>(
+          builder: (context, state)=>Text('Welcome $state'),
+        ),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -35,6 +38,8 @@ class DashboardView extends StatelessWidget {
             padding: EdgeInsets.all(8.0),
             child: Image.asset('images/bytebank_logo.png'),
           ),
+
+          // TODO: Na aula 02.03 o professor troca Container por SingleChildScrollView. Porém, nessa versão do Flutter, está dando erro. Por isso, não troquei.
           Container(
             height: 120,
             child: ListView(
@@ -117,9 +122,7 @@ class _FeatureItem extends StatelessWidget {
 }
 
 void _showContactsList(BuildContext context) {
-  Navigator.of(context).push(MaterialPageRoute(
-    builder: (context) => ContactsList(),
-  ));
+  push(context, ContactsListContainer());
 }
 
 void _showTransactionsList(BuildContext context) {

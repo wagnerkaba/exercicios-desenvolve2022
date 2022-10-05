@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../components/container.dart';
+
 // Exemplo de contador utilizando bloc
 // vide nota de aula 1.06 - Bloc pattern
 
@@ -12,8 +14,7 @@ class CounterCubit extends Cubit<int> {
   void decrement() => emit(state - 1);
 }
 
-class CounterContainer extends StatelessWidget {
-  const CounterContainer({Key? key}) : super(key: key);
+class CounterContainer extends BlocContainer {
 
   @override
   Widget build(BuildContext context) {

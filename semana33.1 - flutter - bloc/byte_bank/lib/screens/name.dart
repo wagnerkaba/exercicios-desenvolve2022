@@ -1,14 +1,11 @@
+import 'package:byte_bank/components/container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../models/name.dart';
 
-class NameCubit extends Cubit<String> {
-  NameCubit(String state) : super(state);
 
-  void change(String name) => emit(name);
-}
 
-class NameContainer extends StatelessWidget {
-  const NameContainer({Key? key}) : super(key: key);
+class NameContainer extends BlocContainer {
 
   @override
   Widget build(BuildContext context) {
