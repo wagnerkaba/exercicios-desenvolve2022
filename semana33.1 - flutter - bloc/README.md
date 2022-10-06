@@ -41,7 +41,7 @@ Exemplo de url: http://192.168.15.8:8080/transactions
 
 É possível compartilhar o localhost através da internet por meio do [ngrok](https://ngrok.com/).
 
-To start a HTTP tunnel forwarding to your local port 8080, run this next:
+To start a HTTP tunnel forwarding to your local port 8080, run this next (no power shell do windows):
 
 ```
 ngrok http 8080

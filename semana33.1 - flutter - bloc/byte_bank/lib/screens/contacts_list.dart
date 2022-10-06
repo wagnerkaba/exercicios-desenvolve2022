@@ -82,13 +82,7 @@ class ContactsList extends StatelessWidget {
               itemBuilder: (context, index) {
                 final Contact contact = contacts[index];
                 return _ContactItem(contact, onClick: () {
-                  print(
-                      '============================================= ON CLICK ===================================================================================');
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => TransactionForm(contact),
-                    ),
-                  );
+                  push(context, TransactionFormContainer(contact));
                 });
               },
               itemCount: contacts.length,
