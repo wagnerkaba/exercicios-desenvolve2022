@@ -6,6 +6,7 @@ import 'package:byte_bank/components/response_dialog.dart';
 import 'package:byte_bank/components/transaction_auth_dialog.dart';
 import 'package:byte_bank/screens/contacts_list.dart';
 import 'package:flutter/material.dart';
+import '../components/error.dart';
 import '../http/webclients/transaction_webclient.dart';
 import '../models/contact.dart';
 import '../models/transaction.dart';
@@ -45,41 +46,30 @@ class TransactionFormCubit extends Cubit<TransactionFormState> {
   void save(Transaction transactionCreated, String password,
       BuildContext context) async {
     emit(SendingState());
-
-    Transaction transaction = await _send(transactionCreated, password, context);
-
-    emit(SentState());
+    await _send(transactionCreated, password, context);
   }
 
-  Future<Transaction> _send(Transaction transactionCreated, String password,
+  _send(Transaction transactionCreated, String password,
       BuildContext context) async {
-    final Transaction transaction = await TransactionWebClient()
-        .save(
-      transactionCreated,
-      password,
-    )
+    await TransactionWebClient()
+        .save(transactionCreated, password)
+        .then((transaction) => emit(SentState()))
         .catchError(
-      (e) {
+          (e) {
         emit(FatalErrorFormState('Timeout submitting transaction'));
       },
       test: ((e) => e is TimeoutException),
     ).catchError(
-      (e) {
+          (e) {
         emit(FatalErrorFormState(e.message));
       },
       test: ((e) => e is HttpException),
     ).catchError(
-      (e) {
+          (e) {
         emit(FatalErrorFormState(e.message));
       },
       test: ((e) => e is Exception),
-    ).whenComplete(() {
-      // faz com que o widget Visibility não fique mais visivel, deixando de mostrar a animação de progresso em andamento
-      // setState(() {
-      //   _sending = false;
-      // });
-    });
-    return transaction;
+    );
   }
 }
 
@@ -94,7 +84,13 @@ class TransactionFormContainer extends BlocContainer {
       create: (BuildContext context) {
         return TransactionFormCubit();
       },
-      child: TransactionFormStateless(_contact),
+      child: BlocListener<TransactionFormCubit, TransactionFormState>(
+        listener: (context, state){
+          if (state is SentState){
+            Navigator.pop(context);
+          }
+        },
+          child: TransactionFormStateless(_contact)),
     );
   }
 }
@@ -108,54 +104,26 @@ class TransactionFormStateless extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TransactionFormCubit, TransactionFormState>(
         builder: (context, state) {
-      if (state is ShowFormState) {
-        return _BasicForm(_contact);
-      }
-      if (state is SendingState) {
-        return ProgressView();
-      }
-      if (state is SentState) {
-        Navigator.pop(context);
-      }
-      if (state is FatalErrorFormState) {
-        return Text("Erro");
-      }
-      return Text("Erro");
-    });
+          if (state is ShowFormState) {
+            return _BasicForm(_contact);
+          }
+          if (state is SendingState || state is SentState) {
+            return ProgressView();
+          }
+          if (state is FatalErrorFormState) {
+            return ErrorView(state._message);
+          }
+          return const ErrorView("Unknown Error");
+        });
   }
 
-  // void _save(Transaction transactionCreated, String password,
-  //     BuildContext context) async {
-  //   setState(() {
-  //     // faz com que o widget Visibility fique visível, mostrando a animação de progresso em andamento
-  //     _sending = true;
-  //   });
-  //   await _send(transactionCreated, password, context);
-  //
-  //   showDialog(
-  //     context: context,
-  //     builder: (contextDialog) {
-  //       return SuccessDialog('Transação feita com sucesso');
-  //     },
-  //   ).then((value) => Navigator.pop(context));
-  // }
-
-  void _showFailureMessage(BuildContext context,
-      {String message = 'Unknown Error'}) {
-    showDialog(
-      context: context,
-      builder: (contextDialog) {
-        return FailureDialog(message);
-      },
-    );
-  }
 }
 
 class _BasicForm extends StatelessWidget {
   final Contact _contact;
   final TextEditingController _valueController = TextEditingController();
   final String transactionId =
-      const Uuid().v4(); // cria um id único para cada transação
+  const Uuid().v4(); // cria um id único para cada transação
 
   _BasicForm(this._contact);
 
@@ -194,7 +162,7 @@ class _BasicForm extends StatelessWidget {
                   style: const TextStyle(fontSize: 24.0),
                   decoration: const InputDecoration(labelText: 'Value'),
                   keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
+                  const TextInputType.numberWithOptions(decimal: true),
                 ),
               ),
               Padding(
@@ -207,14 +175,14 @@ class _BasicForm extends StatelessWidget {
                       final double value;
                       if (double.tryParse(_valueController.text) != null) {
                         value =
-                            double.tryParse(_valueController.text) as double;
+                        double.tryParse(_valueController.text) as double;
                       } else {
                         throw Exception(
                             "Não foi digitado um valor para transferência");
                       }
 
                       final transactionCreated =
-                          Transaction(transactionId, value, _contact);
+                      Transaction(transactionId, value, _contact);
                       try {
                         showDialog(
                             context: context,
@@ -226,7 +194,7 @@ class _BasicForm extends StatelessWidget {
                                 onConfirm: (String password) {
                                   BlocProvider.of<TransactionFormCubit>(context)
                                       .save(transactionCreated, password,
-                                          context);
+                                      context);
                                 },
                               );
                             });

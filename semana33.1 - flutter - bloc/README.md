@@ -2,6 +2,13 @@
 
 Este projeto é continuação da semana 31 - flutter web api 2.
 
+Faça esse curso de Flutter e:
+* Crie seus blocs e cubit
+* Gerencie o seu estado
+* Crie um framework para gerenciamento de estado
+* Separe UI, estado e eventos
+* Lide com a assincronicidade no meio de uma tela
+
 ## Tópicos importantes
 
 * [Flutter: Provider, BLoC e State Management](./notas-de-aula/Provider%2C%20BLoC%20e%20State%20Management.md)
