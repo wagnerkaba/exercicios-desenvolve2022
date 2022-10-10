@@ -4,6 +4,7 @@ import 'package:byte_bank/screens/name.dart';
 import 'package:byte_bank/screens/transactions_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../components/localization.dart';
 import '../models/name.dart';
 
 class DashboardContainer extends BlocContainer {
@@ -19,11 +20,11 @@ class DashboardContainer extends BlocContainer {
 }
 
 class DashboardView extends StatelessWidget {
-  const DashboardView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final name = context.read<NameCubit>().state;
+    final i18n = DashboardViewI18N(context);
+
     return Scaffold(
       appBar: AppBar(
         title: BlocBuilder<NameCubit, String>(
@@ -46,21 +47,21 @@ class DashboardView extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               children: [
                 _FeatureItem(
-                  'Transfer',
+                  i18n.transfer,
                   Icons.monetization_on,
                   onClick: () {
                     _showContactsList(context);
                   },
                 ),
                 _FeatureItem(
-                  'Transaction Feed',
+                  i18n.transaction_feed,
                   Icons.description,
                   onClick: () {
                     _showTransactionsList(context);
                   },
                 ),
                 _FeatureItem(
-                  'Change Name',
+                  i18n.change_name,
                   Icons.person_outline,
                   onClick: () {
                     _showChangeName(context);
@@ -74,6 +75,22 @@ class DashboardView extends StatelessWidget {
     );
   }
 }
+
+class DashboardViewI18N extends ViewI18N{
+  DashboardViewI18N(BuildContext context) : super(context);
+  String get transfer =>
+    localize({"pt-br":"Transferir", "en": "Transfer"});
+
+
+  String get transaction_feed =>
+    localize({"pt-br":"Transações", "en": "Transaction Feed"});
+
+  String get change_name =>
+    localize({"pt-br":"Mudar Nome", "en": "Change Name"});
+
+}
+
+
 
 class _FeatureItem extends StatelessWidget {
   final String name;

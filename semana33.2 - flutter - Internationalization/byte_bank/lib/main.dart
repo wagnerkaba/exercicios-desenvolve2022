@@ -1,15 +1,13 @@
-
-import 'package:byte_bank/screens/counter_page.dart';
 import 'package:byte_bank/screens/dashboard.dart';
-import 'package:byte_bank/screens/name.dart';
 import 'package:flutter/material.dart';
+import 'components/localization.dart';
+
 import 'components/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 
 void main() {
   runApp(ByteBankApp());
-
 }
 
 class LogObserver extends BlocObserver {
@@ -25,11 +23,10 @@ class LogObserver extends BlocObserver {
 class ByteBankApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     Bloc.observer = LogObserver();
     return MaterialApp(
-        theme: bytebankTheme,
-        home: DashboardContainer(),
+      theme: bytebankTheme,
+      home: LocalizationContainer(child: DashboardContainer(),),
     );
   }
 }
