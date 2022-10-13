@@ -5,6 +5,7 @@ import 'package:byte_bank/components/progress.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
+import '../http/webclients/I18NWebClient.dart';
 import 'container.dart';
 
 class LocalizationContainer extends BlocContainer {
@@ -65,7 +66,7 @@ class LoadedI18NMessagesState extends I18NMessagesState {
 }
 
 class I18NMessages {
-  final Map<String, String> _messages;
+  final Map<String, dynamic> _messages;
 
   I18NMessages(this._messages);
 
@@ -93,7 +94,7 @@ class I18NLoadingContainer extends BlocContainer {
     return BlocProvider<I18NMessagesCubit>(
       create: (BuildContext context) {
         final cubit = I18NMessagesCubit();
-        cubit.reload();
+        cubit.reload(I18NWebClient());
         return cubit;
       },
       child: I18NLoadingView(this._creator),
@@ -112,7 +113,7 @@ class I18NLoadingView extends StatelessWidget {
       builder: (context, state) {
         if (state is InitI18NMessagesState ||
             state is LoadingI18NMessagesState) {
-          return ProgressView();
+          return ProgressView(message: "Loading...");
         }
         if (state is LoadedI18NMessagesState) {
           final messages = state._messages;
@@ -127,19 +128,14 @@ class I18NLoadingView extends StatelessWidget {
 class I18NMessagesCubit extends Cubit<I18NMessagesState> {
   I18NMessagesCubit() : super(InitI18NMessagesState());
 
-  reload() {
+  reload(I18NWebClient client) {
     emit(LoadingI18NMessagesState());
-    //todo: carregar
-    emit(
-      LoadedI18NMessagesState(
-        I18NMessages(
-          {
-            "transfer": "TRANSFER",
-            "transaction_feed": "TRANSACTION FEED",
-            "change_name": "CHANGE NAME",
-          },
-        ),
-      ),
-    );
+    client.findAll().then(
+          (messages) => emit(
+            LoadedI18NMessagesState(
+              I18NMessages(messages),
+            ),
+          ),
+        );
   }
 }
