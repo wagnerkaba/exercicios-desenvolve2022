@@ -14,7 +14,8 @@ class DashboardContainer extends BlocContainer {
       // Para entender (_) veja nota de aula: underscore as parameter
       create: (_) => NameCubit("Guilherme"),
       child: I18NLoadingContainer(
-        (messages) => DashboardView(DashboardViewLazyI18N(messages)),
+        viewKey: "dashboard",
+        creator: (messages) => DashboardView(DashboardViewLazyI18N(messages)),
       ),
     );
   }
