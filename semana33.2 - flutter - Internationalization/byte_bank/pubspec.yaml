@@ -29,6 +29,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  sqflite:
+  path:
+  http:
+  http_interceptor:
+  uuid:
+  flutter_bloc:
+  localstorage: ^4.0.0+1
+
 
 
 
@@ -39,13 +47,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  sqflite:
-  path:
-  http:
-  http_interceptor:
-  uuid:
-  flutter_bloc:
-  localstorage: ^3.0.6
+
 
 
 
