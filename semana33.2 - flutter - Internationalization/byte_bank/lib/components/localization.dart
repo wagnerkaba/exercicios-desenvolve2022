@@ -1,9 +1,12 @@
 // localization and internationalization
 
+import 'dart:async';
+
 import 'package:byte_bank/components/error.dart';
 import 'package:byte_bank/components/progress.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:localstorage/localstorage.dart';
 
 import '../http/webclients/I18NWebClient.dart';
 import 'container.dart';
@@ -33,7 +36,9 @@ class ViewI18N {
     // o problema desta abordagem é o rebuild quando se troca a lingua
     // o que vc quer reconstruir quando trocar o currentLocaleCubit?
     // em geral, é comum reinicializar o sistema ou voltar para tela inicial
-    this._language = BlocProvider.of<CurrentLocaleCubit>(context).state;
+    this._language = BlocProvider
+        .of<CurrentLocaleCubit>(context)
+        .state;
   }
 
   String localize(Map<String, String> values) {
@@ -88,8 +93,8 @@ class I18NLoadingContainer extends BlocContainer {
   late I18NWidgetCreator creator;
   late String viewKey;
 
-
-  I18NLoadingContainer({required String viewKey, required I18NWidgetCreator creator}){
+  I18NLoadingContainer(
+      {required String viewKey, required I18NWidgetCreator creator}) {
     this.creator = creator;
     this.viewKey = viewKey;
   }
@@ -98,7 +103,7 @@ class I18NLoadingContainer extends BlocContainer {
   Widget build(BuildContext context) {
     return BlocProvider<I18NMessagesCubit>(
       create: (BuildContext context) {
-        final cubit = I18NMessagesCubit();
+        final cubit = I18NMessagesCubit(this.viewKey);
         cubit.reload(I18NWebClient(this.viewKey));
         return cubit;
       },
@@ -131,16 +136,28 @@ class I18NLoadingView extends StatelessWidget {
 }
 
 class I18NMessagesCubit extends Cubit<I18NMessagesState> {
-  I18NMessagesCubit() : super(InitI18NMessagesState());
+  final LocalStorage storage = new LocalStorage(
+      'local_unsecure_version_1.json');
+  final String _viewKey;
 
-  reload(I18NWebClient client) {
+  I18NMessagesCubit(this._viewKey) : super(InitI18NMessagesState());
+
+  reload(I18NWebClient client) async {
     emit(LoadingI18NMessagesState());
-    client.findAll().then(
-          (messages) => emit(
-            LoadedI18NMessagesState(
-              I18NMessages(messages),
-            ),
-          ),
-        );
+    await storage.ready;
+    final items = storage.getItem(_viewKey);
+    print("_______________________ Loaded $_viewKey $items _______________________");
+    if (items != null) {
+      emit(LoadedI18NMessagesState(I18NMessages(items)));
+      return;
+    }
+    client.findAll().then(saveAndRefresh);
+  }
+
+  saveAndRefresh(Map<String, dynamic> messages) {
+    print("_______________________ Saving $_viewKey $messages _______________________");
+    storage.setItem(_viewKey, messages);
+    final state = LoadedI18NMessagesState(I18NMessages(messages));
+    emit(state);
   }
 }

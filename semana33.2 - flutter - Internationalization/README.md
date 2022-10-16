@@ -16,6 +16,7 @@ Este projeto é continuação da semana 33.1 - flutter - bloc
   *[http_interceptor](https://pub.dev/packages/http_interceptor) - This is a plugin that lets you intercept the different requests and responses from Dart's http package. You can use to add headers, modify query params, or print a log of the response.
 * [uuid](https://pub.dev/packages/uuid) - Simple, fast generation of RFC4122 UUIDs.
 * [flutter_bloc](https://pub.dev/packages/flutter_bloc) Widgets that make it easy to integrate blocs and cubits into Flutter.
+* [LocalStorage](https://pub.dev/packages/localstorage) Simple json file-based storage for flutter
 
 ## Setup
 
