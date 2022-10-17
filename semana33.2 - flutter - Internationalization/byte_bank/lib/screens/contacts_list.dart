@@ -1,5 +1,5 @@
 import 'package:byte_bank/components/container.dart';
-import 'package:byte_bank/components/progress.dart';
+import 'package:byte_bank/components/progress/progress.dart';
 import 'package:byte_bank/database/dao/contact_dao.dart';
 import 'package:byte_bank/screens/contact_form.dart';
 import 'package:byte_bank/screens/transaction_form.dart';

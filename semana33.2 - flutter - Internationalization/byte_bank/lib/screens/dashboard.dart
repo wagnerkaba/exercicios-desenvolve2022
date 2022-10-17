@@ -4,7 +4,10 @@ import 'package:byte_bank/screens/name.dart';
 import 'package:byte_bank/screens/transactions_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../components/localization.dart';
+import '../components/localization/eagar_localization.dart';
+import '../components/localization/i18n_container.dart';
+import '../components/localization/i18n_messages.dart';
+import '../components/localization/i18n_view.dart';
 import '../models/name.dart';
 
 class DashboardContainer extends BlocContainer {

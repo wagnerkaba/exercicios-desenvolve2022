@@ -1,4 +1,4 @@
-import 'package:byte_bank/components/progress.dart';
+import 'package:byte_bank/components/progress/progress.dart';
 import 'package:byte_bank/http/webclients/transaction_webclient.dart';
 import 'package:flutter/material.dart';
 

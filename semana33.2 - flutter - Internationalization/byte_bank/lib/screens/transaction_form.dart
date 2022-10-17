@@ -1,12 +1,13 @@
 import 'dart:async';
 
 import 'package:byte_bank/components/container.dart';
-import 'package:byte_bank/components/progress.dart';
+import 'package:byte_bank/components/progress/progress.dart';
 import 'package:byte_bank/components/response_dialog.dart';
 import 'package:byte_bank/components/transaction_auth_dialog.dart';
 import 'package:byte_bank/screens/contacts_list.dart';
 import 'package:flutter/material.dart';
 import '../components/error.dart';
+import '../components/progress/progress_view.dart';
 import '../http/webclients/transaction_webclient.dart';
 import '../models/contact.dart';
 import '../models/transaction.dart';
