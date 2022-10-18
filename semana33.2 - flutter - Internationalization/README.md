@@ -2,6 +2,13 @@
 
 Este projeto é continuação da semana 33.1 - flutter - bloc
 
+## Faça esse curso de Flutter e:
+* Mostre o carregamento das mensagens
+* Carregue as mensagens de várias idiomas de maneira assíncrona
+* Trabalhe com um servidor externo para carregas as mensagens sob demanda
+* Use cache local para otimizar o carregamento
+* Organize o seu app em camadas e avance nas boas práticas
+
 
 
 ## Tópicos importantes
