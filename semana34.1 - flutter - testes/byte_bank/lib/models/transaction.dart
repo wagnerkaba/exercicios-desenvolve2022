@@ -9,7 +9,7 @@ class Transaction {
       this.id,
       this.value,
       this.contact,
-      );
+      ): assert(value>0);
 
   // Transaction.fromJson é um named constructor: https://dart.dev/guides/language/language-tour#named-constructors
   // os dois pontos depois do construtor é chamado de initializer list.

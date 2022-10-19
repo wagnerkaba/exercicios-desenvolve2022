@@ -5,7 +5,7 @@ Este projeto é continuação da semana 31 - flutter web api 2.
 
 
 ## Tópicos importantes
-
+* [Tipos de teste no Flutter](./notas-de-aula/aula%201.05%20-%20Foco%20em%20testes%20de%20widget.md)
 
 
 ## Tecnologias utilizadas
