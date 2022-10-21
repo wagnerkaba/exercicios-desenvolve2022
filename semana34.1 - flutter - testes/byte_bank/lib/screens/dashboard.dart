@@ -1,9 +1,12 @@
+import 'package:byte_bank/database/dao/contact_dao.dart';
 import 'package:byte_bank/screens/contacts_list.dart';
 import 'package:byte_bank/screens/transactions_list.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatelessWidget {
-  const Dashboard({Key? key}) : super(key: key);
+
+  late final ContactDao contactDao;
+  Dashboard({required ContactDao this.contactDao});
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +60,20 @@ class Dashboard extends StatelessWidget {
     );
   }
 
+  void _showContactsList(BuildContext context) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(
+      builder: (context) => ContactsList(contactDao: contactDao),
+    ));
+  }
+
+  void _showTransactionsList(BuildContext context) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(
+      builder: (context) => TransactionsList(),
+    ));
+  }
+
 
 }
 
@@ -106,18 +123,8 @@ class FeatureItem extends StatelessWidget {
       ),
     );
   }
+
+
+
 }
 
-void _showContactsList(BuildContext context) {
-  Navigator.of(context)
-      .push(MaterialPageRoute(
-    builder: (context) => ContactsList(),
-  ));
-}
-
-void _showTransactionsList(BuildContext context) {
-  Navigator.of(context)
-      .push(MaterialPageRoute(
-    builder: (context) => TransactionsList(),
-  ));
-}

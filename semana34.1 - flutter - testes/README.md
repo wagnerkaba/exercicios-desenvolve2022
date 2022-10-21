@@ -15,6 +15,7 @@ Este projeto é continuação da semana 31 - flutter web api 2.
 * [http package](https://pub.dev/packages/http) - This package contains a set of high-level functions and classes that make it easy to consume HTTP resources. It's multi-platform, and supports mobile, desktop, and the browser.
 *[http_interceptor](https://pub.dev/packages/http_interceptor) - This is a plugin that lets you intercept the different requests and responses from Dart's http package. You can use to add headers, modify query params, or print a log of the response.
 * [uuid](https://pub.dev/packages/uuid) - Simple, fast generation of RFC4122 UUIDs.
+* [mockito](https://docs.flutter.dev/cookbook/testing/unit/mocking)
 
 ## Setup
 

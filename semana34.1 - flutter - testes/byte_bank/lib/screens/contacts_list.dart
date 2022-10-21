@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import '../models/contact.dart';
 
 class ContactsList extends StatefulWidget {
-  ContactsList({Key? key}) : super(key: key);
+  final ContactDao contactDao;
+  ContactsList({required this.contactDao});
 
   @override
   State<ContactsList> createState() => _ContactsListState();

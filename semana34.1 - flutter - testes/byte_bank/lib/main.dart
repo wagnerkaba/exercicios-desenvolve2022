@@ -1,12 +1,16 @@
 import 'package:byte_bank/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 
+import 'database/dao/contact_dao.dart';
+
 void main() {
-  runApp(ByteBankApp());
+  runApp(ByteBankApp(contactDao: ContactDao(),));
 
 }
 
 class ByteBankApp extends StatelessWidget {
+  late final ContactDao contactDao;
+  ByteBankApp({required this.contactDao});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,7 +27,7 @@ class ByteBankApp extends StatelessWidget {
               textTheme: ButtonTextTheme.primary
           ),
         ),
-        home: Dashboard(),
+        home: Dashboard(contactDao: contactDao),
     );
   }
 }
