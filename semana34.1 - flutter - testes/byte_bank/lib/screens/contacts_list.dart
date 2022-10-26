@@ -15,7 +15,7 @@ class ContactsList extends StatefulWidget {
 }
 
 class _ContactsListState extends State<ContactsList> {
-  final ContactDao _dao = ContactDao();
+  final ContactDao contactDao = ContactDao();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class _ContactsListState extends State<ContactsList> {
       body: FutureBuilder<List<Contact>>(
         initialData: [],
         future: Future.delayed(Duration(seconds: 1))
-            .then((value) => _dao.findAll()),
+            .then((value) => contactDao.findAll()),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
@@ -71,7 +71,7 @@ class _ContactsListState extends State<ContactsList> {
           Navigator.of(context)
               .push(
                 MaterialPageRoute(
-                  builder: (context) => ContactForm(),
+                  builder: (context) => ContactForm(contactDao: contactDao,),
                 ),
               )
               .then((value) => setState(() {}));
