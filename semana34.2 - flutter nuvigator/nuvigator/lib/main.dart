@@ -25,37 +25,37 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Montserrat',
       ),
-      // initialRoute: 'home',
-      // onGenerateRoute: RouteGenerator.generateRoute,
+      initialRoute: 'home',
+      onGenerateRoute: RouteGenerator.generateRoute,
 
-      home: Nuvigator.routes(
-        initialRoute: 'home',
-        routes: [
-          NuRouteBuilder(path: 'home', builder: (_, __, ___) => HomeScreen()),
-          NuRouteBuilder(path: 'login', builder: (_, __, ___) => LoginScreen()),
-          NuRouteBuilder(
-              path: 'sign-up', builder: (_, __, ___) => SignupScreen()),
-          NuRouteBuilder(
-              path: 'favorites', builder: (_, __, ___) => FavoritesScreen()),
-          NuRouteBuilder(
-              path: 'profile', builder: (_, __, ___) => ProfileScreen()),
-          NuRouteBuilder(
-            path: 'producer-details',
-            builder: (_, __, NuRouteSettings args) {
-              final Producer producer = args.rawParameters["producer"];
-              return ProducerDetailsScreen(producer: producer);
-            },
-          ),
-          NuRouteBuilder(
-            path: 'package-details',
-            builder: (_, __, NuRouteSettings args) {
-              final Producer producer = args.rawParameters["producer"];
-              final Package package = args.rawParameters["package"];
-              return PackageDetailsScreen(package: package, producer: producer);
-            },
-          ),
-        ],
-      ),
+      // home: Nuvigator.routes(
+      //   initialRoute: 'home',
+      //   routes: [
+      //     NuRouteBuilder(path: 'home', builder: (_, __, ___) => HomeScreen()),
+      //     NuRouteBuilder(path: 'login', builder: (_, __, ___) => LoginScreen()),
+      //     NuRouteBuilder(
+      //         path: 'sign-up', builder: (_, __, ___) => SignupScreen()),
+      //     NuRouteBuilder(
+      //         path: 'favorites', builder: (_, __, ___) => FavoritesScreen()),
+      //     NuRouteBuilder(
+      //         path: 'profile', builder: (_, __, ___) => ProfileScreen()),
+      //     NuRouteBuilder(
+      //       path: 'producer-details',
+      //       builder: (_, __, NuRouteSettings args) {
+      //         final Producer producer = args.rawParameters["producer"];
+      //         return ProducerDetailsScreen(producer: producer);
+      //       },
+      //     ),
+      //     NuRouteBuilder(
+      //       path: 'package-details',
+      //       builder: (_, __, NuRouteSettings args) {
+      //         final Producer producer = args.rawParameters["producer"];
+      //         final Package package = args.rawParameters["package"];
+      //         return PackageDetailsScreen(package: package, producer: producer);
+      //       },
+      //     ),
+      //   ],
+      // ),
     );
   }
 }
