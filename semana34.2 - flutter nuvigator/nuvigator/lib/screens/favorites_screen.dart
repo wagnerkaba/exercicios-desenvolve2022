@@ -85,10 +85,7 @@ class FavoritesScreen extends StatelessWidget {
       final prod = Producer.fromJson(producers[producer]);
 
       children.add(OrgsStoresCard(
-        action: () => Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ProducerDetailsScreen(producer: prod)),
-        ),
+        action: () => Navigator.pushNamed(context, 'producer-details', arguments: prod),
         img: prod.logo,
         distance: prod.distance,
         title: prod.name,

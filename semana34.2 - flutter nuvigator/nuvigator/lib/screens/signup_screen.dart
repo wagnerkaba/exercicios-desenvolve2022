@@ -3,7 +3,7 @@ import 'package:proj/core/app_colors.dart';
 import 'package:proj/core/app_images.dart';
 import 'login_screen.dart';
 
-class SingupScreen extends StatelessWidget {
+class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,10 +95,7 @@ class SingupScreen extends StatelessWidget {
                   vertical: 10,
                 ),
                 child: GestureDetector(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
-                  ),
+                  onTap: () => Navigator.pushNamed(context, 'login'),
                   child: Container(
                     width: double.maxFinite,
                     padding: const EdgeInsets.all(8),
