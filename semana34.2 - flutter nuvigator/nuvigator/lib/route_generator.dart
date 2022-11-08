@@ -11,6 +11,9 @@ import 'package:proj/screens/producer_details_screen.dart';
 import 'package:proj/screens/profile_screen.dart';
 import 'package:proj/screens/signup_screen.dart';
 
+// Esta classe é utilizada apenas no primeiro bloco de aula
+// A partir do segundo bloco de aulas, essa classe é substituida pelo Nuvigator
+
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
