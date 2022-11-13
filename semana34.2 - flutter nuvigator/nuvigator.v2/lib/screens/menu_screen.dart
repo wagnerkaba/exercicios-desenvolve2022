@@ -4,12 +4,9 @@ import 'package:proj/components/orgs_menu_card.dart';
 import 'package:proj/components/orgs_rate_app.dart';
 import 'package:proj/core/app_colors.dart';
 
-
 class MenuScreen extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-
     final nuvigator = Nuvigator.of(context);
 
     return Scaffold(
@@ -24,8 +21,7 @@ class MenuScreen extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 26,
                     fontWeight: FontWeight.w700,
-                    color: AppColors.darkGrey
-                ),
+                    color: AppColors.darkGrey),
               ),
               SizedBox(height: 20),
               OrgsRateApp(),
@@ -34,21 +30,36 @@ class MenuScreen extends StatelessWidget {
                 text: 'Início',
                 icon: Icons.home,
                 action: () => nuvigator.open('home'),
-                ),
+              ),
               Divider(),
               OrgsMenuCard(
                 text: 'Favoritos',
                 icon: Icons.favorite,
                 action: () => nuvigator.open('favorites'),
-
               ),
               Divider(),
               OrgsMenuCard(
-                text: 'Perfil',
-                icon: Icons.person,
-                action: () => nuvigator.open('profile'),
+                  text: 'Perfil',
+                  icon: Icons.person,
+                  action: () async {
+                    final result =
+                        await nuvigator.open('myapp://profile?name=orgs');
 
-              ),
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Rota encerrada'),
+                            content: Text('Valor retornado $result'),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: Text('Fechar'),
+                              )
+                            ],
+                          );
+                        });
+                  }),
               Divider(),
               OrgsMenuCard(
                 text: 'Métodos de pagamento',
@@ -57,11 +68,9 @@ class MenuScreen extends StatelessWidget {
               ),
               Divider(),
               OrgsMenuCard(
-                text: 'Sair',
-                icon: Icons.logout,
-                action: () => Navigator.pushNamed(context, 'login')
-
-              ),
+                  text: 'Sair',
+                  icon: Icons.logout,
+                  action: () => Navigator.pushNamed(context, 'login')),
               SizedBox(height: 30),
             ],
           ),
