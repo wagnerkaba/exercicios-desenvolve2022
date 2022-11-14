@@ -33,7 +33,7 @@ class PackageDetailsRoute extends NuRoute<NuRouter, PackageDetailsArgs, String> 
 
   @override
   ParamsParser<PackageDetailsArgs> get paramsParser => PackageDetailsArgs.fromJson;
-  
+
   @override
   Widget build(BuildContext context, NuRouteSettings<PackageDetailsArgs> settings) {
 
